@@ -10,17 +10,19 @@ interface NavProps {
 }
 
 const MARKETING_LINKS = [
-  { id: "how", label: "કેવી રીતે કામ કરે છે? (How it works)" },
-  { id: "features", label: "ફાયદા (Benefits)" },
-  { id: "results", label: "પરિણામો (Results)" },
-  { id: "pricing", label: "પ્લાન અને ભાવ (Pricing)" },
-  { id: "faq", label: "સવાલ-જવાબ (FAQ)" },
+  { id: "how", label: "How It Works" },
+  { id: "features", label: "Features" },
+  { id: "results", label: "Results" },
+  { id: "benefits", label: "Benefits" },
+  { id: "stories", label: "Client Proof" },
+  { id: "pricing", label: "Pricing" },
+  { id: "faq", label: "FAQ" },
 ];
 
 export default function Nav({ onOpenAuth, currentUser, onOpenDashboard }: NavProps) {
   const { scrolled } = useScrollState(20);
   const [open, setOpen] = useState(false);
-  const active = useActiveSection(["how", "features", "results", "pricing", "faq"]);
+  const active = useActiveSection(["how", "features", "results", "benefits", "stories", "pricing", "faq"]);
 
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
@@ -52,7 +54,7 @@ export default function Nav({ onOpenAuth, currentUser, onOpenDashboard }: NavPro
                 : "bg-white/90 border border-slate-200/80 shadow-sm backdrop-blur-md",
             )}
           >
-            {/* Logo & Native Badge */}
+            {/* Logo & Region Badge */}
             <div className="flex shrink-0 items-center gap-3">
               <a href="#top" className="group flex items-center gap-2.5" aria-label="Zentap home">
                 <img
@@ -64,8 +66,8 @@ export default function Nav({ onOpenAuth, currentUser, onOpenDashboard }: NavPro
                   Zen<span className="text-blue-600">tap</span>
                 </span>
               </a>
-              <span className="hidden xl:inline-flex items-center gap-1 rounded-full border border-amber-300 bg-amber-50 px-2.5 py-0.5 text-[11px] font-bold text-amber-900">
-                🇮🇳 ગુજરાતના ૫૦+ શોરૂમ્સનો ભરોસો
+              <span className="hidden xl:inline-flex items-center gap-1 rounded-full border border-slate-200 bg-slate-50 px-2.5 py-0.5 text-[11px] font-bold text-slate-700">
+                🇮🇳 Trusted by 50+ Showrooms in Ahmedabad & Gujarat
               </span>
             </div>
 
@@ -114,7 +116,7 @@ export default function Nav({ onOpenAuth, currentUser, onOpenDashboard }: NavPro
                   onClick={onOpenAuth}
                   className="min-h-10 whitespace-nowrap rounded-full bg-blue-600 px-4 text-xs font-bold text-white shadow-sm transition hover:bg-blue-700 active:scale-95"
                 >
-                  Sign In / સ્ટેન્ડી ઓર્ડર કરો
+                  Sign In / Order Standee
                 </button>
               )}
 
@@ -135,8 +137,8 @@ export default function Nav({ onOpenAuth, currentUser, onOpenDashboard }: NavPro
         {open && (
           <div className="fixed inset-0 top-[65px] z-50 bg-white/98 p-6 backdrop-blur-2xl lg:hidden flex flex-col justify-between overflow-y-auto">
             <div className="space-y-4">
-              <span className="inline-flex items-center gap-1.5 rounded-full border border-amber-300 bg-amber-50 px-3 py-1 text-xs font-bold text-amber-900">
-                🇮🇳 ગુજરાતના ૫૦+ શોરૂમ્સનો ભરોસો
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-slate-50 px-3 py-1 text-xs font-bold text-slate-700">
+                🇮🇳 Trusted by 50+ Showrooms in Gujarat
               </span>
               <nav className="flex flex-col space-y-2 pt-2">
                 {MARKETING_LINKS.map((l) => (
@@ -160,7 +162,7 @@ export default function Nav({ onOpenAuth, currentUser, onOpenDashboard }: NavPro
                 className="flex w-full items-center justify-center gap-2 rounded-2xl border border-emerald-300 bg-emerald-50 py-3.5 text-sm font-bold text-emerald-800 shadow-sm"
               >
                 <span>💬</span>
-                <span>Direct WhatsApp: +91 8788416911</span>
+                <span>WhatsApp: +91 8788416911</span>
               </a>
               <button
                 onClick={() => {
@@ -169,7 +171,7 @@ export default function Nav({ onOpenAuth, currentUser, onOpenDashboard }: NavPro
                 }}
                 className="w-full rounded-2xl bg-blue-600 py-3.5 text-sm font-bold text-white shadow-md"
               >
-                Merchant Sign In / સ્ટેન્ડી ઓર્ડર કરો
+                Sign In / Order Standee
               </button>
             </div>
           </div>

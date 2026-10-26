@@ -109,10 +109,10 @@ function CommandCenterIntro() {
     <Section id="command-center" className="pt-0 sm:pt-0 bg-white">
       <div className="flex flex-col items-center justify-between gap-4 sm:flex-row mb-6">
         <SectionHeading
-          eyebrow="મર્ચન્ટ કંટ્રોલ (Merchant Portal)"
-          title="તમારા શોરૂમનો સમગ્ર ગ્રોથ"
-          highlight="એક જ સ્ક્રીન પરથી"
-          copy="તમારા કાઉન્ટર સ્ટેન્ડી સ્કેન, ગૂગલ રિવ્યુ, AI જવાબો અને UPI બિલિંગ — બધું જ તમારા મોબાઇલમાંથી મેનેજ કરો."
+          eyebrow="Merchant Portal"
+          title="Manage Your Countertop Reputation"
+          highlight="From One Screen"
+          copy="Real-time NFC scan analytics, Google review stream, automated AI responses, and UPI billing managed directly from your phone."
           icon={<IconPulse className="h-3.5 w-3.5 text-blue-600" />}
         />
       </div>
@@ -121,16 +121,16 @@ function CommandCenterIntro() {
         <div className="mt-8 grid gap-4 sm:grid-cols-3">
           {[
             {
-              t: "લાઇવ સ્કેન ટ્રેકિંગ",
-              d: "રોજ કેટલા ગ્રાહકોએ સ્ટેન્ડી પર ટેપ કર્યું અને કેટલા રિવ્યુ ગૂગલ પર આવ્યા તેનો ચોક્કસ રિપોર્ટ.",
+              t: "Live Counter Scan Tracking",
+              d: "Accurate daily reports showing how many customers tapped the standee and submitted reviews.",
             },
             {
-              t: "નેગેટિવ રિવ્યુ પ્રોટેક્શન",
-              d: "કોઈ પણ નારાજ ગ્રાહકનો ફીડબેક સીધો તમારા WhatsApp પર આવશે, જેથી તમે તરત જ સમાધાન લાવી શકો.",
+              t: "Private Feedback Filter",
+              d: "Unhappy ratings (1–3★) route straight to your private WhatsApp so you can resolve issues instantly.",
             },
             {
-              t: "ઓટોમેટિક ગૂગલ AI રિપ્લાય",
-              d: "દરેક ૫-સ્ટાર રિવ્યુનો આભાર માનતો સુંદર જવાબ AI આપોઆપ ગૂગલ મેપ્સ પર ૧૫ મિનિટમાં પોસ્ટ કરે છે.",
+              t: "Automated Google AI Replies",
+              d: "Every 5-star review receives a warm, customized thank-you reply published to Google Maps within 15 minutes.",
             },
           ].map((c, i) => (
             <div
