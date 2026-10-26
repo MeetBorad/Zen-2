@@ -1,143 +1,99 @@
-import type { ReactNode } from "react";
-import { cn } from "@/utils/cn";
 import { Reveal, Section, SectionHeading } from "./ui";
 import {
-  IconActivity,
-  IconCard,
-  IconChat,
+  IconCheck,
   IconNfc,
-  IconPrinter,
   IconShield,
   IconSparkles,
+  IconChat,
+  IconCard,
+  IconStar,
 } from "./Icons";
 
-type Feature = {
-  icon: ReactNode;
-  title: string;
-  copy: string;
-  span?: string;
-  tone: string;
-  extra?: ReactNode;
-};
-
-const FEATURES: Feature[] = [
+const FEATURES = [
   {
-    icon: <IconNfc className="h-5 w-5" />,
-    title: "NFC + QR standees that work the room",
-    copy: "We auto-generate A6 counter artwork with your brand, your unique link and an NFC chip. Guests tap, scan and land straight on your Google review form — no app, no login, no friction.",
-    tone: "from-brand-500/25",
-    span: "lg:col-span-2",
-    extra: (
-      <div className="mt-5 flex flex-wrap gap-2">
-        {["Auto artwork", "NFC chip", "Unique short link", "Print + ship included"].map((t) => (
-          <span key={t} className="rounded-full border border-white/10 bg-white/5 px-2.5 py-1 text-[11px] text-slate-300">
-            {t}
-          </span>
-        ))}
-      </div>
-    ),
+    icon: <IconNfc className="h-6 w-6 text-blue-600" />,
+    title: "પ્રીમિયમ એક્રેલિક સ્ટેન્ડી (NFC + QR)",
+    englishTitle: "Premium Acrylic Standee Hardware",
+    copy: "સોના-ચાંદીના શોરૂમ, બ્રાઇડલ સલૂન કે કાફેના કાઉન્ટર પર શોભે તેવું લક્ઝરી ફિનિશ એક્રેલિક સ્ટેન્ડી. ગ્રાહક માત્ર ફોન અડાડશે અને રિવ્યુ શરૂ થશે.",
+    badge: "કોઈ એપ નહીં",
   },
   {
-    icon: <IconSparkles className="h-5 w-5" />,
-    title: "AI replies that sound like you",
-    copy: "Zentap drafts a reply in your tone, checks it for compliance, then publishes it to your Google Business Profile in minutes.",
-    tone: "from-violet-500/25",
-    extra: (
-      <div className="mt-4 space-y-2">
-        <div className="rounded-lg border border-white/8 bg-ink-950/60 p-2.5 text-[11px] leading-relaxed text-slate-400">
-          “Thanks so much, Priya! We'll have your usual table ready next Friday. 🌿”
-        </div>
-        <div className="flex items-center gap-2 text-[10.5px] text-emerald-300">
-          <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
-          Published automatically · 3 min
-        </div>
-      </div>
-    ),
+    icon: <IconSparkles className="h-6 w-6 text-amber-600" />,
+    title: "ગુજરાતી, હિન્દી અને અંગ્રેજી AI રિવ્યુ",
+    englishTitle: "Multilingual Gujarati, Hindi & English",
+    copy: "ગ્રાહકને લાંબુ લખાણ ટાઇપ કરવાનો કંટાળો આવે છે. અમારું AI ગ્રાહકના સંતોષ મુજબ ગુજરાતી કે હિન્દીમાં આપોઆપ સુંદર ૫-સ્ટાર રિવ્યુ તૈયાર કરી આપે છે.",
+    badge: "Gemini 1.5 Flash",
   },
   {
-    icon: <IconShield className="h-5 w-5" />,
-    title: "Private feedback, honest reviews",
-    copy: "Unhappy guests can reach you privately first — and still get a clear, one-tap path to a public Google review. Policy-safe by design.",
-    tone: "from-emerald-500/20",
+    icon: <IconShield className="h-6 w-6 text-emerald-600" />,
+    title: "ખરાબ રિવ્યુથી ૧૦૦% રક્ષણ (Private Filter)",
+    englishTitle: "Negative Review Protection Shield",
+    copy: "જો કોઈ ગ્રાહક કોઈ બાબતે નારાજ હોય, તો તેનો ૧-૩ સ્ટાર ફીડબેક ગૂગલ પર પબ્લિક નહીં થાય, પણ સીધો તમારા અંગત વોટ્સએપ પર આવશે. તમારું ગૂગલ રેટિંગ હંમેશા 4.9★ રહેશે!",
+    badge: "100% Policy Safe",
   },
   {
-    icon: <IconCard className="h-5 w-5" />,
-    title: "Subscriptions that don't chase you",
-    copy: "₹2,999/month via Razorpay and UPI AutoPay. Trials, renewals, failures and cancellations are tracked for you.",
-    tone: "from-cyan-500/20",
+    icon: <IconChat className="h-6 w-6 text-indigo-600" />,
+    title: "૧૫ મિનિટમાં ગૂગલ પર ઓટો-રિપ્લાય (Mode B)",
+    englishTitle: "Automated Google API Responses",
+    copy: "ગૂગલ પર જે પણ રિવ્યુ આવે તેનો આભાર માનતો સુંદર જવાબ AI આપમેળે આપી દે છે. ગૂગલના અલ્ગોરિધમમાં જે બિઝનેસ ઝડપી રિપ્લાય આપે તે હંમેશા #1 રેન્ક કરે છે.",
+    badge: "Official Google API",
   },
   {
-    icon: <IconChat className="h-5 w-5" />,
-    title: "One record per business",
-    copy: "Merchant ID, Google connection, standee status, trial window and activity history in a single row you can actually read.",
-    tone: "from-indigo-500/20",
-    span: "lg:col-span-2",
-    extra: (
-      <div className="mt-5 grid gap-2 sm:grid-cols-3">
-        {[
-          { k: "Connected", v: "7 of 8" },
-          { k: "Standee live", v: "5 of 8" },
-          { k: "Needs onboarding", v: "1" },
-        ].map((s) => (
-          <div key={s.k} className="rounded-xl border border-white/8 bg-white/[0.03] p-3">
-            <p className="text-[10.5px] uppercase tracking-wider text-slate-500">{s.k}</p>
-            <p className="mt-1 font-mono text-lg font-semibold text-white">{s.v}</p>
-          </div>
-        ))}
-      </div>
-    ),
+    icon: <IconCard className="h-6 w-6 text-cyan-600" />,
+    title: "સરળ UPI AutoPay (GPay, PhonePe)",
+    englishTitle: "Hassle-Free UPI AutoPay Mandates",
+    copy: "કોઈ ક્રેડિટ કાર્ડ કે પેપરવર્કની જરૂર નથી. ગૂગલ પે કે ફોનપે દ્વારા સરળ મંથલી ઓટોપે સેટ કરો. કોઈ લોક-ઇન પિરિયડ નથી, ગમે ત્યારે કેન્સલ કરી શકો છો.",
+    badge: "Razorpay Verified",
   },
   {
-    icon: <IconPrinter className="h-5 w-5" />,
-    title: "Fulfilment you can see",
-    copy: "Artwork → printer acknowledgement → production → dispatch → delivered. No customer disappears between signup and delivery.",
-    tone: "from-amber-500/18",
-  },
-  {
-    icon: <IconActivity className="h-5 w-5" />,
-    title: "Alerts before complaints",
-    copy: "Broken redirects, expired OAuth tokens, failed webhooks and stuck AI jobs — with the affected customer attached.",
-    tone: "from-rose-500/18",
+    icon: <IconStar className="h-6 w-6 text-rose-600" />,
+    title: "લાઇવ વોટ્સએપ સપોર્ટ (Direct Founder Help)",
+    englishTitle: "Dedicated WhatsApp Assistance",
+    copy: "સેટઅપ કરવામાં કે ગૂગલ કનેક્ટ કરવામાં કોઈ પણ પ્રશ્ન હોય તો અમારા ફાઉન્ડર હેલ્પલાઇન (+91 8788416911) પર સીધો ગુજરાતીમાં સપોર્ટ મળશે.",
+    badge: "+91 8788416911",
   },
 ];
 
 export default function Features() {
   return (
-    <Section id="platform">
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 -z-10 opacity-60"
-        style={{
-          background:
-            "radial-gradient(45% 35% at 15% 10%, rgba(99,102,241,0.12), transparent 70%), radial-gradient(40% 35% at 85% 60%, rgba(34,211,238,0.09), transparent 70%)",
-        }}
-      />
+    <Section id="features" className="bg-slate-50">
       <SectionHeading
-        eyebrow="The platform"
-        title="Everything a local business needs,"
-        highlight="nothing it doesn't"
-        copy="Zentap combines hardware, automation and software into one subscription — so reputation, revenue and operations stop living in five different tools."
-        icon={<span className="text-brand-300">◆</span>}
+        eyebrow="વેપારીઓ માટે ખાસ સુવિધાઓ (Business Features)"
+        title="શા માટે ગુજરાતના વેપારીઓ"
+        highlight="Zentap પસંદ કરે છે?"
+        copy="તમારા બિઝનેસનું ગૂગલ રેટિંગ વધારવા અને કાઉન્ટર પરથી જ રોજ નવા કસ્ટમર્સ લાવવા માટે આ સિસ્ટમ ડિઝાઇન કરવામાં આવી છે."
+        icon={<span className="text-emerald-600">✓</span>}
       />
 
-      <div className="mt-14 grid gap-4 lg:grid-cols-3">
-        {FEATURES.map((f, i) => (
-          <Reveal key={f.title} delay={i * 70} className={cn(f.span)}>
-            <article className="group relative flex h-full flex-col overflow-hidden rounded-3xl border border-white/8 bg-white/[0.025] p-6 card-hover hover:-translate-y-1.5 hover:border-white/20 hover:bg-white/[0.05] sm:p-7">
-              <span
-                aria-hidden
-                className={cn(
-                  "pointer-events-none absolute inset-x-0 -top-24 h-48 bg-gradient-to-b to-transparent opacity-0 blur-2xl transition-opacity duration-500 group-hover:opacity-100",
-                  f.tone,
-                )}
-              />
-              <span className="relative grid h-11 w-11 place-items-center rounded-2xl border border-white/12 bg-gradient-to-br from-white/12 to-white/[0.02] text-brand-200 transition-all duration-500 group-hover:scale-110 group-hover:text-white group-hover:shadow-[0_0_28px_-6px_rgba(129,140,248,0.8)]">
-                {f.icon}
-              </span>
-              <h3 className="relative mt-5 text-[17px] font-semibold leading-snug text-white">{f.title}</h3>
-              <p className="relative mt-2.5 text-[13.5px] leading-relaxed text-slate-400">{f.copy}</p>
-              {f.extra && <div className="relative mt-auto">{f.extra}</div>}
-            </article>
+      <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {FEATURES.map((feat, idx) => (
+          <Reveal key={feat.title} delay={idx * 70}>
+            <div className="flex flex-col justify-between rounded-3xl border border-slate-200 bg-white p-6 shadow-sm transition-all duration-200 hover:-translate-y-1 hover:shadow-md hover:border-blue-400 h-full">
+              <div>
+                <div className="flex items-center justify-between">
+                  <div className="grid h-12 w-12 place-items-center rounded-2xl bg-slate-50 border border-slate-100 shadow-xs">
+                    {feat.icon}
+                  </div>
+                  <span className="rounded-full border border-slate-200 bg-slate-100 px-2.5 py-0.5 text-[10.5px] font-bold text-slate-700">
+                    {feat.badge}
+                  </span>
+                </div>
+
+                <h3 className="mt-5 text-base sm:text-lg font-bold text-slate-900 leading-snug">
+                  {feat.title}
+                </h3>
+                <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide mt-0.5">
+                  {feat.englishTitle}
+                </p>
+                <p className="mt-3 text-sm leading-relaxed text-slate-600">
+                  {feat.copy}
+                </p>
+              </div>
+
+              <div className="mt-5 pt-3 border-t border-slate-100 flex items-center gap-1.5 text-xs font-semibold text-blue-700">
+                <IconCheck className="h-3.5 w-3.5" /> સિસ્ટમમાં ઇન્ક્લુડેડ
+              </div>
+            </div>
           </Reveal>
         ))}
       </div>

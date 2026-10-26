@@ -1,57 +1,60 @@
 import { useState } from "react";
 import { cn } from "@/utils/cn";
 import { Reveal, Section, SectionHeading } from "./ui";
-import { IconCheck, IconLock, IconShield, IconZap } from "./Icons";
+import { IconCheck } from "./Icons";
 
 const PLANS = [
   {
-    name: "Starter",
-    tag: "₹1,000/mo",
-    monthly: 1000,
-    annual: 833,
-    blurb: "Perfect for single counter businesses starting their reputation journey.",
-    cta: "Sign In / Sign Up",
+    name: "Starter (નાના વેપારીઓ માટે)",
+    englishName: "Starter Plan",
+    tag: "₹1,000/મહિને",
+    price: 1000,
+    daily: "માત્ર ₹33/દિવસ",
+    blurb: "નાના ક્લિનિક, કાફે કે ૧ કાઉન્ટર વાળી દુકાનો માટે પરફેક્ટ પ્લાન.",
+    cta: "ઓર્ડર કરો સ્ટેન્ડી",
     features: [
-      "1 branded NFC + QR standee",
-      "Google Business Profile connection",
-      "AI reply drafts (your approval)",
-      "Scan & review dashboard",
-      "Cancel or walk away anytime",
+      "૧ પ્રીમિયમ A6 એક્રેલિક સ્ટેન્ડી (NFC + QR)",
+      "ગૂગલ બિઝનેસ પ્રોફાઇલ ૧-ટેપ કનેક્શન",
+      "ગુજરાતી, હિન્દી અને અંગ્રેજી AI રિવ્યુ ડ્રાફ્ટ્સ",
+      "ફ્રી બ્લુડાર્ટ કુરિયર ડિલિવરી (૪૮ કલાકમાં)",
+      "કોઈ લોક-ઇન નથી, ગમે ત્યારે કેન્સલ કરી શકો છો",
     ],
     highlight: false,
   },
   {
-    name: "Growth",
-    tag: "Most popular",
-    monthly: 2999,
-    annual: 2499,
-    blurb: "The full reputation engine for a single-location business.",
-    cta: "Sign In / Sign Up",
+    name: "Growth (સૌથી વધુ લોકપ્રિય)",
+    englishName: "Growth Plan — Best for Showrooms",
+    tag: "Most Popular",
+    price: 2999,
+    daily: "માત્ર ₹99/દિવસ",
+    blurb: "જ્વેલરી શોરૂમ, બ્રાઇડલ સલૂન કે રેસ્ટોરન્ટ માટે સંપૂર્ણ ગૂગલ ગ્રોથ એન્જિન.",
+    cta: "ઓર્ડર કરો સ્ટેન્ડી (Most Popular)",
     features: [
-      "4 standees included, reprints at cost",
-      "AI replies published automatically",
-      "Private feedback routing",
-      "Full Founder Command Center",
-      "WhatsApp alerts for issues & reviews",
-      "Razorpay + UPI AutoPay billing",
-      "Priority support, under 24 hrs",
+      "૪ પ્રીમિયમ A6 એક્રેલિક સ્ટેન્ડી (બિલિંગ, કાઉન્ટર, રિસેપ્શન)",
+      "Mode B: ૧૫ મિનિટમાં ગૂગલ પર ઓટોમેટિક AI રિપ્લાય",
+      "પ્રાઇવેટ નેગેટિવ રિવ્યુ શિલ્ડ (ખરાબ રિવ્યુ વોટ્સએપ પર ફિલ્ટર)",
+      "લાઇવ મર્ચન્ટ ડેશબોર્ડ & રિવ્યુ એનાલિટિક્સ",
+      "ગ્રાહકને વોટ્સએપ એલર્ટ્સ & સ્ટેન્ડી ટ્રેકર",
+      "Razorpay UPI AutoPay (GPay, PhonePe, Paytm)",
+      "પ્રાયોરિટી ફોન & વોટ્સએપ સપોર્ટ (+91 8788416911)",
     ],
     highlight: true,
   },
   {
-    name: "Scale",
-    tag: "Multi-location",
-    monthly: 7499,
-    annual: 6249,
-    blurb: "For chains, franchises and agencies running many brands.",
-    cta: "Talk to us",
+    name: "Scale (મલ્ટિ-બ્રાન્ચ ચેઇન)",
+    englishName: "Scale Plan — Multi-Location",
+    tag: "Multi-branch",
+    price: 7499,
+    daily: "ચેઇન સ્ટોર્સ માટે",
+    blurb: "અમદાવાદ, સુરત અને ગુજરાતભરમાં એક કરતાં વધુ શાખાઓ ધરાવતા બિઝનેસ માટે.",
+    cta: "વાત કરો અમારી ટીમ સાથે",
     features: [
-      "12 standees included",
-      "Unlimited locations & merchant IDs",
-      "Custom branded artwork & landing pages",
-      "API + webhook access",
-      "Dedicated onboarding manager",
-      "Quarterly reputation reporting",
+      "૧૨ પ્રીમિયમ એક્રેલિક સ્ટેન્ડી ઇન્ક્લુડેડ",
+      "અમર્યાદિત લોકેશન્સ & બ્રાન્ચ ડેશબોર્ડ",
+      "કસ્ટમ બ્રાન્ડેડ આર્ટવર્ક & સ્ટેન્ડી કલર",
+      "ડેડિકેટેડ એકાઉન્ટ મેનેજર",
+      "GST ઇનવોઇસિંગ & ઓડિટ રિપોર્ટ્સ",
+      "વીકલી ગૂગલ મેપ્સ રેન્કિંગ રિપોર્ટ",
     ],
     highlight: false,
   },
@@ -62,154 +65,100 @@ interface PricingProps {
 }
 
 export default function Pricing({ onSelectPlan }: PricingProps) {
-  const [annual, setAnnual] = useState(false);
-
   return (
-    <Section id="pricing">
+    <Section id="pricing" className="bg-slate-50">
       <SectionHeading
-        eyebrow="Pricing"
-        title="One simple subscription."
-        highlight="Starting at ₹1,000/mo."
-        copy="Choose a plan to create your merchant account. The Zentap team will help link your business and activate billing."
-        icon={<span className="text-cyan-300">◆</span>}
+        eyebrow="પારદર્શક ભાવ (Transparent Pricing)"
+        title="સરળ અને પરવડે તેવો ભાવ."
+        highlight="માત્ર ₹1,000/મહિને થી શરૂ"
+        copy="કોઈ હિડન ચાર્જ નથી. ૧ નવો ગ્રાહક તમારી દુકાને આવે એટલે આખા મહિનાનો સ્ટેન્ડી ખર્ચ વસૂલ થઈ જાય છે!"
+        icon={<span className="text-amber-500">₹</span>}
       />
 
-      <Reveal delay={100}>
-        <div className="mt-9 flex items-center justify-center gap-3">
-          <span className={cn("text-[13px] font-medium transition-colors", !annual ? "text-white" : "text-slate-500")}>
-            Monthly
-          </span>
-          <button
-            onClick={() => setAnnual((a) => !a)}
-            role="switch"
-            aria-checked={annual}
-            aria-label="Toggle annual billing"
-            className={cn(
-              "relative h-7 w-13 rounded-full border transition-colors duration-300",
-              annual ? "border-brand-400/40 bg-brand-500/30" : "border-white/12 bg-white/8",
-            )}
-            style={{ width: 52 }}
-          >
-            <span
+      <div className="mt-14 grid gap-6 lg:grid-cols-3 max-w-7xl mx-auto items-stretch">
+        {PLANS.map((plan, idx) => (
+          <Reveal key={plan.name} delay={idx * 90}>
+            <div
               className={cn(
-                "absolute top-0.5 h-5 w-5 rounded-full bg-white shadow transition-all duration-300",
-                annual ? "left-[26px]" : "left-0.5",
+                "relative flex flex-col justify-between rounded-3xl p-6 sm:p-8 h-full transition-all duration-200",
+                plan.highlight
+                  ? "border-2 border-blue-600 bg-white shadow-xl ring-4 ring-blue-600/10 -translate-y-1"
+                  : "border border-slate-200 bg-white shadow-sm hover:shadow-md hover:border-slate-300",
               )}
-            />
-          </button>
-          <span className={cn("text-[13px] font-medium transition-colors", annual ? "text-white" : "text-slate-500")}>
-            Annual
-          </span>
-          <span className="rounded-full bg-emerald-500/12 px-2.5 py-1 text-[11px] font-semibold text-emerald-300 ring-1 ring-emerald-400/25">
-            2 months free
-          </span>
-        </div>
-      </Reveal>
-
-      <div className="mt-12 grid items-start gap-5 lg:grid-cols-3">
-        {PLANS.map((p, i) => {
-          const price = annual ? p.annual : p.monthly;
-          return (
-            <Reveal key={p.name} delay={i * 100}>
-              <div
-                className={cn(
-                  "group relative flex h-full flex-col overflow-hidden rounded-3xl border p-7 transition-all duration-500",
-                  p.highlight
-                    ? "border-brand-400/35 bg-gradient-to-b from-brand-600/20 via-ink-900/70 to-ink-900/40 shadow-[0_40px_100px_-40px_rgba(79,70,229,0.95)] lg:-mt-4 lg:pb-9"
-                    : "border-white/8 bg-white/[0.025] hover:-translate-y-1 hover:border-white/20",
-                )}
-              >
-                {p.highlight && (
-                  <>
-                    <span
-                      aria-hidden
-                      className="pointer-events-none absolute -right-20 -top-24 h-64 w-64 rounded-full bg-brand-500/25 blur-3xl"
-                    />
-                    <span className="absolute right-5 top-5 rounded-full bg-white/12 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-white ring-1 ring-white/20">
-                      {p.tag}
-                    </span>
-                  </>
-                )}
-                <p className="relative text-[13px] font-semibold uppercase tracking-[0.16em] text-brand-200">{p.name}</p>
-                <div className="relative mt-4 flex items-end gap-1.5">
-                  <span className="font-mono text-[2.6rem] font-semibold leading-none text-white">
-                    ₹{price.toLocaleString("en-IN")}
-                  </span>
-                  <span className="pb-1 text-[12.5px] text-slate-400">/month</span>
+            >
+              {plan.highlight && (
+                <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 rounded-full bg-blue-600 px-4 py-1 text-xs font-bold text-white shadow-md uppercase tracking-wider">
+                  સૌથી વધુ પસંદ કરાતો પ્લાન (Recommended)
                 </div>
-                <p className="relative mt-1.5 text-[11.5px] text-slate-500">
-                  {p.monthly === 0
-                    ? "No card required · full platform access"
-                    : annual
-                      ? `Billed annually · ₹${(p.annual * 12).toLocaleString("en-IN")}/year`
-                      : "Billed monthly · cancel anytime"}
-                </p>
-                <p className="relative mt-4 text-[13px] leading-relaxed text-slate-400">{p.blurb}</p>
+              )}
 
-                <ul className="relative mt-6 space-y-2.5">
-                  {p.features.map((f) => (
-                    <li key={f} className="flex items-start gap-2.5 text-[13px] text-slate-300">
-                      <span
-                        className={cn(
-                          "mt-0.5 grid h-4 w-4 shrink-0 place-items-center rounded-full",
-                          p.highlight ? "bg-brand-400/25 text-brand-100" : "bg-white/8 text-slate-300",
-                        )}
-                      >
-                        <IconCheck className="h-2.5 w-2.5" strokeWidth={3} />
-                      </span>
-                      {f}
-                    </li>
-                  ))}
-                </ul>
-
-                {onSelectPlan ? (
-                  <button
-                    onClick={() => onSelectPlan(`${p.name} ₹${price.toLocaleString("en-IN")}`)}
-                    className={cn(
-                      "relative mt-7 inline-flex items-center justify-center gap-2 rounded-full py-3 text-[13.5px] font-semibold transition-all duration-300 hover:-translate-y-0.5",
-                      p.highlight
-                        ? "bg-[linear-gradient(105deg,#4f46e5,#7c3aed_50%,#0891b2)] text-white shadow-[0_14px_40px_-14px_rgba(124,58,237,0.95)] ring-1 ring-white/20"
-                        : "glass text-white hover:bg-white/12",
-                    )}
-                  >
-                    {p.cta}
-                  </button>
-                ) : (
-                  <a
-                    href="#start"
-                    className={cn(
-                      "relative mt-7 inline-flex items-center justify-center gap-2 rounded-full py-3 text-[13.5px] font-semibold transition-all duration-300 hover:-translate-y-0.5",
-                      p.highlight
-                        ? "bg-[linear-gradient(105deg,#4f46e5,#7c3aed_50%,#0891b2)] text-white shadow-[0_14px_40px_-14px_rgba(124,58,237,0.95)] ring-1 ring-white/20"
-                        : "glass text-white hover:bg-white/12",
-                    )}
-                  >
-                    {p.cta}
-                  </a>
-                )}
-              </div>
-            </Reveal>
-          );
-        })}
-      </div>
-
-      <Reveal delay={140}>
-        <div className="mt-8 grid gap-3 sm:grid-cols-3">
-          {[
-            { icon: <IconShield className="h-4 w-4" />, t: "No lock-in", s: "Monthly plans, cancel from the dashboard." },
-            { icon: <IconZap className="h-4 w-4" />, t: "Hardware included", s: "Standees, artwork and shipping covered." },
-            { icon: <IconLock className="h-4 w-4" />, t: "Your data stays yours", s: "Isolated merchant records, exportable anytime." },
-          ].map((b) => (
-            <div key={b.t} className="flex items-start gap-3 rounded-2xl border border-white/8 bg-white/[0.02] p-4">
-              <span className="grid h-8 w-8 shrink-0 place-items-center rounded-xl bg-white/8 text-brand-200">{b.icon}</span>
               <div>
-                <p className="text-[13px] font-semibold text-white">{b.t}</p>
-                <p className="mt-0.5 text-[12px] text-slate-500">{b.s}</p>
+                <div className="flex items-center justify-between">
+                  <h3 className="text-lg font-bold text-slate-900">{plan.name}</h3>
+                  <span
+                    className={cn(
+                      "rounded-full px-2.5 py-0.5 text-xs font-bold",
+                      plan.highlight ? "bg-amber-100 text-amber-900" : "bg-slate-100 text-slate-700",
+                    )}
+                  >
+                    {plan.daily}
+                  </span>
+                </div>
+
+                <div className="mt-4 flex items-baseline gap-1">
+                  <span className="text-4xl font-black text-slate-900 font-mono">
+                    ₹{plan.price.toLocaleString("en-IN")}
+                  </span>
+                  <span className="text-sm font-semibold text-slate-500">/ મહિને (+GST)</span>
+                </div>
+
+                <p className="mt-3 text-xs sm:text-sm text-slate-600 leading-relaxed">{plan.blurb}</p>
+
+                <div className="mt-6 space-y-3 pt-4 border-t border-slate-100">
+                  <p className="text-xs font-bold text-slate-800 uppercase tracking-wider">શું મળશે:</p>
+                  {plan.features.map((feat) => (
+                    <div key={feat} className="flex items-start gap-2.5 text-xs sm:text-[13px] text-slate-700">
+                      <IconCheck className="h-4 w-4 shrink-0 text-blue-600 mt-0.5" strokeWidth={2.5} />
+                      <span>{feat}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="mt-8 pt-4 border-t border-slate-100">
+                <button
+                  type="button"
+                  onClick={() => onSelectPlan && onSelectPlan(plan.name.split(" ")[0])}
+                  className={cn(
+                    "w-full rounded-2xl py-3.5 text-sm font-bold shadow-sm transition-all duration-200 active:scale-95",
+                    plan.highlight
+                      ? "bg-blue-600 text-white hover:bg-blue-700 shadow-blue-600/20"
+                      : "bg-slate-100 text-slate-900 hover:bg-slate-200 border border-slate-200",
+                  )}
+                >
+                  {plan.cta}
+                </button>
               </div>
             </div>
-          ))}
+          </Reveal>
+        ))}
+      </div>
+
+      {/* Payment Methods Bar */}
+      <div className="mt-12 rounded-2xl border border-slate-200 bg-white p-5 max-w-3xl mx-auto shadow-xs flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
+        <div>
+          <p className="text-xs font-bold uppercase tracking-wider text-slate-500">સરળ પેમેન્ટ ઓપ્શન્સ (Payment Options)</p>
+          <p className="text-sm font-semibold text-slate-800 mt-0.5">Google Pay, PhonePe, Paytm, BHIM UPI AutoPay & Netbanking</p>
         </div>
-      </Reveal>
+        <div className="flex items-center gap-3">
+          <span className="rounded-lg border border-slate-200 bg-slate-50 px-3 py-1.5 text-xs font-bold text-slate-700">
+            🔒 256-bit SSL Secure
+          </span>
+          <span className="rounded-lg border border-emerald-200 bg-emerald-50 px-3 py-1.5 text-xs font-bold text-emerald-800">
+            ✓ Razorpay Verified
+          </span>
+        </div>
+      </div>
     </Section>
   );
 }

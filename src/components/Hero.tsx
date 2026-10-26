@@ -1,166 +1,18 @@
-import { Orb, Reveal } from "./ui";
+import { Reveal } from "./ui";
 import { IconCheck, IconGoogle, IconNfc, IconQr, IconSparkles, IconStar } from "./Icons";
 import { cn } from "@/utils/cn";
 
 const LOGOS = [
-  "Virat Gold Palace (Nikol)",
-  "Aditi's Bake Studio",
-  "Iron Works Fitness",
-  "Nirvana Salon & Spa",
-  "Dr. Rao Dental Care",
-  "Cafe Koramangala",
-  "Le Petit Patisserie",
-  "Urban Click Studio",
-  "Sharma Electricals",
-  "The Loft Cowork",
-  "Masala Junction",
+  "વિરાટ ગોલ્ડ પેલેસ (Virat Gold Palace - Nikol)",
+  "ડિજિટ્રોનિક્સ કંટ્રોલ (Digitronics Control)",
+  "ઓરા બ્રાઇડલ સ્ટુડિયો (Aura Bridal Studio)",
+  "નિલકંઠ જ્વેલર્સ (Nilkanth Jewellers)",
+  "કેફે ડી બેલા (Cafe De Bella & Bakers)",
+  "શર્મા ઇલેક્ટ્રિકલ્સ (Sharma Electricals)",
+  "ડો. રાવ ડેન્ટલ ક્લિનિક (Dr. Rao Dental Clinic)",
+  "અદિતિસ બેક સ્ટુડિયો (Aditi's Bake Studio)",
+  "નિર્વાણા સ્પા એન્ડ સલૂન (Nirvana Spa)",
 ];
-
-function StandeeMock() {
-  return (
-    <div
-      className="animate-float-slow relative w-[168px] rounded-[22px] border border-white/12 bg-gradient-to-b from-white/12 to-white/[0.03] p-4 text-left shadow-[0_30px_80px_-30px_rgba(0,0,0,0.9)] backdrop-blur-xl sm:w-[188px]"
-    >
-      <div className="flex items-center justify-between">
-        <span className="font-display text-[11px] font-extrabold tracking-tight text-white">
-          Zen<span className="text-brand-200">tap</span>
-        </span>
-        <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-400 shadow-[0_0_8px_2px_rgba(52,211,153,0.6)]" />
-      </div>
-      <div className="mt-4 grid place-items-center rounded-2xl bg-white p-2.5">
-        <svg viewBox="0 0 40 40" className="h-20 w-20 sm:h-24 sm:w-24" aria-hidden>
-          <rect x="2" y="2" width="11" height="11" rx="2.5" fill="#0f172a" />
-          <rect x="5" y="5" width="5" height="5" rx="1.2" fill="#fff" />
-          <rect x="27" y="2" width="11" height="11" rx="2.5" fill="#0f172a" />
-          <rect x="30" y="5" width="5" height="5" rx="1.2" fill="#fff" />
-          <rect x="2" y="27" width="11" height="11" rx="2.5" fill="#0f172a" />
-          <rect x="5" y="30" width="5" height="5" rx="1.2" fill="#fff" />
-          <rect x="24" y="24" width="5" height="5" rx="1" fill="#4f46e5" />
-          <rect x="31" y="24" width="5" height="5" rx="1" fill="#4f46e5" />
-          <rect x="24" y="31" width="5" height="5" rx="1" fill="#4f46e5" />
-          <rect x="16" y="2" width="4" height="4" rx="1" fill="#0f172a" />
-          <rect x="20" y="7" width="4" height="4" rx="1" fill="#0f172a" />
-          <rect x="16" y="14" width="8" height="8" rx="2" fill="#0f172a" />
-          <rect x="2" y="16" width="4" height="4" rx="1" fill="#0f172a" />
-          <rect x="9" y="20" width="4" height="4" rx="1" fill="#0f172a" />
-          <rect x="27" y="16" width="4" height="4" rx="1" fill="#0f172a" />
-          <rect x="34" y="20" width="4" height="4" rx="1" fill="#0f172a" />
-          <rect x="16" y="27" width="4" height="4" rx="1" fill="#0f172a" />
-          <rect x="16" y="34" width="8" height="4" rx="1" fill="#0f172a" />
-        </svg>
-      </div>
-      <p className="mt-3 text-center text-[11px] font-semibold text-white">Tap or scan to review</p>
-      <div className="mt-1 flex items-center justify-center gap-3 text-[10px] text-slate-400">
-        <span className="inline-flex items-center gap-1">
-          <IconNfc className="h-3 w-3" /> NFC
-        </span>
-        <span className="inline-flex items-center gap-1">
-          <IconQr className="h-3 w-3" /> QR
-        </span>
-      </div>
-      <span
-        aria-hidden
-        className="pointer-events-none absolute -inset-1 -z-10 rounded-[26px] bg-brand-500/25 blur-xl"
-      />
-    </div>
-  );
-}
-
-function HeroVisual() {
-  return (
-    <div className="relative mx-auto w-full max-w-[560px]">
-      <div
-        aria-hidden
-        className="absolute -inset-6 -z-10 rounded-[40px] opacity-80"
-        style={{
-          background:
-            "radial-gradient(45% 45% at 30% 20%, rgba(99,102,241,0.35), transparent 70%), radial-gradient(45% 45% at 75% 80%, rgba(34,211,238,0.28), transparent 70%)",
-          filter: "blur(30px)",
-        }}
-      />
-      <div className="relative rounded-[28px] border border-white/10 bg-ink-900/70 p-4 shadow-[0_50px_120px_-40px_rgba(0,0,0,0.95)] backdrop-blur-2xl sm:p-6">
-        <div className="flex items-center justify-between">
-          <div>
-            <p className="text-[10.5px] font-semibold uppercase tracking-[0.16em] text-slate-500">
-              Reputation this month
-            </p>
-            <p className="mt-1 font-mono text-3xl font-semibold text-white">4.9</p>
-          </div>
-          <div className="text-right">
-            <span className="inline-flex items-center gap-1 rounded-full bg-emerald-500/12 px-2 py-1 text-[10.5px] font-semibold text-emerald-300 ring-1 ring-emerald-400/25">
-              ▲ +38 reviews
-            </span>
-            <p className="mt-1.5 flex items-center justify-end gap-1 text-[10.5px] text-slate-500">
-              <IconGoogle className="h-3 w-3" /> Google Business
-            </p>
-          </div>
-        </div>
-
-        <div className="mt-5 flex h-28 items-end gap-1.5 sm:h-32">
-          {[28, 34, 30, 44, 52, 47, 62, 58, 74, 68, 86, 96].map((h, i) => (
-            <div
-              key={i}
-              className="group relative flex-1 rounded-t-md bg-gradient-to-t from-brand-600/40 via-brand-400/70 to-cyan-300/90 transition-all duration-500 hover:from-brand-500 hover:to-white"
-              style={{ height: `${h}%`, animation: `bar 1.1s cubic-bezier(.16,1,.3,1) ${i * 70}ms both`, transformOrigin: "bottom" }}
-            />
-          ))}
-        </div>
-        <div className="mt-3 flex justify-between font-mono text-[9.5px] text-slate-500">
-          <span>Week 1</span>
-          <span>Week 6</span>
-          <span>Week 12</span>
-        </div>
-
-        <div className="mt-5 grid grid-cols-2 gap-3">
-          <div className="rounded-2xl border border-white/8 bg-white/[0.03] p-3">
-            <p className="text-[10px] uppercase tracking-wider text-slate-500">AI replies published</p>
-            <p className="mt-1 font-mono text-xl font-semibold text-white">36</p>
-            <p className="mt-0.5 text-[10px] text-emerald-300">avg. 3 min 12 s</p>
-          </div>
-          <div className="rounded-2xl border border-white/8 bg-white/[0.03] p-3">
-            <p className="text-[10px] uppercase tracking-wider text-slate-500">Standee taps</p>
-            <p className="mt-1 font-mono text-xl font-semibold text-white">2,413</p>
-            <p className="mt-0.5 text-[10px] text-brand-200">61% QR · 39% NFC</p>
-          </div>
-        </div>
-      </div>
-
-      {/* floating standee */}
-      <div className="animate-float-slow absolute -bottom-12 -left-4 hidden lg:block" style={{ animationDelay: "0.8s" }}>
-        <StandeeMock />
-      </div>
-
-      {/* floating AI toast */}
-      <div className="animate-float absolute -right-2 top-6 hidden w-[214px] rounded-2xl border border-white/12 bg-ink-850/90 p-3 shadow-[0_24px_60px_-25px_rgba(0,0,0,0.9)] backdrop-blur-xl sm:block lg:-right-8">
-        <div className="flex items-center gap-2">
-          <span className="grid h-6 w-6 place-items-center rounded-lg bg-gradient-to-br from-brand-500 to-cyan-400 text-white">
-            <IconSparkles className="h-3.5 w-3.5" />
-          </span>
-          <p className="text-[11px] font-semibold text-white">AI reply published</p>
-        </div>
-        <p className="mt-2 text-[10.5px] leading-relaxed text-slate-400">
-          “Thank you Karthik! See you at your 6 AM session 💪” — posted to Google in 3 minutes.
-        </p>
-        <div className="mt-2 flex items-center gap-1 text-[9.5px] text-emerald-300">
-          <IconCheck className="h-3 w-3" /> No approval needed
-        </div>
-      </div>
-
-      {/* floating star chip */}
-      <div
-        className="animate-float absolute -bottom-4 right-4 flex items-center gap-2 rounded-full border border-white/12 bg-ink-850/90 px-3 py-2 shadow-xl backdrop-blur-xl"
-        style={{ animationDelay: "1.4s" }}
-      >
-        <span className="flex">
-          {Array.from({ length: 5 }).map((_, i) => (
-            <IconStar key={i} className="h-3 w-3 text-amber-300" strokeWidth={0} fill="currentColor" />
-          ))}
-        </span>
-        <span className="font-mono text-[11px] text-white">+38</span>
-      </div>
-    </div>
-  );
-}
 
 interface HeroProps {
   onOpenAuth: () => void;
@@ -168,85 +20,194 @@ interface HeroProps {
 
 export default function Hero({ onOpenAuth }: HeroProps) {
   return (
-    <section id="top" className="relative overflow-hidden px-4 pb-16 pt-28 sm:px-8 sm:pt-36 lg:pb-24 lg:pt-44">
-      <Orb className="-left-24 -top-24" color="brand" size={620} />
-      <Orb className="right-[-8rem] top-10" color="aqua" size={520} delay={4000} />
-      <Orb className="left-1/3 top-[28rem]" color="violet" size={480} delay={8000} />
-      <div aria-hidden className="grid-lines pointer-events-none absolute inset-0 mask-fade-b opacity-40" />
+    <section id="top" className="relative overflow-hidden bg-slate-50 px-4 pb-16 pt-28 sm:px-8 sm:pt-36 lg:pb-24 lg:pt-40">
+      {/* Subtle background business grid */}
+      <div aria-hidden className="grid-lines pointer-events-none absolute inset-0 mask-fade-b opacity-60" />
 
-      <div className="relative mx-auto grid w-full max-w-7xl items-center gap-14 lg:grid-cols-[1.05fr_1fr] lg:gap-10">
+      <div className="relative mx-auto grid w-full max-w-7xl items-center gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:gap-10">
         <div>
+          {/* Eyebrow badge */}
           <Reveal>
-            <span className="inline-flex max-w-full flex-wrap items-center justify-center gap-2 rounded-full glass px-3 py-1.5 text-center text-[11.5px] font-medium text-slate-200">
-              <span className="relative flex h-1.5 w-1.5">
-                <span className="animate-pulse-ring absolute inline-flex h-full w-full rounded-full bg-emerald-400" />
-                <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-400" />
-              </span>
-              Now onboarding businesses across 12 Indian cities
-            </span>
-          </Reveal>
-
-          <Reveal delay={90}>
-            <h1 className="mt-6 text-[clamp(1.85rem,7.5vw,2.35rem)] font-extrabold leading-[1.02] text-white sm:text-[clamp(2.35rem,6.2vw,4.35rem)]">
-              Turn every walk-in
-              <br className="hidden sm:block" />{" "}
-              into a <span className="text-gradient">5-star review.</span>
-            </h1>
-          </Reveal>
-
-          <Reveal delay={170}>
-            <p className="mt-6 max-w-xl text-[15.5px] leading-relaxed text-slate-400 sm:text-[17px]">
-              Zentap is the AI growth OS for local business. NFC & QR standees capture reviews at the table, AI writes
-              and publishes your replies, private feedback protects your rating — and one ₹2,999/month subscription runs
-              the whole engine.
-            </p>
-          </Reveal>
-
-          <Reveal delay={240}>
-            <div className="mt-8">
-              <button
-                onClick={onOpenAuth}
-                className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-full bg-[linear-gradient(105deg,#4f46e5,#7c3aed_50%,#0891b2)] px-6 py-3.5 text-[14.5px] font-semibold text-white shadow-[0_14px_40px_-14px_rgba(79,70,229,0.95)] ring-1 ring-white/20 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_20px_50px_-15px_rgba(79,70,229,1)] sm:w-auto"
-              >
-                Sign In / Sign Up
-              </button>
+            <div className="inline-flex max-w-full flex-wrap items-center gap-2 rounded-full border border-amber-300 bg-amber-50/90 px-3.5 py-1.5 text-xs font-bold text-amber-950 shadow-sm">
+              <span className="flex h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
+              <span>🇮🇳 અમદાવાદ, સુરત અને ગુજરાતના વેપારીઓ માટે ખાસ સ્માર્ટ સ્ટેન્ડી</span>
             </div>
           </Reveal>
 
-          <Reveal delay={300}>
-            <ul className="mt-7 flex flex-wrap items-center gap-x-5 gap-y-2 text-[12.5px] text-slate-500">
-              {["Choose a plan that fits your business", "Secure account sign-in", "Manage billing with staff support"].map((t) => (
-                <li key={t} className="inline-flex items-center gap-1.5">
-                  <IconCheck className="h-3.5 w-3.5 text-emerald-400" strokeWidth={2.4} />
-                  {t}
-                </li>
-              ))}
-            </ul>
+          {/* Main Headline */}
+          <Reveal delay={80}>
+            <h1 className="mt-5 text-[clamp(1.9rem,4.6vw,3.4rem)] font-black leading-[1.15] text-slate-900 tracking-tight">
+              તમારા ગ્રાહકો પાસેથી{" "}
+              <span className="text-amber-600 underline decoration-amber-400 decoration-wavy decoration-2 underline-offset-8">
+                5-Star Google Reviews
+              </span>{" "}
+              મેળવો — <span className="text-blue-600">માત્ર ૧ ટેપમાં!</span>
+            </h1>
+            <p className="mt-3 text-base sm:text-xl font-bold text-slate-700">
+              Turn Every Happy Walk-in Customer into a 5-Star Google Review.
+            </p>
+          </Reveal>
+
+          {/* What We Sell & How It Benefits */}
+          <Reveal delay={150}>
+            <div className="mt-5 rounded-2xl border border-blue-200/80 bg-white p-4 sm:p-5 shadow-sm text-slate-700 text-sm sm:text-[15.5px] leading-relaxed space-y-2">
+              <p>
+                <strong>અમે તમારા બિલિંગ કાઉન્ટર માટે સ્માર્ટ એક્રેલિક સ્ટેન્ડી (Smart NFC + QR Standee) આપીએ છીએ.</strong>
+              </p>
+              <p className="text-slate-600 text-[14px]">
+                ગ્રાહક ખરીદી પછી માત્ર પોતાનો ફોન સ્ટેન્ડી પર અડાડશે એટલે ગુજરાતી, હિન્દી કે અંગ્રેજીમાં 5-Star રિવ્યુ આપોઆપ લખાઈ જશે અને સીધો Google Maps પર સબમિટ થઈ જશે. <strong>તમારા સ્ટાફે કોઈને રિક્વેસ્ટ કરવાની જરૂર નથી!</strong>
+              </p>
+            </div>
+          </Reveal>
+
+          {/* 3 Core Business Benefits */}
+          <Reveal delay={200}>
+            <div className="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <div className="rounded-xl border border-slate-200 bg-white p-3 shadow-xs">
+                <span className="text-lg">🏆</span>
+                <p className="mt-1 text-xs font-bold text-slate-900">Google પર #1 રેન્કિંગ</p>
+                <p className="text-[11.5px] text-slate-500">નિકોલ/અમદાવાદમાં લોકલ કસ્ટમર્સને તમારી દુકાન સૌથી ઉપર દેખાશે.</p>
+              </div>
+              <div className="rounded-xl border border-slate-200 bg-white p-3 shadow-xs">
+                <span className="text-lg">⭐</span>
+                <p className="mt-1 text-xs font-bold text-slate-900">દર મહિને 30-50+ રિવ્યુ</p>
+                <p className="text-[11.5px] text-slate-500">ગ્રાહક માત્ર ૫ સેકન્ડમાં ખુશીથી રિવ્યુ પોસ્ટ કરશે.</p>
+              </div>
+              <div className="rounded-xl border border-slate-200 bg-white p-3 shadow-xs">
+                <span className="text-lg">🛡️</span>
+                <p className="mt-1 text-xs font-bold text-slate-900">ખરાબ રિવ્યુથી સુરક્ષા</p>
+                <p className="text-[11.5px] text-slate-500">નાખુશ ગ્રાહકનો ફીડબેક ગુગલ પર નહીં, તમારા પર્સનલ WhatsApp પર આવશે.</p>
+              </div>
+            </div>
+          </Reveal>
+
+          {/* CTAs: Order Standee + WhatsApp Chat */}
+          <Reveal delay={260}>
+            <div className="mt-7 flex flex-col sm:flex-row items-center gap-3">
+              <button
+                onClick={onOpenAuth}
+                className="flex w-full sm:w-auto items-center justify-center gap-2 rounded-full bg-blue-600 px-7 py-4 text-base font-bold text-white shadow-md transition-all hover:bg-blue-700 hover:shadow-lg active:scale-95"
+              >
+                <span>📦 સ્ટેન્ડી ઓર્ડર કરો (Free 48h Delivery)</span>
+              </button>
+              <a
+                href="https://wa.me/918788416911?text=Hello%20Zentap!%20I%20want%20to%20get%20Google%20Review%20Standee%20for%20my%20showroom."
+                target="_blank"
+                rel="noreferrer"
+                className="flex w-full sm:w-auto items-center justify-center gap-2 rounded-full border border-emerald-300 bg-emerald-50 px-6 py-3.5 text-sm font-bold text-emerald-900 shadow-sm transition hover:bg-emerald-100"
+              >
+                <span className="text-base">💬</span>
+                <span>WhatsApp: +91 8788416911</span>
+              </a>
+            </div>
+          </Reveal>
+
+          {/* Trust Guarantees */}
+          <Reveal delay={310}>
+            <div className="mt-5 flex flex-wrap items-center gap-x-5 gap-y-2 text-xs font-medium text-slate-600">
+              <span className="flex items-center gap-1.5">
+                <IconCheck className="h-4 w-4 text-emerald-600" /> કોઈ એપ ડાઉનલોડ કરવી પડતી નથી (No App)
+              </span>
+              <span className="flex items-center gap-1.5">
+                <IconCheck className="h-4 w-4 text-emerald-600" /> ₹0 કુરિયર ડિલિવરી (BlueDart)
+              </span>
+              <span className="flex items-center gap-1.5">
+                <IconCheck className="h-4 w-4 text-emerald-600" /> UPI AutoPay થી સરળ પેમેન્ટ
+              </span>
+            </div>
           </Reveal>
         </div>
 
-        <Reveal delay={220} dir="scale">
-          <HeroVisual />
+        {/* Visual Right Side: Real Standee + Phone Mockup */}
+        <Reveal delay={180} dir="scale">
+          <div className="relative mx-auto w-full max-w-[500px]">
+            {/* Card wrapper */}
+            <div className="relative rounded-3xl border border-slate-200 bg-white p-5 sm:p-6 shadow-xl">
+              <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+                <div className="flex items-center gap-2.5">
+                  <span className="flex h-3 w-3 rounded-full bg-emerald-500 animate-pulse" />
+                  <p className="text-xs font-bold text-slate-800">કાઉન્ટર સ્ટેન્ડી લાઈવ પ્રીવ્યૂ (Live Review Demo)</p>
+                </div>
+                <span className="rounded-full bg-blue-50 border border-blue-200 px-2.5 py-0.5 text-[11px] font-bold text-blue-700">
+                  NFC + QR Technology
+                </span>
+              </div>
+
+              {/* Physical Standee Image */}
+              <div className="mt-4 relative overflow-hidden rounded-2xl border border-slate-200 bg-slate-100">
+                <img
+                  src="/hero-standee.jpg"
+                  alt="Zentap Acrylic Smart Countertop Standee for Google Reviews"
+                  className="h-48 sm:h-56 w-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-transparent to-transparent flex items-end p-4">
+                  <div className="text-white">
+                    <p className="text-xs font-bold text-amber-300 uppercase tracking-wider">A6 Acrylic Premium Standee</p>
+                    <p className="text-sm font-semibold">કાઉન્ટર પર મૂકો • ગ્રાહક ટેપ કરે એટલે રિવ્યુ શરૂ</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Live Google Review Simulation Card (Gujarati Review for Virat Gold Palace) */}
+              <div className="mt-4 rounded-2xl border border-amber-200/80 bg-amber-50/60 p-4 space-y-2.5">
+                <div className="flex items-start justify-between">
+                  <div className="flex items-center gap-2">
+                    <div className="grid h-8 w-8 place-items-center rounded-full bg-blue-600 text-white font-bold text-xs">
+                      HV
+                    </div>
+                    <div>
+                      <p className="text-xs font-bold text-slate-900">હર્ષિલ વોરા (Harshil Vora)</p>
+                      <p className="text-[10.5px] text-slate-500">વિરાટ ગોલ્ડ પેલેસ (Nikol, Ahmedabad)</p>
+                    </div>
+                  </div>
+                  <div className="flex text-amber-500 text-sm">
+                    {"★★★★★"}
+                  </div>
+                </div>
+
+                <p className="text-xs leading-relaxed text-slate-800 font-medium">
+                  “વિરાટ ગોલ્ડ ખાતે ખૂબ જ ઉત્તમ અનુભવ રહ્યો! ૯૧૬ હોલમાર્ક દાગીના, પારદર્શક વજન અને સ્ટાફની ઉત્તમ સેવા. નિકોલ વિસ્તારમાં સોનાની ખરીદી માટે બેસ્ટ જગ્યા છે.”
+                </p>
+
+                <div className="flex items-center justify-between pt-1 border-t border-amber-200/60 text-[11px]">
+                  <span className="flex items-center gap-1 text-emerald-700 font-bold">
+                    <IconCheck className="h-3.5 w-3.5" /> ગૂગલ પર વેરિફાઇડ પોસ્ટ થયેલ
+                  </span>
+                  <span className="text-slate-500 font-mono">૧૫ મિનિટમાં AI થેંક યુ રિપ્લાય</span>
+                </div>
+              </div>
+
+              {/* Stats Bar */}
+              <div className="mt-4 grid grid-cols-2 gap-3 text-center">
+                <div className="rounded-xl bg-slate-50 p-2.5 border border-slate-200/80">
+                  <p className="text-[10.5px] font-bold text-slate-500 uppercase">ગૂગલ રેટિંગ જમ્પ</p>
+                  <p className="font-mono text-xl font-black text-slate-900">4.6★ ➔ 4.9★</p>
+                  <p className="text-[10px] text-emerald-600 font-semibold">+34 રિવ્યુ માત્ર ૩૦ દિવસમાં</p>
+                </div>
+                <div className="rounded-xl bg-slate-50 p-2.5 border border-slate-200/80">
+                  <p className="text-[10.5px] font-bold text-slate-500 uppercase">નવા ગ્રાહકોની વૃદ્ધિ</p>
+                  <p className="font-mono text-xl font-black text-slate-900">+38% Walk-ins</p>
+                  <p className="text-[10px] text-blue-600 font-semibold">Google Maps પર #1 રેન્ક</p>
+                </div>
+              </div>
+            </div>
+          </div>
         </Reveal>
       </div>
 
-      {/* logo marquee */}
-      <div className="relative mx-auto mt-20 w-full max-w-7xl sm:mt-24">
-        <Reveal>
-          <p className="text-center text-[11px] font-semibold uppercase tracking-[0.2em] text-slate-600">
-            Trusted by local businesses that live on their reputation
-          </p>
-        </Reveal>
-        <div className="mask-fade-x relative mt-6 overflow-hidden">
-          <div className="flex w-max animate-marquee gap-10 sm:gap-14">
+      {/* Local Client Showroom Marquee */}
+      <div className="relative mx-auto mt-16 w-full max-w-7xl sm:mt-20">
+        <p className="text-center text-xs font-bold uppercase tracking-widest text-slate-500">
+          અમદાવાદ, નિકોલ, સુરત અને રાજકોટના પ્રતિષ્ઠિત શોરૂમ્સનો ભરોસો
+        </p>
+        <div className="mask-fade-x relative mt-5 overflow-hidden">
+          <div className="flex w-max animate-marquee gap-8 sm:gap-12">
             {[...LOGOS, ...LOGOS].map((l, i) => (
               <span
                 key={l + i}
-                className={cn(
-                  "font-display whitespace-nowrap text-[15px] font-semibold text-slate-600 transition-colors duration-300 hover:text-slate-300 sm:text-[17px]",
-                )}
+                className="whitespace-nowrap rounded-full border border-slate-200 bg-white px-4 py-2 text-xs sm:text-sm font-bold text-slate-700 shadow-xs"
               >
-                {l}
+                📍 {l}
               </span>
             ))}
           </div>

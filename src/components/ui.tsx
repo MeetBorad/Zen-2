@@ -41,15 +41,15 @@ export function Orb({
   delay?: number;
 }) {
   const map = {
-    brand: "bg-[radial-gradient(circle_at_center,rgba(99,102,241,0.55),transparent_65%)]",
-    violet: "bg-[radial-gradient(circle_at_center,rgba(168,85,247,0.45),transparent_65%)]",
-    aqua: "bg-[radial-gradient(circle_at_center,rgba(34,211,238,0.38),transparent_65%)]",
-    mint: "bg-[radial-gradient(circle_at_center,rgba(52,211,153,0.32),transparent_65%)]",
+    brand: "bg-[radial-gradient(circle_at_center,rgba(37,99,235,0.08),transparent_70%)]",
+    violet: "bg-[radial-gradient(circle_at_center,rgba(217,119,6,0.08),transparent_70%)]",
+    aqua: "bg-[radial-gradient(circle_at_center,rgba(5,150,105,0.08),transparent_70%)]",
+    mint: "bg-[radial-gradient(circle_at_center,rgba(16,185,129,0.08),transparent_70%)]",
   } as const;
   return (
     <div
       aria-hidden
-      className={cn("pointer-events-none absolute rounded-full blur-[70px] animate-drift", map[color], className)}
+      className={cn("pointer-events-none absolute rounded-full blur-[80px]", map[color], className)}
       style={{ width: size, height: size, animationDelay: `${delay}ms` }}
     />
   );
@@ -58,7 +58,7 @@ export function Orb({
 /* --------------------------------- Eyebrow --------------------------------- */
 export function Eyebrow({ children, icon }: { children: ReactNode; icon?: ReactNode }) {
   return (
-    <span className="inline-flex items-center gap-2 rounded-full glass px-3.5 py-1.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-brand-100/90">
+    <span className="inline-flex items-center gap-2 rounded-full border border-blue-200 bg-blue-50/90 px-3.5 py-1.5 text-[11.5px] font-bold uppercase tracking-[0.14em] text-blue-900 shadow-sm">
       {icon}
       {children}
     </span>
@@ -81,29 +81,19 @@ export function PrimaryButton({
 }) {
   const sizes = {
     sm: "px-4 py-2 text-[13px]",
-    md: "px-5 py-3 text-sm",
-    lg: "px-7 py-4 text-[15px]",
+    md: "px-6 py-3 text-sm",
+    lg: "px-8 py-3.5 text-[15px]",
   } as const;
   return (
     <a
       href={href}
       className={cn(
-        "group relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-full font-semibold text-white",
-        "bg-[linear-gradient(105deg,#4f46e5,#7c3aed_45%,#0891b2)]",
-        "shadow-[0_10px_40px_-12px_rgba(99,102,241,0.9)] ring-1 ring-white/15",
-        "transition-[transform,box-shadow] duration-300 hover:-translate-y-0.5 hover:shadow-[0_18px_55px_-12px_rgba(124,58,237,0.95)] active:translate-y-0",
+        "group relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-full font-bold text-white",
+        "bg-blue-600 hover:bg-blue-700 shadow-md hover:shadow-lg transition-all duration-200 active:scale-[0.98]",
         sizes[size],
         className,
       )}
     >
-      <span
-        aria-hidden
-        className="absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
-        style={{
-          background:
-            "linear-gradient(105deg,rgba(255,255,255,0.28),rgba(255,255,255,0) 40%,rgba(255,255,255,0.18))",
-        }}
-      />
       <span className="relative z-10">{children}</span>
       {arrow && (
         <IconArrow className="relative z-10 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
@@ -114,7 +104,7 @@ export function PrimaryButton({
 
 export function GhostButton({
   children,
-  href = "#command-center",
+  href = "#how",
   className,
   size = "md",
 }: {
@@ -125,15 +115,15 @@ export function GhostButton({
 }) {
   const sizes = {
     sm: "px-4 py-2 text-[13px]",
-    md: "px-5 py-3 text-sm",
-    lg: "px-7 py-4 text-[15px]",
+    md: "px-6 py-3 text-sm",
+    lg: "px-8 py-3.5 text-[15px]",
   } as const;
   return (
     <a
       href={href}
       className={cn(
-        "group inline-flex items-center justify-center gap-2 rounded-full glass font-semibold text-white/90",
-        "transition-all duration-300 hover:-translate-y-0.5 hover:border-white/25 hover:bg-white/10 hover:text-white",
+        "group inline-flex items-center justify-center gap-2 rounded-full border border-slate-300 bg-white font-bold text-slate-700 shadow-sm",
+        "transition-all duration-200 hover:border-slate-400 hover:bg-slate-50 hover:text-slate-900 active:scale-[0.98]",
         sizes[size],
         className,
       )}
@@ -165,14 +155,14 @@ export function SectionHeading({
         <Eyebrow icon={icon}>{eyebrow}</Eyebrow>
       </Reveal>
       <Reveal delay={90}>
-        <h2 className="mt-5 text-[clamp(1.85rem,4.4vw,3.1rem)] font-bold leading-[1.08] text-white">
+        <h2 className="mt-4 text-[clamp(1.85rem,4.4vw,2.9rem)] font-extrabold leading-[1.12] text-slate-900 tracking-tight">
           {title}{" "}
-          {highlight && <span className="text-gradient-brand">{highlight}</span>}
+          {highlight && <span className="text-blue-600 underline decoration-amber-400 decoration-4 underline-offset-8">{highlight}</span>}
         </h2>
       </Reveal>
       {copy && (
         <Reveal delay={160}>
-          <p className="mt-5 text-[15px] leading-relaxed text-slate-400 sm:text-base">{copy}</p>
+          <p className="mt-4 text-[15.5px] leading-relaxed text-slate-600 sm:text-lg font-normal">{copy}</p>
         </Reveal>
       )}
     </div>
@@ -190,7 +180,7 @@ export function Section({
   className?: string;
 }) {
   return (
-    <section id={id} className={cn("relative px-5 py-20 sm:px-8 sm:py-28 lg:py-32", className)}>
+    <section id={id} className={cn("relative px-4 py-16 sm:px-8 sm:py-24 lg:py-28", className)}>
       <div className="mx-auto w-full max-w-7xl">{children}</div>
     </section>
   );

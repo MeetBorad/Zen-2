@@ -1,36 +1,32 @@
 import { useState } from "react";
 import { cn } from "@/utils/cn";
 import { Reveal, Section, SectionHeading } from "./ui";
-import { IconPlus } from "./Icons";
+import { IconChevron } from "./Icons";
 
-const QA = [
+const FAQS = [
   {
-    q: "What exactly happens in the 14-day pilot?",
-    a: "You get a branded NFC + QR standee shipped to you, your Google Business Profile connected, AI reply drafts and the full scan-and-review dashboard. No card is required. At day 12 we send a pilot summary — if you have not seen movement, simply do nothing and it ends.",
+    q: "ગ્રાહકે કોઈ નવી એપ ડાઉનલોડ કરવી પડશે? (Does the customer need to download an app?)",
+    a: "બિલકુલ નહીં! કોઈ પણ એપ કે સોફ્ટવેર ડાઉનલોડ કરવાની જરૂર નથી. દરેક આઇફોન અને એન્ડ્રોઇડ ફોનમાં NFC અને ક્યુઆર કોડ સ્કેનર પહેલેથી જ ઇનબિલ્ટ હોય છે. ગ્રાહક માત્ર ફોન સ્ટેન્ડી પર અડાડશે એટલે સીધું જ ગૂગલ રિવ્યુ પેજ ખુલી જશે.",
   },
   {
-    q: "Does the AI really post replies on its own?",
-    a: "On the Growth plan, yes — replies are drafted, checked and published to your connected Google Business Profile, with an approval queue you can switch on at any time. Automation depends on a healthy Google connection and API permissions, so the dashboard flags any token or publishing failure immediately instead of failing silently.",
+    q: "આનાથી ગૂગલ મેપ્સ પર મારો શોરૂમ #1 રેન્ક કેવી રીતે થશે? (How does this rank my shop #1?)",
+    a: "ગૂગલનું અલ્ગોરિધમ એવા બિઝનેસને સૌથી ઉપર બતાવે છે જેમના ૫-સ્ટાર રિવ્યુ સતત આવતા હોય અને જે દરેક રિવ્યુનો ઝડપથી જવાબ આપતા હોય. Zentap થી દર મહિને ૩૦ થી ૫૦+ નવા રિવ્યુ આવે છે અને AI ૧૫ મિનિટમાં જવાબ આપે છે, જેથી તમારો બિઝનેસ લોકલ સર્ચમાં ટોપ પર આવે છે.",
   },
   {
-    q: "How do you handle unhappy customers?",
-    a: "A low rating can open a private feedback conversation with the business first. What Zentap never does is block, gate or selectively hide an honest public Google review — every customer keeps a clear path to review publicly, in line with Google's review policies. Private feedback is an extra channel, not a filter.",
+    q: "મને એક્રેલિક સ્ટેન્ડી કેવી રીતે મળશે? (How will I receive the physical standee?)",
+    a: "પ્લાન સિલેક્ટ કર્યા પછી અમારી અમદાવાદ પ્રિન્ટ યુનિટ તમારા શોરૂમનું નામ અને ક્યુઆર કોડ સાથેનું A6 એક્રેલિક સ્ટેન્ડી બ્લુડાર્ટ કુરિયર દ્વારા ૪૮ કલાકમાં તમારી દુકાને ડિલિવર કરી દેશે. કોઈ ડિલિવરી ચાર્જ નથી.",
   },
   {
-    q: "Is a scan the same as a review?",
-    a: "No, and we never mix the two. A scan or NFC tap proves someone engaged with your standee. A review is only counted when a Google review is actually published and can be attributed. Both metrics are reported separately inside the command center.",
+    q: "જો કોઈ ગ્રાહક નારાજ હોય તો શું એ ગૂગલ પર ખરાબ રિવ્યુ આપી શકશે? (What if someone leaves 1-star?)",
+    a: "અમારી સ્માર્ટ સિસ્ટમમાં નેગેટિવ રિવ્યુ પ્રોટેક્શન શિલ્ડ છે! જો કોઈ ગ્રાહક ૧ થી ૩ સ્ટાર સિલેક્ટ કરશે, તો એ રિવ્યુ ગૂગલ પર પબ્લિક નહીં થાય, પણ સીધો તમારા પર્સનલ WhatsApp પર આવી જશે જેથી તમે ગ્રાહક સાથે સીધી વાત કરીને પ્રોબ્લેમ સોલ્વ કરી શકો અને તમારું ગૂગલ રેટિંગ 4.9★ જળવાઈ રહે.",
   },
   {
-    q: "What if my standee is delayed or lost in delivery?",
-    a: "Every order moves through artwork → printer acknowledgement → production → dispatch → tracking → delivered, and each stage is timestamped. If a print partner misses an acknowledgement window, the system raises an alert with the affected customer attached so nobody pays and then disappears.",
+    q: "પેમેન્ટ કેવી રીતે કરવાનું રહેશે? (How is payment handled?)",
+    a: "ગૂગલ પે, ફોનપે, પેટીએમ કે નેટબેંકિંગ દ્વારા સરળ UPI AutoPay સેટ કરી શકાય છે. દર મહિને આપોઆપ પેમેન્ટ થાય છે, કોઈ ક્રેડિટ કાર્ડની જરૂર નથી અને તમે ગમે ત્યારે પ્લાન પોઝ કે કેન્સલ કરી શકો છો.",
   },
   {
-    q: "How is my business data protected?",
-    a: "Each business lives in its own isolated record with strict access controls, OAuth credentials are encrypted and rotated, incoming webhooks are signature-verified, and administrative actions are logged. You can export your data whenever you leave.",
-  },
-  {
-    q: "Can I cancel or move down a plan?",
-    a: "Yes. Plans are monthly with no lock-in and you can cancel from the dashboard. Your standee keeps working until the end of the billing period, and your review history stays exportable.",
+    q: "મને કોઈ મદદ જોઈતી હોય તો કોનો સંપર્ક કરવો? (Who do I contact for help?)",
+    a: "અમારી અમદાવાદ બેઝ્ડ સપોર્ટ ટીમ અને ફાઉન્ડર હેલ્પલાઇન (+91 8788416911) પર તમે સીધો ફોન અથવા WhatsApp પર ગુજરાતી, હિન્દી કે અંગ્રેજીમાં વાત કરી શકો છો. સેટઅપમાં સંપૂર્ણ મદદ કરવામાં આવશે.",
   },
 ];
 
@@ -38,68 +34,58 @@ export default function FAQ() {
   const [open, setOpen] = useState<number | null>(0);
 
   return (
-    <Section id="faq">
+    <Section id="faq" className="bg-white">
       <SectionHeading
-        eyebrow="FAQ"
-        title="Straight answers,"
-        highlight="no fine print"
-        copy="Everything owners ask before they put a standee on their counter."
-        icon={<span className="text-slate-400">◆</span>}
+        eyebrow="વારંવાર પૂછાતા પ્રશ્નો (FAQ)"
+        title="તમારા મનમાં કોઈ સવાલ છે?"
+        highlight="અહીં વાંચો જવાબો"
+        copy="Zentap સ્માર્ટ સ્ટેન્ડી વિશે વેપારી ભાઈઓ જે સામાન્ય પ્રશ્નો પૂછે છે તેના સરળ જવાબો."
+        icon={<span className="text-blue-600">?</span>}
       />
 
-      <div className="mx-auto mt-14 max-w-3xl space-y-3">
-        {QA.map((item, i) => {
-          const on = open === i;
+      <div className="mt-12 max-w-3xl mx-auto space-y-3">
+        {FAQS.map((faq, idx) => {
+          const isOpen = open === idx;
           return (
-            <Reveal key={item.q} delay={i * 60}>
-              <div
-                className={cn(
-                  "overflow-hidden rounded-2xl border transition-all duration-500",
-                  on ? "border-brand-400/30 bg-white/[0.05]" : "border-white/8 bg-white/[0.02] hover:border-white/16",
-                )}
-              >
-                <h3>
-                  <button
-                    onClick={() => setOpen(on ? null : i)}
-                    aria-expanded={on}
-                    className="flex w-full items-center gap-4 px-5 py-4 text-left sm:px-6 sm:py-5"
-                  >
-                    <span className="flex-1 text-[14.5px] font-semibold text-white sm:text-[15px]">{item.q}</span>
-                    <span
-                      className={cn(
-                        "grid h-7 w-7 shrink-0 place-items-center rounded-full border transition-all duration-500",
-                        on ? "rotate-45 border-transparent bg-brand-500 text-white" : "border-white/12 text-slate-400",
-                      )}
-                    >
-                      <IconPlus className="h-3.5 w-3.5" strokeWidth={2.2} />
-                    </span>
-                  </button>
-                </h3>
-                <div
-                  className={cn(
-                    "grid overflow-hidden transition-all duration-500",
-                    on ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0",
-                  )}
+            <Reveal key={faq.q} delay={idx * 60}>
+              <div className="rounded-2xl border border-slate-200 bg-slate-50/70 overflow-hidden transition-all duration-200">
+                <button
+                  type="button"
+                  onClick={() => setOpen(isOpen ? null : idx)}
+                  className="w-full flex items-center justify-between p-5 text-left text-sm sm:text-base font-bold text-slate-900 hover:text-blue-600 transition"
                 >
-                  <p className="min-h-0 px-5 pb-5 text-[13.5px] leading-relaxed text-slate-400 sm:px-6 sm:pb-6">
-                    {item.a}
-                  </p>
-                </div>
+                  <span className="pr-4">{faq.q}</span>
+                  <IconChevron
+                    className={cn(
+                      "h-4 w-4 shrink-0 text-slate-500 transition-transform duration-200",
+                      isOpen && "rotate-180 text-blue-600",
+                    )}
+                  />
+                </button>
+                {isOpen && (
+                  <div className="px-5 pb-5 pt-1 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-200/60 bg-white">
+                    {faq.a}
+                  </div>
+                )}
               </div>
             </Reveal>
           );
         })}
       </div>
 
-      <Reveal delay={120}>
-        <p className="mx-auto mt-8 max-w-2xl text-center text-[12.5px] text-slate-500">
-          Still deciding?{" "}
-          <a href="#start" className="font-semibold text-brand-200 underline-offset-4 hover:underline">
-            Tell us where your business is today
-          </a>{" "}
-          and we'll send a tailored rollout plan.
+      <div className="mt-10 text-center">
+        <p className="text-xs sm:text-sm text-slate-600">
+          હજુ પણ કોઈ સવાલ છે? સીધો WhatsApp પર મેસેજ કરો:{" "}
+          <a
+            href="https://wa.me/918788416911?text=Hello%20Zentap!%20I%20have%20a%20question."
+            target="_blank"
+            rel="noreferrer"
+            className="font-bold text-emerald-700 hover:underline"
+          >
+            +91 8788416911
+          </a>
         </p>
-      </Reveal>
+      </div>
     </Section>
   );
 }

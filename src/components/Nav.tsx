@@ -10,17 +10,17 @@ interface NavProps {
 }
 
 const MARKETING_LINKS = [
-  { id: "platform", label: "Platform" },
-  { id: "how", label: "How it works" },
-  { id: "results", label: "Results" },
-  { id: "pricing", label: "Pricing" },
-  { id: "faq", label: "FAQ" },
+  { id: "how", label: "કેવી રીતે કામ કરે છે? (How it works)" },
+  { id: "features", label: "ફાયદા (Benefits)" },
+  { id: "results", label: "પરિણામો (Results)" },
+  { id: "pricing", label: "પ્લાન અને ભાવ (Pricing)" },
+  { id: "faq", label: "સવાલ-જવાબ (FAQ)" },
 ];
 
 export default function Nav({ onOpenAuth, currentUser, onOpenDashboard }: NavProps) {
-  const { scrolled, progress } = useScrollState(20);
+  const { scrolled } = useScrollState(20);
   const [open, setOpen] = useState(false);
-  const active = useActiveSection(["platform", "how", "results", "pricing", "faq"]);
+  const active = useActiveSection(["how", "features", "results", "pricing", "faq"]);
 
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
@@ -32,90 +32,96 @@ export default function Nav({ onOpenAuth, currentUser, onOpenDashboard }: NavPro
   return (
     <>
       <a
-        href="#platform"
-        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-lg focus:bg-brand-600 focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-white"
+        href="#how"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-lg focus:bg-blue-600 focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-white"
       >
         Skip to content
       </a>
       <header
         className={cn(
-          "fixed inset-x-0 top-0 z-40 transition-all duration-500",
+          "fixed inset-x-0 top-0 z-40 transition-all duration-300",
           scrolled ? "py-2" : "py-3 sm:py-4",
         )}
       >
-        <div className="mx-auto w-full max-w-7xl px-2.5 sm:px-6">
+        <div className="mx-auto w-full max-w-7xl px-3 sm:px-6">
           <div
             className={cn(
-              "flex items-center justify-between gap-3 rounded-2xl px-2.5 py-2.5 transition-all duration-500 sm:px-5",
+              "flex items-center justify-between gap-3 rounded-2xl px-3 py-2.5 transition-all duration-300 sm:px-5",
               scrolled
-                ? "glass shadow-[0_18px_50px_-25px_rgba(0,0,0,0.95)]"
-                : "border border-white/8 bg-ink-950/75 backdrop-blur-xl",
+                ? "bg-white/95 border border-slate-200 shadow-md backdrop-blur-xl"
+                : "bg-white/90 border border-slate-200/80 shadow-sm backdrop-blur-md",
             )}
           >
-            {/* Logo */}
+            {/* Logo & Native Badge */}
             <div className="flex shrink-0 items-center gap-3">
               <a href="#top" className="group flex items-center gap-2.5" aria-label="Zentap home">
                 <img
-                  src="/zentap-logo-white.png"
+                  src="/zentap-logo.png"
                   alt="Zentap Logo"
-                  className="h-8 w-8 rounded-xl object-contain shadow-[0_4px_16px_-4px_rgba(99,102,241,0.8)] transition-transform duration-300 group-hover:scale-105"
+                  className="h-8 w-8 rounded-xl object-contain shadow-sm transition-transform duration-200 group-hover:scale-105"
                 />
-                <span className="font-display text-[18px] font-black tracking-tight text-white">
-                  Zen<span className="text-gradient-brand">tap</span>
+                <span className="font-display text-[19px] font-black tracking-tight text-slate-900">
+                  Zen<span className="text-blue-600">tap</span>
                 </span>
               </a>
+              <span className="hidden xl:inline-flex items-center gap-1 rounded-full border border-amber-300 bg-amber-50 px-2.5 py-0.5 text-[11px] font-bold text-amber-900">
+                🇮🇳 ગુજરાતના ૫૦+ શોરૂમ્સનો ભરોસો
+              </span>
             </div>
 
             {/* Desktop Navigation Links */}
-            <nav className="hidden items-center gap-1 md:flex" aria-label="Main">
+            <nav className="hidden items-center gap-1 lg:flex" aria-label="Main">
               {MARKETING_LINKS.map((l) => (
                 <a
                   key={l.id}
                   href={`#${l.id}`}
                   className={cn(
-                    "relative rounded-full px-3.5 py-1.5 text-[13.5px] font-medium transition-colors duration-300",
-                    active === l.id ? "text-white" : "text-slate-400 hover:text-white",
+                    "relative rounded-full px-3 py-1.5 text-[13px] font-semibold transition-colors duration-200",
+                    active === l.id ? "text-blue-700 bg-blue-50" : "text-slate-600 hover:text-slate-900 hover:bg-slate-100",
                   )}
                 >
                   {l.label}
-                  <span
-                    aria-hidden
-                    className={cn(
-                      "absolute inset-x-3 -bottom-0.5 h-px origin-center bg-gradient-to-r from-brand-300 to-cyan-300 transition-transform duration-300",
-                      active === l.id ? "scale-x-100" : "scale-x-0",
-                    )}
-                  />
                 </a>
               ))}
             </nav>
 
-            {/* Account access */}
+            {/* Actions: WhatsApp Helpline + Merchant Account */}
             <div className="flex items-center gap-2 sm:gap-2.5">
+              <a
+                href="https://wa.me/918788416911?text=Hello%20Zentap!%20I%20want%20to%20know%20about%20the%20Google%20Review%20Standee%20for%20my%20business."
+                target="_blank"
+                rel="noreferrer"
+                className="hidden sm:inline-flex items-center gap-1.5 rounded-full border border-emerald-300 bg-emerald-50 px-3 py-2 text-xs font-bold text-emerald-800 transition hover:bg-emerald-100 shadow-sm"
+              >
+                <span className="text-sm">💬</span>
+                <span>WhatsApp: +91 8788416911</span>
+              </a>
+
               {currentUser ? (
                 <button
                   type="button"
                   onClick={onOpenDashboard || onOpenAuth}
-                  className="min-h-10 whitespace-nowrap rounded-full border border-brand-400/30 bg-brand-500/15 px-3 text-xs font-semibold text-brand-200 shadow-sm transition-all hover:bg-brand-500/25 sm:px-4 sm:text-[12.5px] flex items-center gap-1.5"
+                  className="min-h-10 whitespace-nowrap rounded-full bg-blue-600 px-4 text-xs font-bold text-white shadow-sm transition hover:bg-blue-700 active:scale-95 flex items-center gap-1.5"
                 >
                   <span>🏬</span>
                   <span className="max-w-[120px] truncate sm:max-w-[160px]">
-                    {currentUser?.user_metadata?.business_name || "Dashboard"}
+                    {currentUser?.user_metadata?.business_name || "Merchant Dashboard"}
                   </span>
                 </button>
               ) : (
                 <button
                   type="button"
                   onClick={onOpenAuth}
-                  className="min-h-10 whitespace-nowrap rounded-full border border-white/12 bg-white/5 px-3 text-xs font-semibold text-slate-200 shadow-sm transition-all hover:border-white/25 hover:bg-white/10 hover:text-white sm:px-4 sm:text-[12.5px]"
+                  className="min-h-10 whitespace-nowrap rounded-full bg-blue-600 px-4 text-xs font-bold text-white shadow-sm transition hover:bg-blue-700 active:scale-95"
                 >
-                  Sign In / Sign Up
+                  Sign In / સ્ટેન્ડી ઓર્ડર કરો
                 </button>
               )}
 
               {/* Mobile hamburger */}
               <button
                 onClick={() => setOpen((o) => !o)}
-                className="grid h-10 w-10 shrink-0 place-items-center rounded-xl glass text-white md:hidden"
+                className="grid h-10 w-10 shrink-0 place-items-center rounded-xl border border-slate-200 bg-slate-100 text-slate-800 lg:hidden"
                 aria-label={open ? "Close menu" : "Open menu"}
                 aria-expanded={open}
               >
@@ -123,79 +129,52 @@ export default function Nav({ onOpenAuth, currentUser, onOpenDashboard }: NavPro
               </button>
             </div>
           </div>
-
-          {/* scroll progress */}
-          <div className="mt-1.5 h-px w-full overflow-hidden">
-            <div
-              className="h-full origin-left bg-gradient-to-r from-brand-400 via-violet-400 to-cyan-300 transition-transform duration-150"
-              style={{ transform: `scaleX(${progress})`, opacity: scrolled ? 1 : 0 }}
-            />
-          </div>
         </div>
-      </header>
 
-      {/* Mobile Drawer */}
-      <div
-        className={cn(
-          "fixed inset-0 z-50 md:hidden",
-          open ? "pointer-events-auto" : "pointer-events-none",
-        )}
-      >
-        <div
-          onClick={() => setOpen(false)}
-          className={cn(
-            "absolute inset-0 bg-ink-950/80 backdrop-blur-md transition-opacity duration-400",
-            open ? "opacity-100" : "opacity-0",
-          )}
-        />
-        <div
-          className={cn(
-            "absolute inset-x-3 top-20 rounded-3xl border border-white/10 bg-ink-900/95 p-5 shadow-2xl transition-all duration-500",
-            open ? "translate-y-0 opacity-100" : "-translate-y-4 opacity-0",
-          )}
-        >
-          <nav className="flex flex-col" aria-label="Mobile">
-            {MARKETING_LINKS.map((l) => (
+        {/* Mobile menu modal */}
+        {open && (
+          <div className="fixed inset-0 top-[65px] z-50 bg-white/98 p-6 backdrop-blur-2xl lg:hidden flex flex-col justify-between overflow-y-auto">
+            <div className="space-y-4">
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-amber-300 bg-amber-50 px-3 py-1 text-xs font-bold text-amber-900">
+                🇮🇳 ગુજરાતના ૫૦+ શોરૂમ્સનો ભરોસો
+              </span>
+              <nav className="flex flex-col space-y-2 pt-2">
+                {MARKETING_LINKS.map((l) => (
+                  <a
+                    key={l.id}
+                    href={`#${l.id}`}
+                    onClick={() => setOpen(false)}
+                    className="rounded-xl px-4 py-3 text-base font-bold text-slate-800 hover:bg-blue-50 hover:text-blue-700"
+                  >
+                    {l.label}
+                  </a>
+                ))}
+              </nav>
+            </div>
+
+            <div className="space-y-3 pt-6 border-t border-slate-200">
               <a
-                key={l.id}
-                href={`#${l.id}`}
-                onClick={() => setOpen(false)}
-                className="min-h-11 border-b border-white/6 py-3 text-[14px] font-medium text-slate-200 transition-colors last:border-0 hover:text-white"
+                href="https://wa.me/918788416911?text=Hello%20Zentap!%20I%20want%20to%20know%20about%20the%20Google%20Review%20Standee."
+                target="_blank"
+                rel="noreferrer"
+                className="flex w-full items-center justify-center gap-2 rounded-2xl border border-emerald-300 bg-emerald-50 py-3.5 text-sm font-bold text-emerald-800 shadow-sm"
               >
-                {l.label}
+                <span>💬</span>
+                <span>Direct WhatsApp: +91 8788416911</span>
               </a>
-            ))}
-          </nav>
-
-          <div className="mt-4 pt-3 border-t border-white/10">
-            {currentUser ? (
               <button
-                type="button"
-                onClick={() => {
-                  setOpen(false);
-                  if (onOpenDashboard) onOpenDashboard();
-                  else onOpenAuth();
-                }}
-                className="w-full flex items-center justify-center gap-2 rounded-xl border border-brand-400/30 bg-brand-500/20 py-3 text-sm font-semibold text-brand-200"
-              >
-                <span>🏬</span>
-                <span>{currentUser?.user_metadata?.business_name || "Merchant Dashboard"}</span>
-              </button>
-            ) : (
-              <button
-                type="button"
                 onClick={() => {
                   setOpen(false);
                   onOpenAuth();
                 }}
-                className="w-full rounded-xl bg-gradient-to-r from-brand-500 to-violet-500 py-3 text-sm font-bold text-white shadow-md"
+                className="w-full rounded-2xl bg-blue-600 py-3.5 text-sm font-bold text-white shadow-md"
               >
-                Sign In / Sign Up
+                Merchant Sign In / સ્ટેન્ડી ઓર્ડર કરો
               </button>
-            )}
+            </div>
           </div>
-        </div>
-      </div>
+        )}
+      </header>
     </>
   );
 }

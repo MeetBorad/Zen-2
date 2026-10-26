@@ -43,9 +43,9 @@ function StickyMobileCta({ onOpenAuth }: { onOpenAuth: () => void }) {
     >
       <button
         onClick={onOpenAuth}
-        className="flex min-h-12 w-full items-center justify-center rounded-2xl border border-white/12 bg-ink-900/95 px-4 py-3 text-sm font-semibold text-white shadow-[0_20px_50px_-20px_rgba(0,0,0,0.95)] backdrop-blur-xl"
+        className="flex min-h-12 w-full items-center justify-center rounded-2xl bg-blue-600 px-4 py-3 text-sm font-bold text-white shadow-lg active:scale-95"
       >
-        Sign In / Sign Up
+        📦 સ્ટેન્ડી ઓર્ડર કરો / Sign In
       </button>
     </div>
   );
@@ -58,7 +58,7 @@ function BackToTop() {
       onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
       aria-label="Back to top"
       className={cn(
-        "fixed bottom-5 right-5 z-40 hidden h-11 w-11 place-items-center rounded-full glass text-white transition-all duration-500 hover:-translate-y-1 hover:bg-white/12 sm:grid",
+        "fixed bottom-5 right-5 z-40 hidden h-11 w-11 place-items-center rounded-full border border-slate-300 bg-white shadow-md text-slate-700 transition-all duration-300 hover:-translate-y-1 hover:bg-slate-50 sm:grid",
         scrolled ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-6 opacity-0",
       )}
     >
@@ -106,48 +106,40 @@ function getAuthPlanFromHash(): string | undefined {
 
 function CommandCenterIntro() {
   return (
-    <Section id="command-center" className="pt-0 sm:pt-0">
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 -z-10"
-        style={{
-          background:
-            "radial-gradient(50% 40% at 50% 0%, rgba(99,102,241,0.12), transparent 70%)",
-        }}
-      />
+    <Section id="command-center" className="pt-0 sm:pt-0 bg-white">
       <div className="flex flex-col items-center justify-between gap-4 sm:flex-row mb-6">
         <SectionHeading
-          eyebrow="Founder command center"
-          title="Run the entire business from"
-          highlight="one screen"
-          copy="Customers, subscriptions, revenue, Google reviews, standees, AI automation, technical health and growth — without checking five systems every morning."
-          icon={<IconPulse className="h-3.5 w-3.5 text-brand-300" />}
+          eyebrow="મર્ચન્ટ કંટ્રોલ (Merchant Portal)"
+          title="તમારા શોરૂમનો સમગ્ર ગ્રોથ"
+          highlight="એક જ સ્ક્રીન પરથી"
+          copy="તમારા કાઉન્ટર સ્ટેન્ડી સ્કેન, ગૂગલ રિવ્યુ, AI જવાબો અને UPI બિલિંગ — બધું જ તમારા મોબાઇલમાંથી મેનેજ કરો."
+          icon={<IconPulse className="h-3.5 w-3.5 text-blue-600" />}
         />
       </div>
 
       <Reveal delay={180}>
-        <div className="mt-10 grid gap-4 sm:grid-cols-3">
+        <div className="mt-8 grid gap-4 sm:grid-cols-3">
           {[
             {
-              t: "It shows what's working",
-              d: "MRR trend, trial conversion, scan-to-review funnel and AI reply success — defined consistently, period over period.",
+              t: "લાઇવ સ્કેન ટ્રેકિંગ",
+              d: "રોજ કેટલા ગ્રાહકોએ સ્ટેન્ડી પર ટેપ કર્યું અને કેટલા રિવ્યુ ગૂગલ પર આવ્યા તેનો ચોક્કસ રિપોર્ટ.",
             },
             {
-              t: "It shows what's broken",
-              d: "Failed webhooks, expired OAuth tokens, stuck AI jobs and standee delivery gaps, each with the affected customer attached.",
+              t: "નેગેટિવ રિવ્યુ પ્રોટેક્શન",
+              d: "કોઈ પણ નારાજ ગ્રાહકનો ફીડબેક સીધો તમારા WhatsApp પર આવશે, જેથી તમે તરત જ સમાધાન લાવી શકો.",
             },
             {
-              t: "It tells you what to do",
-              d: "A ranked action centre that turns the day's data into six decisions instead of forty notifications.",
+              t: "ઓટોમેટિક ગૂગલ AI રિપ્લાય",
+              d: "દરેક ૫-સ્ટાર રિવ્યુનો આભાર માનતો સુંદર જવાબ AI આપોઆપ ગૂગલ મેપ્સ પર ૧૫ મિનિટમાં પોસ્ટ કરે છે.",
             },
           ].map((c, i) => (
             <div
               key={c.t}
-              className="group rounded-2xl border border-white/8 bg-white/[0.025] p-5 transition-all duration-500 hover:-translate-y-1 hover:border-brand-400/30 hover:bg-white/[0.05]"
+              className="group rounded-2xl border border-slate-200 bg-slate-50/80 p-6 transition-all duration-200 hover:-translate-y-1 hover:border-blue-400 hover:shadow-md hover:bg-white"
             >
-              <p className="font-mono text-[11px] text-brand-300">0{i + 1}</p>
-              <p className="mt-2 text-[14px] font-semibold text-white">{c.t}</p>
-              <p className="mt-1.5 text-[12.5px] leading-relaxed text-slate-400">{c.d}</p>
+              <p className="font-mono text-xs font-bold text-blue-600">0{i + 1}</p>
+              <p className="mt-2 text-base font-bold text-slate-900">{c.t}</p>
+              <p className="mt-1.5 text-xs sm:text-sm leading-relaxed text-slate-600">{c.d}</p>
             </div>
           ))}
         </div>
@@ -340,7 +332,7 @@ export default function App() {
     <TaskProvider>
       <div
         className={cn(
-          "relative min-h-screen bg-ink-950 transition-opacity duration-700",
+          "relative min-h-screen bg-slate-50 text-slate-900 transition-opacity duration-700",
           ready ? "opacity-100" : "opacity-0",
         )}
       >
