@@ -1,13 +1,11 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { cn } from "@/utils/cn";
-import { useScrollReveal, useScrollState } from "@/lib/hooks";
+import { useScrollReveal, useScrollState, useScrollProgress } from "@/lib/hooks";
 import { TaskProvider } from "@/lib/tasks";
 import Nav from "@/components/Nav";
 import Hero from "@/components/Hero";
 import Stats from "@/components/Stats";
 import Features from "@/components/Features";
-import CommandCenter from "@/components/CommandCenter";
-import ActionCentre from "@/components/ActionCentre";
 import HowItWorks from "@/components/HowItWorks";
 import Benefits from "@/components/Benefits";
 import Testimonials from "@/components/Testimonials";
@@ -15,34 +13,39 @@ import Pricing from "@/components/Pricing";
 import FAQ from "@/components/FAQ";
 import StartCTA from "@/components/StartCTA";
 import Footer from "@/components/Footer";
-import MerchantPortal from "@/components/MerchantPortal";
-import AuthModal from "@/components/AuthModal";
-import StandeeSimulatorModal from "@/components/StandeeSimulatorModal";
-import OnboardingModal from "@/components/OnboardingModal";
+import AuthPage from "@/components/AuthPage";
+import AdminDashboard from "@/components/AdminDashboard";
+import MerchantPreview from "@/components/MerchantPreview";
 import LegalModal from "@/components/LegalModal";
+import { hasInitialAuthCallback, isInitialSignupConfirmation, supabase } from "@/lib/supabase";
 import { Reveal, Section, SectionHeading } from "@/components/ui";
-import { IconChevron, IconLock, IconPulse, IconQr, IconZap } from "@/components/Icons";
+import { IconChevron, IconPulse } from "@/components/Icons";
 
-function StickyMobileCta({ onOpenPilot }: { onOpenPilot: () => void }) {
+function ScrollProgressBar() {
+  const progress = useScrollProgress();
+  return (
+    <div
+      className="fixed top-0 left-0 z-50 h-1 bg-gradient-to-r from-brand-500 via-violet-500 to-cyan-500 origin-left transition-transform duration-100"
+      style={{ transform: `scaleX(${progress})` }}
+      aria-hidden="true"
+    />
+  );
+}
+
+function StickyMobileCta({ onOpenAuth }: { onOpenAuth: () => void }) {
   const { scrolled } = useScrollState(900);
   return (
     <div
       className={cn(
-        "fixed inset-x-3 bottom-3 z-40 transition-all duration-500 sm:hidden",
+        "fixed inset-x-3 bottom-[max(0.75rem,env(safe-area-inset-bottom))] z-40 transition-all duration-500 sm:hidden",
         scrolled ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-6 opacity-0",
       )}
     >
       <button
-        onClick={onOpenPilot}
-        className="w-full flex items-center justify-between gap-3 rounded-2xl border border-white/12 bg-ink-900/95 px-4 py-3 shadow-[0_20px_50px_-20px_rgba(0,0,0,0.95)] backdrop-blur-xl"
+        onClick={onOpenAuth}
+        className="flex min-h-12 w-full items-center justify-center rounded-2xl border border-white/12 bg-ink-900/95 px-4 py-3 text-sm font-semibold text-white shadow-[0_20px_50px_-20px_rgba(0,0,0,0.95)] backdrop-blur-xl"
       >
-        <span className="text-left">
-          <span className="block text-[13px] font-semibold text-white">Start 14-day free pilot</span>
-          <span className="block text-[11px] text-slate-400">1 free acrylic standee · ₹2,999/mo after</span>
-        </span>
-        <span className="rounded-full bg-[linear-gradient(105deg,#4f46e5,#7c3aed_50%,#0891b2)] px-4 py-2 text-[12.5px] font-semibold text-white">
-          Start
-        </span>
+        Sign In / Sign Up
       </button>
     </div>
   );
@@ -64,7 +67,44 @@ function BackToTop() {
   );
 }
 
-function CommandCenterIntro({ onOpenStaffLogin }: { onOpenStaffLogin: () => void }) {
+const previewMerchantDemoEnabled =
+  import.meta.env.DEV || import.meta.env.VITE_ENABLE_PREVIEW_MERCHANT_DEMO;
+
+function getPageFromHash(): "home" | "auth" | "admin" | "merchant-demo" {
+  const hash = window.location.hash.slice(1);
+  const authCallback = new URLSearchParams(hash);
+  if (
+    hasInitialAuthCallback ||
+    authCallback.has("access_token") ||
+    authCallback.has("error_code") ||
+    authCallback.has("error")
+  ) {
+    return "auth";
+  }
+
+  const route = hash.replace(/^\//, "").split("?")[0];
+  if (route === "auth") return "auth";
+  if (route === "admin") return "admin";
+  if (route === "merchant-demo" && previewMerchantDemoEnabled) return "merchant-demo";
+  return "home";
+}
+
+function getAuthRoleFromHash(): "merchant" | "staff" {
+  const params = new URLSearchParams(window.location.hash.split("?")[1] ?? "");
+  return params.get("role") === "staff" ? "staff" : "merchant";
+}
+
+function getAuthModeFromHash(): "signin" | "signup" {
+  const params = new URLSearchParams(window.location.hash.split("?")[1] ?? "");
+  return params.get("mode") === "signup" ? "signup" : "signin";
+}
+
+function getAuthPlanFromHash(): string | undefined {
+  const params = new URLSearchParams(window.location.hash.split("?")[1] ?? "");
+  return params.get("plan") ?? undefined;
+}
+
+function CommandCenterIntro() {
   return (
     <Section id="command-center" className="pt-0 sm:pt-0">
       <div
@@ -85,19 +125,6 @@ function CommandCenterIntro({ onOpenStaffLogin }: { onOpenStaffLogin: () => void
         />
       </div>
 
-      <div className="flex justify-end mb-3">
-        <button
-          onClick={onOpenStaffLogin}
-          className="inline-flex items-center gap-1.5 rounded-xl border border-cyan-500/30 bg-cyan-500/10 px-3.5 py-1.5 text-xs font-semibold text-cyan-300 hover:bg-cyan-500/20 transition"
-        >
-          <IconLock className="h-3 w-3" />
-          <span>Open Fullscreen Staff Console (with 1-Click Login) →</span>
-        </button>
-      </div>
-
-      <Reveal delay={120} dir="scale" className="mt-4">
-        <CommandCenter />
-      </Reveal>
       <Reveal delay={180}>
         <div className="mt-10 grid gap-4 sm:grid-cols-3">
           {[
@@ -132,14 +159,11 @@ function CommandCenterIntro({ onOpenStaffLogin }: { onOpenStaffLogin: () => void
 export default function App() {
   useScrollReveal();
   const [ready, setReady] = useState(false);
-  const [currentView, setCurrentView] = useState<"marketing" | "merchant" | "staff">("marketing");
-  
-  // Modals state
-  const [authModalOpen, setAuthModalOpen] = useState(false);
-  const [authModalTab, setAuthModalTab] = useState<"merchant" | "staff">("merchant");
-  const [standeeModalOpen, setStandeeModalOpen] = useState(false);
-  const [onboardingModalOpen, setOnboardingModalOpen] = useState(false);
-  const [selectedPlan, setSelectedPlan] = useState("Growth ₹2,999");
+  const [page, setPage] = useState<"home" | "auth" | "admin" | "merchant-demo">(() => getPageFromHash());
+  const [authRole, setAuthRole] = useState<"merchant" | "staff">(() => getAuthRoleFromHash());
+  const [authMode, setAuthMode] = useState<"signin" | "signup">(() => getAuthModeFromHash());
+  const [authPlan, setAuthPlan] = useState<string | undefined>(() => getAuthPlanFromHash());
+  const [emailConfirmationResult, setEmailConfirmationResult] = useState<"confirmed" | "error" | null>(null);
   const [legalModalType, setLegalModalType] = useState<"privacy" | "terms" | null>(null);
 
   useEffect(() => {
@@ -147,34 +171,139 @@ export default function App() {
     return () => clearTimeout(t);
   }, []);
 
-  const handleOpenMerchantLogin = () => {
-    setAuthModalTab("merchant");
-    setAuthModalOpen(true);
-  };
+  useEffect(() => {
+    const syncPage = () => {
+      setPage(getPageFromHash());
+      setAuthRole(getAuthRoleFromHash());
+      setAuthMode(getAuthModeFromHash());
+      setAuthPlan(getAuthPlanFromHash());
+    };
+    window.addEventListener("hashchange", syncPage);
+    syncPage();
+    return () => window.removeEventListener("hashchange", syncPage);
+  }, []);
 
-  const handleOpenStaffLogin = () => {
-    setAuthModalTab("staff");
-    setAuthModalOpen(true);
-  };
+  useEffect(() => {
+    const callbackParams = new URLSearchParams(window.location.hash.slice(1));
+    const hasAuthCallback =
+      hasInitialAuthCallback ||
+      callbackParams.has("access_token") ||
+      callbackParams.has("error_code") ||
+      callbackParams.has("error");
+    if (!hasAuthCallback) return;
 
-  const handleLoginSuccess = (role: "merchant" | "staff") => {
-    if (role === "merchant") {
-      setCurrentView("merchant");
-    } else {
-      setCurrentView("staff");
-    }
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
+    let active = true;
+    setPage("auth");
+    setAuthRole("merchant");
+    setAuthMode("signin");
+    setAuthPlan(undefined);
 
-  const handleBackToMarketing = () => {
-    setCurrentView("marketing");
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
+    void (async () => {
+      let result: "confirmed" | "error" = "error";
+      const accessToken = callbackParams.get("access_token");
+      const refreshToken = callbackParams.get("refresh_token");
+      const hasError = callbackParams.has("error") || callbackParams.has("error_code");
 
-  const handleSelectPlan = (plan: string) => {
-    setSelectedPlan(plan);
-    setOnboardingModalOpen(true);
-  };
+      if (!hasError && (isInitialSignupConfirmation || accessToken)) {
+        try {
+          if (accessToken && refreshToken) {
+            const { data: sessionData, error: sessionError } = await supabase.auth.setSession({
+              access_token: accessToken,
+              refresh_token: refreshToken,
+            });
+            if (!sessionError && sessionData.session) {
+              result = "confirmed";
+            }
+          }
+          if (result !== "confirmed") {
+            const { data, error } = await supabase.auth.getSession();
+            if (!error && data.session) result = "confirmed";
+          }
+        } catch {
+          result = "error";
+        }
+      }
+
+      if (!active) return;
+      window.history.replaceState(
+        null,
+        "",
+        `${window.location.pathname}${window.location.search}#/auth?role=merchant&mode=signin`,
+      );
+      setPage("auth");
+      setAuthRole("merchant");
+      setAuthMode("signin");
+      setAuthPlan(undefined);
+      setEmailConfirmationResult(result);
+    })();
+
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  const navigateHome = useCallback(() => {
+    setEmailConfirmationResult(null);
+    window.location.hash = "top";
+  }, []);
+
+  const navigateToAuth = useCallback((
+    role: "merchant" | "staff" = "merchant",
+    mode: "signin" | "signup" = "signin",
+    plan?: string,
+  ) => {
+    const params = new URLSearchParams({ role, mode });
+    if (plan) params.set("plan", plan);
+    window.location.hash = `/auth?${params.toString()}`;
+  }, []);
+
+  const navigateToAdmin = useCallback(() => {
+    window.location.hash = "/admin";
+  }, []);
+
+  const navigateToMerchantDemo = useCallback(() => {
+    window.location.hash = "/merchant-demo";
+  }, []);
+
+  const handleOpenMerchantLogin = useCallback(() => {
+    navigateToAuth("merchant");
+  }, [navigateToAuth]);
+
+  const handleOpenStaffLogin = useCallback(() => {
+    navigateToAuth("staff");
+  }, [navigateToAuth]);
+
+  const handleSelectPlan = (plan: string) => navigateToAuth("merchant", "signup", plan);
+
+  if (page === "auth") {
+    return (
+      <AuthPage
+        key={`${authRole}-${authMode}-${authPlan ?? ""}`}
+        initialRole={authRole}
+        initialMode={authMode}
+        initialPlan={authPlan}
+        emailConfirmationResult={emailConfirmationResult}
+        showDemoLogin={previewMerchantDemoEnabled}
+        onBackToHome={navigateHome}
+        onDemoLogin={navigateToMerchantDemo}
+        onStaffAuthenticated={navigateToAdmin}
+      />
+    );
+  }
+
+  if (page === "merchant-demo" && previewMerchantDemoEnabled) {
+    return <MerchantPreview onExit={() => navigateToAuth("merchant")} />;
+  }
+
+  if (page === "admin") {
+    return (
+      <AdminDashboard
+        onBackToHome={navigateHome}
+        onSignOut={navigateHome}
+        onUnauthorized={handleOpenStaffLogin}
+      />
+    );
+  }
 
   return (
     <TaskProvider>
@@ -184,175 +313,30 @@ export default function App() {
           ready ? "opacity-100" : "opacity-0",
         )}
       >
-        {/* ============================================================== */}
-        {/* VIEW 1: SEPARATE MERCHANT DASHBOARD PAGE                       */}
-        {/* ============================================================== */}
-        {currentView === "merchant" ? (
-          <div className="animate-fade-in">
-            <MerchantPortal
-              onOpenStandeeSimulator={() => setStandeeModalOpen(true)}
-              onOpenOnboarding={() => setOnboardingModalOpen(true)}
-              onBackToMarketing={handleBackToMarketing}
-              onOpenStaffConsole={() => {
-                setCurrentView("staff");
-                window.scrollTo({ top: 0, behavior: "smooth" });
-              }}
-            />
-          </div>
-        ) : currentView === "staff" ? (
-          /* ============================================================== */
-          /* VIEW 2: SEPARATE STAFF / FOUNDER COMMAND CONSOLE PAGE          */
-          /* ============================================================== */
-          <div className="animate-fade-in min-h-screen bg-ink-950 text-slate-100 pb-16">
-            {/* Top Dedicated Nav for Staff Console */}
-            <nav className="sticky top-0 z-40 border-b border-white/8 bg-ink-900/90 px-4 py-3 backdrop-blur-xl sm:px-8">
-              <div className="mx-auto flex max-w-7xl items-center justify-between gap-3">
-                <div className="flex items-center gap-3">
-                  <button
-                    onClick={handleBackToMarketing}
-                    className="group inline-flex items-center gap-1.5 rounded-xl border border-white/10 bg-white/5 px-3 py-1.5 text-xs font-semibold text-slate-300 transition hover:border-white/20 hover:bg-white/10 hover:text-white"
-                  >
-                    <span className="transition-transform group-hover:-translate-x-0.5">←</span>
-                    <span>Marketing Site</span>
-                  </button>
-                  <div className="h-4 w-px bg-white/10" />
-                  <div className="flex items-center gap-2">
-                    <img
-                      src="/zentap-logo-white.png"
-                      alt="Zentap"
-                      className="h-6 w-6 rounded-lg object-contain"
-                    />
-                    <span className="font-display text-sm font-black text-white">
-                      Zen<span className="text-gradient-brand">tap</span>
-                    </span>
-                    <span className="text-[11px] text-cyan-400 font-mono hidden sm:inline">
-                      / Staff & Founder Console
-                    </span>
-                  </div>
-                </div>
+        <ScrollProgressBar />
+        <Nav onOpenAuth={handleOpenMerchantLogin} />
 
-                <div className="flex items-center gap-2 sm:gap-3">
-                  <div className="hidden sm:flex items-center gap-2 rounded-lg border border-cyan-500/20 bg-cyan-500/10 px-2.5 py-1 text-[11px] font-medium text-cyan-300">
-                    <span className="h-2 w-2 rounded-full bg-cyan-400 animate-pulse" />
-                    <span>8 Active Merchant Schemas</span>
-                  </div>
+        <main>
+          <Hero onOpenAuth={handleOpenMerchantLogin} />
+          <Stats />
+          <Features />
+          <CommandCenterIntro />
+          <HowItWorks />
+          <Benefits />
+          <Testimonials />
+          <Pricing onSelectPlan={handleSelectPlan} />
+          <FAQ />
+          <StartCTA />
+        </main>
 
-                  <button
-                    onClick={() => {
-                      setCurrentView("merchant");
-                      window.scrollTo({ top: 0, behavior: "smooth" });
-                    }}
-                    className="hidden md:inline-flex items-center gap-1.5 rounded-xl border border-emerald-500/30 bg-emerald-500/10 px-3 py-1.5 text-xs font-semibold text-emerald-300 hover:bg-emerald-500/20"
-                  >
-                    <span>View as Virat Gold Palace →</span>
-                  </button>
-
-                  <button
-                    onClick={handleBackToMarketing}
-                    className="rounded-xl border border-white/10 px-3 py-1.5 text-xs font-medium text-slate-400 hover:text-white transition hover:bg-white/5"
-                  >
-                    Sign Out
-                  </button>
-                </div>
-              </div>
-            </nav>
-
-            <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 py-6 sm:py-8">
-              {/* Staff Banner */}
-              <div className="mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-3 rounded-2xl border border-cyan-500/30 bg-cyan-500/10 p-4 text-xs">
-                <div className="flex items-center gap-3">
-                  <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-xl bg-cyan-500/20 text-cyan-300 font-bold">
-                    🛡️
-                  </span>
-                  <div>
-                    <p className="font-bold text-white text-sm">Founder Master Command Center</p>
-                    <p className="text-cyan-200 text-xs mt-0.5">
-                      Multi-tenant administrative overview across all subscribed merchants. Top Client: <strong>Virat Gold Palace</strong> (Nikol, Ahmedabad).
-                    </p>
-                  </div>
-                </div>
-                <button
-                  onClick={handleBackToMarketing}
-                  className="self-end sm:self-auto shrink-0 rounded-lg bg-white/10 px-3 py-1 text-[11px] font-semibold text-slate-300 hover:bg-white/15"
-                >
-                  Exit to Website →
-                </button>
-              </div>
-
-              <CommandCenter />
-              <div className="mt-8">
-                <ActionCentre />
-              </div>
-            </div>
-          </div>
-        ) : (
-          /* ============================================================== */
-          /* VIEW 3: MAIN MARKETING WEBSITE                                 */
-          /* ============================================================== */
-          <>
-            <Nav
-              onOpenMerchantLogin={handleOpenMerchantLogin}
-              onOpenStaffLogin={handleOpenStaffLogin}
-              onOpenStandeeSimulator={() => setStandeeModalOpen(true)}
-              onOpenOnboarding={() => setOnboardingModalOpen(true)}
-            />
-
-            <main>
-              <Hero
-                onOpenOnboarding={() => setOnboardingModalOpen(true)}
-                onOpenMerchantLogin={handleOpenMerchantLogin}
-                onOpenStaffLogin={handleOpenStaffLogin}
-                onOpenStandeeSimulator={() => setStandeeModalOpen(true)}
-              />
-              <Stats />
-              <Features />
-              <CommandCenterIntro onOpenStaffLogin={handleOpenStaffLogin} />
-              <ActionCentre />
-              <HowItWorks />
-              <Benefits />
-              <Testimonials />
-              <Pricing onSelectPlan={handleSelectPlan} />
-              <FAQ />
-              <StartCTA />
-            </main>
-
-            <Footer
-              onOpenPrivacy={() => setLegalModalType("privacy")}
-              onOpenTerms={() => setLegalModalType("terms")}
-              onOpenStandeeSimulator={() => setStandeeModalOpen(true)}
-              onOpenMerchantLogin={handleOpenMerchantLogin}
-              onOpenStaffLogin={handleOpenStaffLogin}
-            />
-
-            <StickyMobileCta onOpenPilot={() => setOnboardingModalOpen(true)} />
-            <BackToTop />
-          </>
-        )}
-
-        {/* ============================================================== */}
-        {/* GLOBAL INTERACTIVE MODALS                                      */}
-        {/* ============================================================== */}
-        <AuthModal
-          isOpen={authModalOpen}
-          initialTab={authModalTab}
-          onClose={() => setAuthModalOpen(false)}
-          onLoginSuccess={handleLoginSuccess}
-          onOpenPilot={() => setOnboardingModalOpen(true)}
+        <Footer
+          onOpenPrivacy={() => setLegalModalType("privacy")}
+          onOpenTerms={() => setLegalModalType("terms")}
+          onOpenAuth={handleOpenMerchantLogin}
         />
 
-        <StandeeSimulatorModal
-          isOpen={standeeModalOpen}
-          onClose={() => setStandeeModalOpen(false)}
-          businessName="Virat Gold Palace"
-          category="Jewellery Showroom"
-          city="Nikol, Ahmedabad"
-        />
-
-        <OnboardingModal
-          isOpen={onboardingModalOpen}
-          onClose={() => setOnboardingModalOpen(false)}
-          initialPlan={selectedPlan}
-        />
+        <StickyMobileCta onOpenAuth={handleOpenMerchantLogin} />
+        <BackToTop />
 
         <LegalModal
           type={legalModalType}
