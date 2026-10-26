@@ -6,6 +6,7 @@ import {
   type BusinessCategory,
 } from "@/lib/business-categories";
 import { cn } from "@/utils/cn";
+import { BentoCard, Sparkline, StatusPill, SegmentedControl } from "./opendesign";
 
 type PreviewTab = "overview" | "reviews" | "insights" | "billing";
 type ReviewStatus = "pending" | "approved";
@@ -237,7 +238,7 @@ export default function MerchantPreview({ user, onExit }: MerchantPreviewProps) 
           </div>
         )}
 
-        {/* Workspace Title & Tabs */}
+        {/* Workspace Title & Tabs (Open Design Segmented Switcher) */}
         <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.18em] text-brand-300">Merchant Dashboard</p>
@@ -246,26 +247,14 @@ export default function MerchantPreview({ user, onExit }: MerchantPreviewProps) 
               AI Growth OS for Google Reviews & Countertop Standees ({city})
             </p>
           </div>
-          <nav aria-label="Merchant workspace navigation" className="flex gap-2 overflow-x-auto pb-1">
-            {tabs.map((item) => (
-              <button
-                key={item.id}
-                onClick={() => {
-                  setTab(item.id);
-                  setMessage("");
-                }}
-                aria-pressed={tab === item.id}
-                className={cn(
-                  "whitespace-nowrap rounded-lg px-3.5 py-2 text-sm font-semibold transition",
-                  tab === item.id
-                    ? "bg-brand-500 text-white shadow-md"
-                    : "border border-white/10 text-slate-300 hover:bg-white/5",
-                )}
-              >
-                {item.label}
-              </button>
-            ))}
-          </nav>
+          <SegmentedControl
+            value={tab}
+            onChange={(val) => {
+              setTab(val as PreviewTab);
+              setMessage("");
+            }}
+            options={tabs.map((t) => ({ id: t.id, label: t.label }))}
+          />
         </div>
 
         {/* Category Context Selector */}
@@ -291,20 +280,43 @@ export default function MerchantPreview({ user, onExit }: MerchantPreviewProps) 
         {/* TAB 1: OVERVIEW */}
         {tab === "overview" && (
           <section className="mt-6 space-y-5" aria-label="Business overview">
-            {/* Quick Metrics */}
+            {/* Quick Metrics (Open Design Bento Cards with Sparklines) */}
             <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-              {[
-                ["Google Rating", averageRating, "4.9★ target on Google Maps"],
-                ["Total Reviews", "34 verified", "+28 since placing counter standee"],
-                ["Replies Awaiting Review", String(pendingCount), "Mode B: Auto-replies 4-5★, review 1-3★"],
-                ["Positive Sentiment", `${Math.round((positiveCount / DEMO_REVIEWS.length) * 100)}%`, "4 and 5-star customer ratings"],
-              ].map(([label, value, detail]) => (
-                <article key={label} className="rounded-2xl border border-white/10 bg-ink-900 p-5 shadow-sm">
-                  <p className="text-xs font-medium uppercase tracking-wider text-slate-400">{label}</p>
-                  <p className="mt-3 font-mono text-3xl font-semibold text-white">{value}</p>
-                  <p className="mt-2 text-xs text-slate-500">{detail}</p>
-                </article>
-              ))}
+              <BentoCard
+                label="Google Maps Rating"
+                badge={<StatusPill tone="warning" size="sm">Target 4.9★</StatusPill>}
+                value={averageRating}
+                unit="★"
+                accentGlow="amber"
+                sparkline={<Sparkline data={[4.6, 4.6, 4.7, 4.8, 4.8, 4.9, 4.9]} tone="amber" width={90} height={30} showPoints />}
+                footer={<p className="text-slate-400 text-xs">Top 1% rated showroom in Nikol, Ahmedabad</p>}
+              />
+              <BentoCard
+                label="Total Verified Reviews"
+                badge={<StatusPill tone="done" dot size="sm">+28 Lift</StatusPill>}
+                value="34"
+                unit="Verified"
+                accentGlow="emerald"
+                sparkline={<Sparkline data={[6, 12, 18, 22, 28, 31, 34]} tone="emerald" width={90} height={30} showPoints />}
+                footer={<p className="text-slate-400 text-xs">Scanned directly on counter standee</p>}
+              />
+              <BentoCard
+                label="Replies Awaiting Review"
+                badge={<StatusPill tone="progress" size="sm">Mode B</StatusPill>}
+                value={pendingCount}
+                unit="Pending"
+                accentGlow="cyan"
+                sparkline={<Sparkline data={[4, 3, 2, 2, 1, 0, pendingCount]} tone="cyan" width={90} height={30} />}
+                footer={<p className="text-slate-400 text-xs">Auto-replies 4-5★, review 1-3★ only</p>}
+              />
+              <BentoCard
+                label="Customer Sentiment"
+                badge={<StatusPill tone="brand" size="sm">4 & 5★ Stars</StatusPill>}
+                value={`${Math.round((positiveCount / DEMO_REVIEWS.length) * 100)}%`}
+                accentGlow="violet"
+                sparkline={<Sparkline data={[82, 85, 88, 90, 92, 95, 96]} tone="violet" width={90} height={30} showPoints />}
+                footer={<p className="text-slate-400 text-xs">Gujarati, Hindi, and English feedback</p>}
+              />
             </div>
 
             {/* Standee Hub Card */}

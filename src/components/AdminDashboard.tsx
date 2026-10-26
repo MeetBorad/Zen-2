@@ -12,6 +12,7 @@ import {
   IconUsers,
   IconZap,
 } from "./Icons";
+import { BentoCard, Sparkline, StatusPill, SegmentedControl } from "./opendesign";
 
 type SubscriptionStatus = "trial" | "active" | "halted" | "cancelled";
 type DashboardTab = "merchants" | "reviews" | "standees" | "system";
@@ -450,102 +451,130 @@ export default function AdminDashboard({
           </div>
         )}
 
-        {/* TOP KPI CARDS (Bento Grid) */}
+        {/* TOP KPI CARDS (Open Design Bento Grid with Sparklines) */}
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {/* Card 1: MRR */}
-          <article className="group relative overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-b from-ink-900 to-ink-950 p-6 shadow-xl transition-all duration-300 hover:border-brand-500/40 hover:-translate-y-1">
-            <div className="flex items-center justify-between text-xs text-slate-400">
-              <span className="font-bold uppercase tracking-wider text-brand-300">Monthly Recurring Revenue</span>
-              <span className="rounded-full bg-emerald-400/10 px-2 py-0.5 text-[11px] font-bold text-emerald-300 ring-1 ring-emerald-400/20">+18.4%</span>
-            </div>
-            <p className="mt-4 font-mono text-3xl font-black text-white tracking-tight">₹{totalMRR.toLocaleString("en-IN")}</p>
-            <div className="mt-3 flex items-center justify-between text-xs text-slate-400">
-              <span>Goal: ₹1,00,000 / mo</span>
-              <span className="font-semibold text-brand-200">{Math.round((totalMRR / 100000) * 100)}%</span>
-            </div>
-            <div className="mt-1.5 h-2 w-full overflow-hidden rounded-full bg-white/5">
-              <div
-                className="h-full rounded-full bg-gradient-to-r from-brand-500 via-violet-500 to-cyan-400"
-                style={{ width: `${Math.min(100, Math.round((totalMRR / 100000) * 100))}%` }}
+          <BentoCard
+            label="Monthly Recurring Revenue"
+            badge={<StatusPill tone="done" dot size="sm">+18.4%</StatusPill>}
+            value={`₹${totalMRR.toLocaleString("en-IN")}`}
+            accentGlow="emerald"
+            sparkline={
+              <Sparkline
+                data={[14990, 18990, 21990, 24990, 26990, 28490, totalMRR]}
+                tone="emerald"
+                width={110}
+                height={34}
+                showPoints
               />
-            </div>
-          </article>
+            }
+            footer={
+              <div className="space-y-1.5">
+                <div className="flex items-center justify-between text-xs text-slate-400">
+                  <span>Goal: ₹1,00,000 / mo</span>
+                  <span className="font-semibold text-emerald-300 font-mono">
+                    {Math.round((totalMRR / 100000) * 100)}%
+                  </span>
+                </div>
+                <div className="h-1.5 w-full overflow-hidden rounded-full bg-white/5">
+                  <div
+                    className="h-full rounded-full bg-gradient-to-r from-emerald-500 via-teal-400 to-cyan-400 transition-all duration-500"
+                    style={{ width: `${Math.min(100, Math.round((totalMRR / 100000) * 100))}%` }}
+                  />
+                </div>
+              </div>
+            }
+          />
 
           {/* Card 2: Active Merchants */}
-          <article className="group relative overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-b from-ink-900 to-ink-950 p-6 shadow-xl transition-all duration-300 hover:border-cyan-400/40 hover:-translate-y-1">
-            <div className="flex items-center justify-between text-xs text-slate-400">
-              <span className="font-bold uppercase tracking-wider text-cyan-300">Live Client Showrooms</span>
-              <span className="rounded-full bg-cyan-400/10 px-2 py-0.5 text-[11px] font-bold text-cyan-200 ring-1 ring-cyan-400/20">Ahmedabad Node</span>
-            </div>
-            <p className="mt-4 font-mono text-3xl font-black text-white tracking-tight">{merchants.length} <span className="text-sm font-sans font-normal text-slate-400">Clients</span></p>
-            <p className="mt-3 text-xs text-slate-400">
-              💍 3 Jewelers • ☕ 1 Cafe • 💇 1 Salon
-            </p>
-            <p className="mt-1 text-[11px] text-emerald-400 font-semibold">
-              ● 100% Retained (0% Churn)
-            </p>
-          </article>
+          <BentoCard
+            label="Live Client Showrooms"
+            badge={<StatusPill tone="progress" size="sm">Ahmedabad Node</StatusPill>}
+            value={merchants.length}
+            unit="Clients"
+            accentGlow="cyan"
+            sparkline={
+              <Sparkline
+                data={[1, 2, 3, 3, 4, 4, merchants.length]}
+                tone="cyan"
+                width={110}
+                height={34}
+                showPoints
+              />
+            }
+            footer={
+              <div className="flex items-center justify-between text-xs">
+                <span className="text-slate-400">💍 3 Jewelers • ☕ 1 Cafe • 💇 1 Salon</span>
+                <span className="font-semibold text-emerald-400 font-mono">0% Churn</span>
+              </div>
+            }
+          />
 
           {/* Card 3: Reviews Generated */}
-          <article className="group relative overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-b from-ink-900 to-ink-950 p-6 shadow-xl transition-all duration-300 hover:border-amber-400/40 hover:-translate-y-1">
-            <div className="flex items-center justify-between text-xs text-slate-400">
-              <span className="font-bold uppercase tracking-wider text-amber-300">Google Reviews Lift</span>
-              <span className="rounded-full bg-amber-400/10 px-2 py-0.5 text-[11px] font-bold text-amber-200 ring-1 ring-amber-400/20">4.92 ★ Avg</span>
-            </div>
-            <p className="mt-4 font-mono text-3xl font-black text-white tracking-tight">+{totalReviewsCount} <span className="text-sm font-sans font-normal text-slate-400">Verified</span></p>
-            <p className="mt-3 text-xs text-slate-400">
-              Scanned on NFC & QR Counter Standees
-            </p>
-            <p className="mt-1 text-[11px] text-brand-300 font-semibold">
-              ⭐ Mode B: Auto-Replied within 15m
-            </p>
-          </article>
+          <BentoCard
+            label="Google Reviews Lift"
+            badge={<StatusPill tone="warning" size="sm">4.92 ★ Avg</StatusPill>}
+            value={`+${totalReviewsCount}`}
+            unit="Verified"
+            accentGlow="amber"
+            sparkline={
+              <Sparkline
+                data={[34, 52, 70, 94, 118, 134, totalReviewsCount]}
+                tone="amber"
+                width={110}
+                height={34}
+                showPoints
+              />
+            }
+            footer={
+              <div className="flex items-center justify-between text-xs">
+                <span className="text-slate-400">Mode B: Auto-replied in 15m</span>
+                <span className="font-semibold text-amber-300 font-mono">NFC+QR Scans</span>
+              </div>
+            }
+          />
 
           {/* Card 4: Standees Placed */}
-          <article className="group relative overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-b from-ink-900 to-ink-950 p-6 shadow-xl transition-all duration-300 hover:border-violet-400/40 hover:-translate-y-1">
-            <div className="flex items-center justify-between text-xs text-slate-400">
-              <span className="font-bold uppercase tracking-wider text-violet-300">Countertop Standees</span>
-              <span className="rounded-full bg-violet-400/10 px-2 py-0.5 text-[11px] font-bold text-violet-200 ring-1 ring-violet-400/20">Acrylic A6</span>
-            </div>
-            <p className="mt-4 font-mono text-3xl font-black text-white tracking-tight">5 <span className="text-sm font-sans font-normal text-slate-400">Counters</span></p>
-            <p className="mt-3 text-xs text-slate-400">
-              3 Placed • 1 Dispatched • 1 In Print
-            </p>
-            <p className="mt-1 text-[11px] text-cyan-300 font-semibold">
-              🚚 BlueDart Express Delivery
-            </p>
-          </article>
+          <BentoCard
+            label="Countertop Standees"
+            badge={<StatusPill tone="brand" size="sm">Acrylic A6</StatusPill>}
+            value="5"
+            unit="Counters"
+            accentGlow="violet"
+            sparkline={
+              <Sparkline
+                data={[1, 2, 2, 3, 4, 5, 5]}
+                tone="violet"
+                width={110}
+                height={34}
+                showPoints
+              />
+            }
+            footer={
+              <div className="flex items-center justify-between text-xs">
+                <span className="text-slate-400">3 Placed • 1 Transit • 1 Print</span>
+                <span className="font-semibold text-cyan-300">BlueDart Transit</span>
+              </div>
+            }
+          />
         </div>
 
-        {/* TAB CONTROLS */}
+        {/* TAB CONTROLS (Open Design Segmented Switcher) */}
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between border-b border-white/10 pb-4">
-          <div className="flex items-center gap-2 overflow-x-auto">
-            {[
+          <SegmentedControl
+            value={activeTab}
+            onChange={(val) => setActiveTab(val as DashboardTab)}
+            options={[
               { id: "merchants", label: "🏢 Merchants & Showrooms", count: merchants.length },
               { id: "reviews", label: "💬 Live Review Stream", count: liveReviews.length },
               { id: "standees", label: "📦 Standee Pipeline", count: 5 },
               { id: "system", label: "⚡ System Health & APIs", count: 4 },
-            ].map((tab) => (
-              <button
-                key={tab.id}
-                onClick={() => setActiveTab(tab.id as DashboardTab)}
-                className={`flex items-center gap-2 whitespace-nowrap rounded-xl px-4 py-2.5 text-xs font-bold transition ${
-                  activeTab === tab.id
-                    ? "bg-gradient-to-r from-brand-500 to-violet-500 text-white shadow-lg"
-                    : "border border-white/10 bg-white/[0.02] text-slate-400 hover:bg-white/5 hover:text-white"
-                }`}
-              >
-                <span>{tab.label}</span>
-                <span className={`rounded-md px-1.5 py-0.5 text-[10px] ${activeTab === tab.id ? "bg-black/30 text-white" : "bg-white/10 text-slate-300"}`}>
-                  {tab.count}
-                </span>
-              </button>
-            ))}
-          </div>
+            ]}
+          />
 
           <button
             onClick={() => setShowAddModal(true)}
-            className="flex items-center justify-center gap-2 rounded-xl bg-emerald-500 px-4 py-2.5 text-xs font-bold text-ink-950 shadow-md transition hover:bg-emerald-400"
+            className="flex items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-emerald-500 to-teal-400 px-4 py-2.5 text-xs font-bold text-ink-950 shadow-md transition hover:brightness-110 active:scale-[0.98]"
           >
             <span>+ Onboard New Merchant</span>
           </button>
@@ -594,13 +623,13 @@ export default function AdminDashboard({
                       <div>
                         <div className="flex items-center gap-2">
                           <h3 className="font-display text-base font-bold text-white">{merchant.name}</h3>
-                          <span
-                            className={`rounded-full px-2 py-0.5 text-[10px] font-bold ${
-                              merchant.is_active ? "bg-emerald-400/15 text-emerald-300" : "bg-rose-400/15 text-rose-300"
-                            }`}
+                          <StatusPill
+                            tone={merchant.is_active ? "done" : "blocked"}
+                            dot={merchant.is_active}
+                            size="sm"
                           >
-                            {merchant.is_active ? "● Active" : "Disabled"}
-                          </span>
+                            {merchant.is_active ? "Active" : "Disabled"}
+                          </StatusPill>
                         </div>
                         <p className="mt-1 text-xs text-slate-400 flex items-center gap-1.5">
                           <span>📍 {merchant.city || "Ahmedabad"}</span>
@@ -608,7 +637,7 @@ export default function AdminDashboard({
                           <span>🏷️ {merchant.category || "Retail"}</span>
                         </p>
                       </div>
-                      <span className="rounded-lg border border-brand-400/25 bg-brand-400/10 px-2.5 py-1 text-[11px] font-bold text-brand-200">
+                      <span className="rounded-xl border border-brand-400/25 bg-brand-400/10 px-2.5 py-1 text-[11px] font-bold text-brand-200">
                         {merchant.plan || "Growth ₹2,999"}
                       </span>
                     </div>
@@ -616,12 +645,29 @@ export default function AdminDashboard({
                     {/* Stats pills */}
                     <div className="mt-4 grid grid-cols-2 gap-2 rounded-2xl border border-white/6 bg-white/[0.02] p-2.5 text-xs">
                       <div>
-                        <p className="text-[10px] text-slate-500 uppercase">Reviews Lift</p>
+                        <p className="text-[10px] text-slate-500 uppercase font-bold tracking-wider">Reviews Lift</p>
                         <p className="font-mono text-sm font-bold text-white">+{merchant.reviews_count || 18} Verified</p>
                       </div>
                       <div>
-                        <p className="text-[10px] text-slate-500 uppercase">Counter Standee</p>
-                        <p className="font-semibold text-cyan-300 capitalize">{merchant.standee_status || "Delivered"}</p>
+                        <p className="text-[10px] text-slate-500 uppercase font-bold tracking-wider">Counter Standee</p>
+                        <div className="mt-0.5">
+                          <StatusPill
+                            tone={
+                              merchant.standee_status === "delivered"
+                                ? "done"
+                                : merchant.standee_status === "dispatched"
+                                ? "progress"
+                                : "warning"
+                            }
+                            size="sm"
+                          >
+                            {merchant.standee_status === "delivered"
+                              ? "Delivered"
+                              : merchant.standee_status === "dispatched"
+                              ? "Dispatched"
+                              : "In Print"}
+                          </StatusPill>
+                        </div>
                       </div>
                     </div>
 
@@ -704,15 +750,13 @@ export default function AdminDashboard({
                       <span className="font-bold text-brand-300 flex items-center gap-1">
                         <span>✨</span> Gemini 1.5 Auto-Reply
                       </span>
-                      <span
-                        className={`rounded-full px-2 py-0.5 font-bold ${
-                          review.status === "auto_posted"
-                            ? "bg-emerald-400/20 text-emerald-300"
-                            : "bg-amber-400/20 text-amber-300"
-                        }`}
+                      <StatusPill
+                        tone={review.status === "auto_posted" ? "done" : "warning"}
+                        dot={review.status === "auto_posted"}
+                        size="sm"
                       >
-                        {review.status === "auto_posted" ? "✓ Posted to Google" : "Pending Approval"}
-                      </span>
+                        {review.status === "auto_posted" ? "Posted to Google" : "Pending Approval"}
+                      </StatusPill>
                     </div>
                     <p className="text-xs leading-relaxed text-slate-300">{review.aiReply}</p>
                   </div>
