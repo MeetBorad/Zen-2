@@ -60,7 +60,7 @@ export default function Features() {
       <SectionHeading
         eyebrow="Commercial Features"
         title="Why Business Owners"
-        highlight="Choose Zentap"
+        highlight="Choose Our Standees"
         copy="Engineered specifically to help local retail showrooms capture more 5-star Google reviews and drive daily footfall."
         icon={<span className="text-emerald-600">✓</span>}
       />

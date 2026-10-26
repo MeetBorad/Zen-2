@@ -339,17 +339,12 @@ export default function AuthPage({
           onClick={onBackToHome}
           className="mb-7 text-sm text-slate-400 transition hover:text-white"
         >
-          ← Back to Zentap
+          ← Back to Home
         </button>
 
-        <div className="flex items-center gap-3">
-          <img src="/zentap-logo-white.png" alt="" className="h-9 w-9 rounded-xl object-contain" />
-          <div>
-            <p className="font-display text-lg font-black text-white">
-              Zen<span className="text-gradient-brand">tap</span>
-            </p>
-            <p className="text-xs text-slate-400">Sign in or create your account</p>
-          </div>
+        <div className="flex flex-col items-start gap-1">
+          <img src="/zentap-logo-white.png" alt="Zentap Digital Solutions" className="h-9 w-auto object-contain" />
+          <p className="text-xs text-slate-400 mt-1">Sign in or create your account</p>
         </div>
 
         {/* Role Selector: Merchant vs Staff */}

@@ -45,7 +45,7 @@ function StickyMobileCta({ onOpenAuth }: { onOpenAuth: () => void }) {
         onClick={onOpenAuth}
         className="flex min-h-12 w-full items-center justify-center rounded-2xl bg-blue-600 px-4 py-3 text-sm font-bold text-white shadow-lg active:scale-95"
       >
-        📦 સ્ટેન્ડી ઓર્ડર કરો / Sign In
+        📦 Order Standee / Sign In
       </button>
     </div>
   );

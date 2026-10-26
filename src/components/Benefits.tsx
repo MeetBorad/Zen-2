@@ -33,7 +33,7 @@ export default function Benefits() {
         <Reveal dir="left">
           <div className="h-full rounded-3xl border border-rose-200 bg-white p-6 sm:p-8 shadow-xs">
             <span className="inline-flex items-center gap-1.5 rounded-full bg-rose-50 border border-rose-200 px-3 py-1 text-xs font-bold text-rose-800 uppercase tracking-wider">
-              ❌ Without Zentap Standee
+              ❌ Without Smart Standee
             </span>
             <h3 className="mt-4 text-xl font-bold text-slate-900">Slow Review Growth & Staff Burden</h3>
             <ul className="mt-6 space-y-3.5">
@@ -57,7 +57,7 @@ export default function Benefits() {
           <div className="h-full rounded-3xl border-2 border-blue-600 bg-white p-6 sm:p-8 shadow-xl relative overflow-hidden">
             <div className="flex items-center justify-between">
               <span className="inline-flex items-center gap-1.5 rounded-full bg-blue-50 border border-blue-200 px-3 py-1 text-xs font-bold text-blue-800 uppercase tracking-wider">
-                ✅ With Zentap Smart Standee
+                ✅ With Smart Review Standee
               </span>
               <span className="text-xs font-bold text-amber-600 bg-amber-50 border border-amber-200 px-2.5 py-0.5 rounded-full">
                 4.9 ★ Rating

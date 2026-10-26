@@ -43,7 +43,7 @@ export default function ActionCentre() {
           </Reveal>
           <Reveal delay={160}>
             <p className="mt-5 text-[15px] leading-relaxed text-slate-400">
-              Most dashboards show numbers. Zentap converts your business data into a ranked, prioritised list — the
+              Most dashboards show numbers. This command centre converts your business data into a ranked, prioritised list — the
               failed payment to verify, the trial about to expire, the Google token to reconnect — so ten minutes each
               morning is enough.
             </p>

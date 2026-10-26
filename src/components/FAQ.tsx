@@ -10,7 +10,7 @@ const FAQS = [
   },
   {
     q: "How does this actually rank my business #1 on Google Maps?",
-    a: "Google's search algorithm strongly favors local businesses that gather frequent, verified 5-star reviews and respond quickly. Zentap drives 30–50+ authentic reviews every month while our AI automatically replies within 15 minutes, boosting your ranking above local competitors.",
+    a: "Google's search algorithm strongly favors local businesses that gather frequent, verified 5-star reviews and respond quickly. Our system drives 30–50+ authentic reviews every month while our AI automatically replies within 15 minutes, boosting your ranking above local competitors.",
   },
   {
     q: "How do I receive the physical acrylic standee?",
@@ -18,7 +18,7 @@ const FAQS = [
   },
   {
     q: "What happens if an unhappy customer tries to leave a negative rating?",
-    a: "Zentap includes a built-in Private Feedback Shield. If an unhappy guest selects 1 to 3 stars, they are immediately prompted to send a private message directly to your WhatsApp so you can resolve their issue immediately, preventing a public 1-star drop on Google Maps.",
+    a: "Our standee includes a built-in Private Feedback Shield. If an unhappy guest selects 1 to 3 stars, they are immediately prompted to send a private message directly to your WhatsApp so you can resolve their issue immediately, preventing a public 1-star drop on Google Maps.",
   },
   {
     q: "How does the monthly subscription and payment work?",
@@ -81,7 +81,7 @@ export default function FAQ() {
         <p className="text-xs sm:text-sm text-slate-600">
           Have an urgent question? Message our team directly on WhatsApp:{" "}
           <a
-            href="https://wa.me/918788416911?text=Hello%20Zentap!%20I%20have%20a%20question%20about%20the%20Standee."
+            href="https://wa.me/918788416911?text=Hello!%20I%20have%20a%20question%20about%20the%20Standee."
             target="_blank"
             rel="noreferrer"
             className="font-bold text-emerald-700 hover:underline"

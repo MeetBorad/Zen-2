@@ -93,7 +93,7 @@ export default function Hero({ onOpenAuth }: HeroProps) {
                 <span>📦 Order Your Counter Standee (Free Delivery)</span>
               </button>
               <a
-                href="https://wa.me/918788416911?text=Hello%20Zentap!%20I%20want%20to%20get%20Google%20Review%20Standee%20for%20my%20showroom."
+                href="https://wa.me/918788416911?text=Hello!%20I%20want%20to%20get%20the%20Google%20Review%20Standee%20for%20my%20showroom."
                 target="_blank"
                 rel="noreferrer"
                 className="flex w-full sm:w-auto items-center justify-center gap-2 rounded-full border border-emerald-300 bg-emerald-50 px-6 py-3.5 text-sm font-bold text-emerald-900 shadow-xs transition hover:bg-emerald-100"
@@ -139,7 +139,7 @@ export default function Hero({ onOpenAuth }: HeroProps) {
               <div className="mt-4 relative overflow-hidden rounded-2xl border border-slate-200 bg-slate-100">
                 <img
                   src="/hero-standee.jpg"
-                  alt="Zentap Acrylic Smart Countertop Standee for Google Reviews"
+                  alt="Smart Acrylic Countertop Standee for Google Reviews"
                   className="h-48 sm:h-52 w-full object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-transparent to-transparent flex items-end p-4">

@@ -31,7 +31,7 @@ const COLS = [
   {
     title: "Company",
     links: [
-      "About Zentap",
+      "About Us",
       "Ahmedabad Pilot Hub",
       "Partner program",
       "Press kit",
@@ -73,19 +73,15 @@ export default function Footer({
       <div className="relative mx-auto w-full max-w-7xl">
         <div className="grid gap-12 lg:grid-cols-[1.15fr_2fr]">
           <div>
-            <a href="#top" className="flex items-center gap-2.5">
+            <a href="#top" className="flex items-center" aria-label="Home">
               <img
                 src="/zentap-logo-white.png"
-                alt="Zentap Logo"
-                className="h-9 w-9 rounded-xl object-contain shadow-[0_4px_16px_-4px_rgba(99,102,241,0.8)]"
+                alt="Zentap Digital Solutions"
+                className="h-9 w-auto object-contain"
               />
-              <span className="font-display text-[18px] font-black tracking-tight text-white">
-                Zen<span className="text-gradient-brand">tap</span>
-              </span>
             </a>
             <p className="mt-4 max-w-sm text-[13.5px] leading-relaxed text-slate-400">
-              The AI growth OS for local business. NFC & QR review standees, Google review automation,
-              private feedback and recurring subscriptions — run from one cloud platform.
+              Smart NFC & QR acrylic review standees for Indian retail showrooms, jewellers, salons, and cafes. Automate 5-star Google reviews effortlessly.
             </p>
 
             <div className="mt-4 flex items-center gap-2 text-xs text-slate-300">
@@ -136,7 +132,7 @@ export default function Footer({
                 </button>
               </div>
               <p className="mt-2 text-[11px] text-slate-500">
-                {ok ? "Subscribed! Welcome to the Zentap Founder Dispatch." : "Playbooks on Google reviews, retention and local growth."}
+                {ok ? "Subscribed! Welcome to the Founder Dispatch." : "Playbooks on Google reviews, retention and local growth."}
               </p>
             </form>
           </div>
@@ -179,7 +175,7 @@ export default function Footer({
         <div className="mt-14 rounded-2xl border border-white/8 bg-white/[0.02] p-4">
           <p className="text-[11.5px] leading-relaxed text-slate-400">
             <strong className="font-semibold text-slate-300">Platform Compliance Guarantee:</strong>{" "}
-            Zentap is fully compliant with Google Business Profile Policies. While our standees and
+            Our standees and software engine are fully compliant with Google Business Profile Policies. While our standees and
             AI engine give dissatisfied customers an instant private channel to contact showroom owners,
             every customer retains an unimpeded right to leave an authentic public Google review.
             All merchant tokens are encrypted with AES-256 and payments are processed via RBI-compliant
@@ -189,7 +185,7 @@ export default function Footer({
 
         <div className="mt-8 flex flex-col items-center justify-between gap-4 border-t border-white/8 pt-6 sm:flex-row">
           <p className="text-[12px] text-slate-500">
-            © {new Date().getFullYear()} Zentap Technologies. All rights reserved.
+            © {new Date().getFullYear()} Zentap Digital Solutions. All rights reserved.
           </p>
           <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-[12px] text-slate-400">
             <button

@@ -397,7 +397,7 @@ export default function AdminDashboard({
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-4">
           <div className="flex items-center gap-3.5">
             <div className="relative">
-              <img src="/zentap-logo-white.png" alt="Zentap" className="h-9 w-9 rounded-xl object-contain shadow-md ring-1 ring-white/15" />
+              <img src="/zentap-logo-white.png" alt="Zentap Digital Solutions" className="h-9 w-auto object-contain" />
               <span className="absolute -bottom-1 -right-1 flex h-3 w-3">
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75"></span>
                 <span className="relative inline-flex h-3 w-3 rounded-full bg-emerald-500"></span>
@@ -405,7 +405,6 @@ export default function AdminDashboard({
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <p className="font-display text-sm font-black text-white">Zen<span className="text-gradient-brand">tap</span></p>
                 <span className="rounded-md border border-cyan-400/30 bg-cyan-400/10 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-cyan-200">
                   Founder Command Center
                 </span>

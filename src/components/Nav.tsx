@@ -56,15 +56,12 @@ export default function Nav({ onOpenAuth, currentUser, onOpenDashboard }: NavPro
           >
             {/* Logo & Region Badge */}
             <div className="flex shrink-0 items-center gap-3">
-              <a href="#top" className="group flex items-center gap-2.5" aria-label="Zentap home">
+              <a href="#top" className="group flex items-center" aria-label="Home">
                 <img
                   src="/zentap-logo.png"
-                  alt="Zentap Logo"
-                  className="h-8 w-8 rounded-xl object-contain shadow-sm transition-transform duration-200 group-hover:scale-105"
+                  alt="Zentap Digital Solutions"
+                  className="h-9 md:h-10 w-auto object-contain transition-transform duration-200 group-hover:scale-105"
                 />
-                <span className="font-display text-[19px] font-black tracking-tight text-slate-900">
-                  Zen<span className="text-blue-600">tap</span>
-                </span>
               </a>
               <span className="hidden xl:inline-flex items-center gap-1 rounded-full border border-slate-200 bg-slate-50 px-2.5 py-0.5 text-[11px] font-bold text-slate-700">
                 🇮🇳 Trusted by 50+ Showrooms in Ahmedabad & Gujarat
@@ -90,7 +87,7 @@ export default function Nav({ onOpenAuth, currentUser, onOpenDashboard }: NavPro
             {/* Actions: WhatsApp Helpline + Merchant Account */}
             <div className="flex items-center gap-2 sm:gap-2.5">
               <a
-                href="https://wa.me/918788416911?text=Hello%20Zentap!%20I%20want%20to%20know%20about%20the%20Google%20Review%20Standee%20for%20my%20business."
+                href="https://wa.me/918788416911?text=Hello!%20I%20want%20to%20know%20about%20the%20Google%20Review%20Standee%20for%20my%20business."
                 target="_blank"
                 rel="noreferrer"
                 className="hidden sm:inline-flex items-center gap-1.5 rounded-full border border-emerald-300 bg-emerald-50 px-3 py-2 text-xs font-bold text-emerald-800 transition hover:bg-emerald-100 shadow-sm"
@@ -156,7 +153,7 @@ export default function Nav({ onOpenAuth, currentUser, onOpenDashboard }: NavPro
 
             <div className="space-y-3 pt-6 border-t border-slate-200">
               <a
-                href="https://wa.me/918788416911?text=Hello%20Zentap!%20I%20want%20to%20know%20about%20the%20Google%20Review%20Standee."
+                href="https://wa.me/918788416911?text=Hello!%20I%20want%20to%20know%20about%20the%20Google%20Review%20Standee."
                 target="_blank"
                 rel="noreferrer"
                 className="flex w-full items-center justify-center gap-2 rounded-2xl border border-emerald-300 bg-emerald-50 py-3.5 text-sm font-bold text-emerald-800 shadow-sm"

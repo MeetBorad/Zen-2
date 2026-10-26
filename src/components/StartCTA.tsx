@@ -26,7 +26,7 @@ export default function StartCTA() {
             📦 Order Counter Standee (₹2,999/mo)
           </a>
           <a
-            href="https://wa.me/918788416911?text=Hello%20Zentap!%20I%20want%20to%20order%20the%20Google%20Review%20Standee%20for%20my%20counter."
+            href="https://wa.me/918788416911?text=Hello!%20I%20want%20to%20order%20the%20Google%20Review%20Standee%20for%20my%20counter."
             target="_blank"
             rel="noreferrer"
             className="w-full sm:w-auto flex items-center justify-center gap-2 rounded-full border border-emerald-400 bg-emerald-500/20 px-7 py-4 text-base font-bold text-emerald-200 transition hover:bg-emerald-500/30"

@@ -3,7 +3,7 @@ import { IconCheck } from "./Icons";
 
 const FEATURED = {
   quote:
-    "Within 45 days of placing the Zentap acrylic standee on our billing counter, we received over 34 verified 5-star Google reviews! Our staff used to awkwardly beg customers, but now customers happily tap their phones while paying. In Nikol, anyone searching for jewellery sees Virat Gold Palace first. It pays for itself multiple times over!",
+    "Within 45 days of placing the smart acrylic standee on our billing counter, we received over 34 verified 5-star Google reviews! Our staff used to awkwardly beg customers, but now customers happily tap their phones while paying. In Nikol, anyone searching for jewellery sees Virat Gold Palace first. It pays for itself multiple times over!",
   nativeNote:
     "“કાઉન્ટર પર સ્ટેન્ડી મૂક્યા પછી ૩૪ થી વધુ ૫-સ્ટાર રિવ્યુ આવ્યા — પૈસા વસૂલ સર્વિસ છે!”",
   name: "Harshil Vora",
@@ -16,7 +16,7 @@ const FEATURED = {
 const TESTIMONIALS = [
   {
     quote:
-      "Collecting reviews from industrial B2B clients used to be tough. Zentap's standee made it effortless for technical clients to review us in English and Hindi. Our brand credibility has surged.",
+      "Collecting reviews from industrial B2B clients used to be tough. The smart standee made it effortless for technical clients to review us in English and Hindi. Our brand credibility has surged.",
     name: "Ketan Shah",
     role: "Director",
     business: "Digitronics Control, Ahmedabad",
@@ -63,7 +63,7 @@ export default function Testimonials() {
         eyebrow="Local Client Proof"
         title="Proven by Top Showrooms"
         highlight="Across Ahmedabad & Gujarat"
-        copy="Hear from local showroom owners who placed Zentap standees on their counters."
+        copy="Hear from local showroom owners who placed our smart standees on their counters."
         icon={<span className="text-amber-500">★</span>}
       />
 
@@ -104,8 +104,8 @@ export default function Testimonials() {
               <p className="text-xs font-bold uppercase tracking-wider text-slate-500">Google Maps Result</p>
               <p className="font-mono text-3xl font-black text-amber-600 mt-2">4.9 ★</p>
               <p className="text-xs font-semibold text-slate-700 mt-1">#1 Jeweller in Nikol, Ahmedabad</p>
-              <div className="mt-3 pt-3 border-t border-slate-100 text-[11px] text-emerald-700 font-bold flex items-center justify-center gap-1">
-                <IconCheck className="h-3.5 w-3.5" /> Zentap Verified Client
+              <div className="mt-3 pt-3 border-slate-100 text-[11px] text-emerald-700 font-bold flex items-center justify-center gap-1">
+                <IconCheck className="h-3.5 w-3.5" /> Verified Local Merchant
               </div>
             </div>
           </div>

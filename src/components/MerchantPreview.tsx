@@ -181,7 +181,7 @@ export default function MerchantPreview({ user, onExit }: MerchantPreviewProps) 
       <header className="sticky top-0 z-20 border-b border-white/8 bg-ink-900/90 px-4 py-3 backdrop-blur-xl sm:px-8">
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-3">
           <div className="flex items-center gap-3">
-            <img src="/zentap-logo-white.png" alt="Zentap" className="h-8 w-8 rounded-lg object-contain shadow-sm" />
+            <img src="/zentap-logo-white.png" alt="Zentap Digital Solutions" className="h-8 w-auto object-contain shadow-sm" />
             <div>
               <p className="font-display text-sm font-black text-white">{businessName}</p>
               <p className="text-[11px] text-emerald-400 font-medium">
