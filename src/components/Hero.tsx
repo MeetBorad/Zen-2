@@ -1,5 +1,6 @@
 import { Reveal } from "./ui";
 import { IconCheck } from "./Icons";
+import StandeePreviewCarousel from "./StandeePreviewCarousel";
 
 const LOGOS = [
   "Virat Gold Palace (Nikol, Ahmedabad)",
@@ -120,80 +121,9 @@ export default function Hero({ onOpenAuth }: HeroProps) {
           </Reveal>
         </div>
 
-        {/* Visual Right Side: Real Standee + Phone Mockup */}
+        {/* Visual Right Side: Standee Carousel Live Preview */}
         <Reveal delay={180} dir="scale">
-          <div className="relative mx-auto w-full max-w-[480px]">
-            {/* Card wrapper */}
-            <div className="relative rounded-3xl border border-slate-200 bg-white p-5 sm:p-6 shadow-xl">
-              <div className="flex items-center justify-between border-b border-slate-100 pb-3">
-                <div className="flex items-center gap-2">
-                  <span className="flex h-2.5 w-2.5 rounded-full bg-emerald-500 animate-pulse" />
-                  <p className="text-xs font-bold text-slate-800">Countertop Standee Live Preview</p>
-                </div>
-                <span className="rounded-full bg-blue-50 border border-blue-200 px-2.5 py-0.5 text-[11px] font-bold text-blue-700">
-                  NFC + QR Integrated
-                </span>
-              </div>
-
-              {/* Physical Standee Image */}
-              <div className="mt-4 relative overflow-hidden rounded-2xl border border-slate-200 bg-slate-100">
-                <img
-                  src="/hero-standee.jpg"
-                  alt="Smart Acrylic Countertop Standee for Google Reviews"
-                  className="h-48 sm:h-52 w-full object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-transparent to-transparent flex items-end p-4">
-                  <div className="text-white">
-                    <p className="text-xs font-bold text-amber-300 uppercase tracking-wider">A6 Acrylic Counter Standee</p>
-                    <p className="text-sm font-semibold">Place on cash desk • Customer taps phone to review</p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Live Google Review Simulation Card (Anchor: Virat Gold Palace) */}
-              <div className="mt-4 rounded-2xl border border-amber-200/80 bg-amber-50/60 p-4 space-y-2">
-                <div className="flex items-start justify-between">
-                  <div className="flex items-center gap-2">
-                    <div className="grid h-8 w-8 place-items-center rounded-full bg-blue-600 text-white font-bold text-xs">
-                      HV
-                    </div>
-                    <div>
-                      <p className="text-xs font-bold text-slate-900">Harshil Vora</p>
-                      <p className="text-[10.5px] text-slate-500">Virat Gold Palace, Nikol, Ahmedabad</p>
-                    </div>
-                  </div>
-                  <div className="flex text-amber-500 text-sm">
-                    {"★★★★★"}
-                  </div>
-                </div>
-
-                <p className="text-xs leading-relaxed text-slate-800 font-medium">
-                  “Outstanding bridal collection and certified 916 purity. Digital scale verification and courteous staff. Best jewellery showroom in Nikol!”
-                </p>
-
-                <div className="flex items-center justify-between pt-1 border-t border-amber-200/60 text-[11px]">
-                  <span className="flex items-center gap-1 text-emerald-700 font-bold">
-                    <IconCheck className="h-3.5 w-3.5" /> Verified Google Review
-                  </span>
-                  <span className="text-slate-500 font-mono">Mode B AI Reply in 3 mins</span>
-                </div>
-              </div>
-
-              {/* Stats Bar */}
-              <div className="mt-4 grid grid-cols-2 gap-3 text-center">
-                <div className="rounded-xl bg-slate-50 p-2.5 border border-slate-200/80">
-                  <p className="text-[10.5px] font-bold text-slate-500 uppercase">Google Rating Jump</p>
-                  <p className="font-mono text-xl font-black text-slate-900">4.6★ ➔ 4.9★</p>
-                  <p className="text-[10px] text-emerald-600 font-semibold">+34 reviews in 30 days</p>
-                </div>
-                <div className="rounded-xl bg-slate-50 p-2.5 border border-slate-200/80">
-                  <p className="text-[10.5px] font-bold text-slate-500 uppercase">Walk-in Customer Growth</p>
-                  <p className="font-mono text-xl font-black text-slate-900">+38% Footfall</p>
-                  <p className="text-[10px] text-blue-600 font-semibold">Rank #1 on Google Maps</p>
-                </div>
-              </div>
-            </div>
-          </div>
+          <StandeePreviewCarousel />
         </Reveal>
       </div>
 
