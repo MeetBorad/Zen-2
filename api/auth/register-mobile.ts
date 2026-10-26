@@ -2,7 +2,7 @@ import type { IncomingMessage, ServerResponse } from "http";
 import { createClient } from "@supabase/supabase-js";
 
 interface RegisterRequest extends IncomingMessage {
-  body?: unknown;
+  body?: any;
 }
 
 export default async function handler(req: RegisterRequest, res: ServerResponse) {
@@ -23,18 +23,23 @@ export default async function handler(req: RegisterRequest, res: ServerResponse)
     return;
   }
 
-  let rawBody = "";
-  for await (const chunk of req) {
-    rawBody += chunk;
-  }
-
-  let payload: any = {};
-  try {
-    payload = rawBody ? JSON.parse(rawBody) : req.body;
-  } catch {
-    res.statusCode = 400;
-    res.end(JSON.stringify({ error: "Invalid JSON body." }));
-    return;
+  let payload: any = req.body;
+  if (typeof payload === "string") {
+    try {
+      payload = JSON.parse(payload);
+    } catch {
+      payload = {};
+    }
+  } else if (!payload) {
+    let rawBody = "";
+    for await (const chunk of req) {
+      rawBody += chunk;
+    }
+    try {
+      payload = rawBody ? JSON.parse(rawBody) : {};
+    } catch {
+      payload = {};
+    }
   }
 
   const {
@@ -123,7 +128,7 @@ export default async function handler(req: RegisterRequest, res: ServerResponse)
     const { data: newUser, error: createError } = await admin.auth.admin.createUser({
       email: authEmail,
       password,
-      email_confirm: true, // AUTO-CONFIRMED! Zero email confirmation barrier!
+      email_confirm: true, // AUTO-CONFIRMED!
       user_metadata: {
         full_name: name,
         business_name: businessName,

@@ -2,7 +2,7 @@ import type { IncomingMessage, ServerResponse } from "http";
 import { createClient } from "@supabase/supabase-js";
 
 interface ResolveRequest extends IncomingMessage {
-  body?: unknown;
+  body?: any;
 }
 
 export default async function handler(req: ResolveRequest, res: ServerResponse) {
@@ -23,20 +23,26 @@ export default async function handler(req: ResolveRequest, res: ServerResponse) 
     return;
   }
 
-  let rawBody = "";
-  for await (const chunk of req) {
-    rawBody += chunk;
+  let payload: any = req.body;
+  if (typeof payload === "string") {
+    try {
+      payload = JSON.parse(payload);
+    } catch {
+      payload = {};
+    }
+  } else if (!payload) {
+    let rawBody = "";
+    for await (const chunk of req) {
+      rawBody += chunk;
+    }
+    try {
+      payload = rawBody ? JSON.parse(rawBody) : {};
+    } catch {
+      payload = {};
+    }
   }
 
-  let identifier = "";
-  try {
-    const parsed = rawBody ? JSON.parse(rawBody) : req.body;
-    identifier = String(parsed?.identifier || "").trim();
-  } catch {
-    res.statusCode = 400;
-    res.end(JSON.stringify({ error: "Invalid JSON body." }));
-    return;
-  }
+  const identifier = String(payload?.identifier || "").trim();
 
   if (!identifier) {
     res.statusCode = 400;
@@ -65,7 +71,6 @@ export default async function handler(req: ResolveRequest, res: ServerResponse) 
   const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
   if (!supabaseUrl || !serviceRoleKey) {
-    // If service role not configured, fallback to mobile domain
     res.statusCode = 200;
     res.end(JSON.stringify({ authEmail: defaultMobileEmail }));
     return;
