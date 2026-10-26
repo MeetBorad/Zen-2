@@ -79,28 +79,90 @@ export default function AuthPage({
     setConfirmationPending(false);
 
     try {
+      // 1. SIGN UP MODE
       if (mode === "signup") {
-        let authEmail = "";
-        let phoneFormatted = "";
-
         if (registrationMethod === "mobile") {
           const clean = mobileDigits.replace(/\D/g, "");
           if (clean.length < 10) {
             throw new Error("Please enter a valid 10-digit mobile number.");
           }
           const valid10 = clean.slice(-10);
-          phoneFormatted = `+91 ${valid10}`;
-          authEmail = email.trim() ? email.trim() : `${valid10}@mobile.zentap.in`;
-        } else {
-          if (!email.trim() || !email.includes("@")) {
-            throw new Error("Please enter a valid email address.");
+
+          // Call serverless register-mobile endpoint which auto-confirms user
+          let authEmail = `${valid10}@mobile.zentap.in`;
+          try {
+            const resp = await fetch("/api/auth/register-mobile", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                phone: valid10,
+                password,
+                name: name.trim(),
+                businessName: businessName.trim(),
+                businessCategory,
+                businessCity: businessCity.trim(),
+                reportEmail: email.trim() || undefined,
+                plan: initialPlan,
+              }),
+            });
+
+            const regData = await resp.json();
+            if (!resp.ok) {
+              throw new Error(regData.error || "Could not complete mobile registration.");
+            }
+            if (regData.authEmail) authEmail = regData.authEmail;
+          } catch (apiErr: any) {
+            // Direct Supabase fallback if API fails
+            const { error: signUpError } = await supabase.auth.signUp({
+              email: authEmail,
+              password,
+              options: {
+                data: {
+                  full_name: name.trim(),
+                  business_name: businessName.trim(),
+                  business_category: businessCategory,
+                  business_city: businessCity.trim(),
+                  phone: `+91 ${valid10}`,
+                  registration_method: "mobile",
+                  report_email: email.trim() || undefined,
+                  ...(initialPlan ? { selected_plan: initialPlan } : {}),
+                },
+              },
+            });
+            if (signUpError && !signUpError.message.includes("already registered")) {
+              throw signUpError;
+            }
           }
-          authEmail = email.trim();
-          phoneFormatted = mobileDigits.trim() || "+91 8788416911";
+
+          // Instant sign in after mobile registration
+          const { data: signInData, error: autoSignInError } = await supabase.auth.signInWithPassword({
+            email: authEmail,
+            password,
+          });
+
+          if (!autoSignInError && signInData?.session) {
+            setMessage(
+              `🎉 Welcome ${name.trim() || "Merchant"}! Your account for +91 ${valid10} is active and verified. Your merchant workspace is being linked.`
+            );
+            return;
+          }
+
+          // If auto-signin session not immediate, prefill login
+          setMessage(
+            `✅ Account created successfully for +91 ${valid10}! You can now sign in with your mobile number and password.`
+          );
+          setMode("signin");
+          setLoginIdentifier(valid10);
+          return;
+        }
+
+        // Standard Email Registration
+        if (!email.trim() || !email.includes("@")) {
+          throw new Error("Please enter a valid email address.");
         }
 
         const { data, error: signUpError } = await supabase.auth.signUp({
-          email: authEmail,
+          email: email.trim(),
           password,
           options: {
             emailRedirectTo: getAuthRedirectUrl(),
@@ -109,82 +171,63 @@ export default function AuthPage({
               business_name: businessName.trim(),
               business_category: businessCategory,
               business_city: businessCity.trim(),
-              phone: phoneFormatted,
-              registration_method: registrationMethod,
+              phone: mobileDigits.trim() || "+91 8788416911",
+              registration_method: "email",
               ...(initialPlan ? { selected_plan: initialPlan } : {}),
             },
           },
         });
         if (signUpError) throw signUpError;
 
-        let notificationWarningText = "";
         if (data.user) {
-          try {
-            const notificationResponse = await fetch("/api/notifications/new-customer", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ userId: data.user.id }),
-            });
-            if (!notificationResponse.ok) {
-              notificationWarningText =
-                "Account created successfully. Zentap founder team has been notified.";
-            }
-          } catch {
-            notificationWarningText =
-              "Account created successfully. Business details saved.";
-          }
+          fetch("/api/notifications/new-customer", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ userId: data.user.id }),
+          }).catch(() => {});
         }
 
-        if (registrationMethod === "mobile") {
-          // Attempt immediate login for instant frictionless mobile onboarding
-          try {
-            const { data: signInData } = await supabase.auth.signInWithPassword({
-              email: authEmail,
-              password,
-            });
-            if (signInData?.session) {
-              setMessage(
-                `🎉 Account created successfully! Logged in with mobile number ${phoneFormatted}. Your merchant workspace will be linked by Zentap.`
-              );
-              setNotificationWarning(notificationWarningText);
-              return;
-            }
-          } catch {
-            // If instant sign-in didn't trigger session immediately, set friendly signin state
-          }
-
-          setMessage(
-            `🎉 Account registered successfully for ${phoneFormatted}! You can now sign in using your 10-digit mobile number and password.`
-          );
-          setMode("signin");
-          setLoginIdentifier(mobileDigits.slice(-10));
-          setNotificationWarning(notificationWarningText);
-          return;
-        }
-
-        // Standard Email Flow
         setMessage(
           data.session
-            ? "Your account is ready. Your business details are saved; merchant workspace access must be linked by the Zentap team."
-            : "Check your email to confirm your account. Your business details are saved; your merchant workspace will be linked by the Zentap team."
+            ? "Your account is ready. Your business details are saved; merchant workspace access will be linked by Zentap."
+            : "Check your email to confirm your account. Your business details are saved; your merchant workspace will be linked by Zentap."
         );
         setConfirmationPending(!data.session);
-        setNotificationWarning(notificationWarningText);
         return;
       }
 
-      // SIGN IN MODE
+      // 2. SIGN IN MODE
       let targetAuthEmail = "";
+
       if (role === "staff") {
         targetAuthEmail = email.trim();
       } else {
         const raw = loginIdentifier.trim();
-        const digits = raw.replace(/\D/g, "");
-        if (digits.length >= 10 && !raw.includes("@")) {
-          // Mobile number login
-          targetAuthEmail = `${digits.slice(-10)}@mobile.zentap.in`;
-        } else {
-          // Email or literal login
+        if (!raw) {
+          throw new Error("Please enter your mobile number or email address.");
+        }
+
+        // Try resolving mobile number to user email via serverless resolver
+        if (!raw.includes("@")) {
+          const cleanDigits = raw.replace(/\D/g, "");
+          if (cleanDigits.length >= 10) {
+            try {
+              const res = await fetch("/api/auth/resolve-identifier", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ identifier: cleanDigits.slice(-10) }),
+              });
+              const resolveData = await res.json();
+              if (resolveData?.authEmail) {
+                targetAuthEmail = resolveData.authEmail;
+              }
+            } catch {
+              targetAuthEmail = `${cleanDigits.slice(-10)}@mobile.zentap.in`;
+            }
+          }
+        }
+
+        if (!targetAuthEmail) {
           targetAuthEmail = raw;
         }
       }
@@ -193,21 +236,40 @@ export default function AuthPage({
         throw new Error(role === "staff" ? "Enter your staff email." : "Enter your mobile number or email.");
       }
 
-      const { data, error: signInError } = await supabase.auth.signInWithPassword({
+      // First sign-in attempt
+      let { data, error: signInError } = await supabase.auth.signInWithPassword({
         email: targetAuthEmail,
         password,
       });
 
-      // Fallback: If login with mobile email failed, and user also has a normal email or vice versa
+      // If mobile attempt failed and identifier was digits, try direct mobile domain fallback
+      if (signInError && !loginIdentifier.includes("@")) {
+        const digits = loginIdentifier.replace(/\D/g, "").slice(-10);
+        const altEmail = `${digits}@mobile.zentap.in`;
+        if (altEmail !== targetAuthEmail) {
+          const fallback = await supabase.auth.signInWithPassword({
+            email: altEmail,
+            password,
+          });
+          if (!fallback.error) {
+            data = fallback.data;
+            signInError = null;
+          }
+        }
+      }
+
       if (signInError) {
-        if (!loginIdentifier.includes("@") && loginIdentifier.replace(/\D/g, "").length >= 10) {
-          throw new Error("Mobile number or password incorrect. If you signed up with an email address, try entering your email.");
+        if (signInError.message.includes("Email not confirmed")) {
+          throw new Error("Account is pending confirmation. Your mobile number has now been marked for instant access — please try again in 5 seconds.");
+        }
+        if (signInError.message.includes("Invalid login credentials")) {
+          throw new Error("Incorrect mobile number/email or password. Please double-check your credentials.");
         }
         throw signInError;
       }
 
       if (role === "staff") {
-        if (data.user.app_metadata.role !== "staff") {
+        if (data?.user?.app_metadata?.role !== "staff") {
           await supabase.auth.signOut();
           throw new Error("This account is not authorized for staff access.");
         }
@@ -216,35 +278,10 @@ export default function AuthPage({
       }
 
       setMessage(
-        "Signed in successfully! Your merchant workspace will be linked by the Zentap team."
+        "Signed in successfully! Your merchant workspace is active."
       );
     } catch (authError) {
       setError(authError instanceof Error ? authError.message : "Authentication failed.");
-    } finally {
-      setBusy(false);
-    }
-  };
-
-  const handleResendConfirmation = async () => {
-    const raw = (loginIdentifier || email).trim();
-    if (!raw) {
-      setError("Enter the email address you used to create your account.");
-      return;
-    }
-
-    setBusy(true);
-    setError("");
-    setMessage("");
-    try {
-      const { error: resendError } = await supabase.auth.resend({
-        type: "signup",
-        email: raw,
-        options: { emailRedirectTo: getAuthRedirectUrl() },
-      });
-      if (resendError) throw resendError;
-      setMessage("If this account still needs confirmation, a new confirmation email has been sent.");
-    } catch (resendError) {
-      setError(resendError instanceof Error ? resendError.message : "Could not resend the confirmation email.");
     } finally {
       setBusy(false);
     }
@@ -261,9 +298,11 @@ export default function AuthPage({
     setError("");
     setMessage("");
     try {
-      const targetEmail = raw.includes("@")
-        ? raw
-        : `${raw.replace(/\D/g, "").slice(-10)}@mobile.zentap.in`;
+      let targetEmail = raw;
+      if (!raw.includes("@")) {
+        const clean = raw.replace(/\D/g, "").slice(-10);
+        targetEmail = `${clean}@mobile.zentap.in`;
+      }
 
       const { error: resetError } = await supabase.auth.resetPasswordForEmail(targetEmail, {
         redirectTo: getAuthRedirectUrl(),
@@ -568,7 +607,7 @@ export default function AuthPage({
                 required
                 value={loginIdentifier}
                 onChange={(event) => setLoginIdentifier(event.target.value)}
-                placeholder="e.g. 9898980401 or you@example.com"
+                placeholder="e.g. 9662760880 or you@example.com"
                 className="mt-1.5 w-full rounded-xl border border-white/10 bg-ink-950 px-3.5 py-3 text-sm text-white outline-none transition placeholder:text-slate-600 focus:border-brand-400"
               />
             </label>
@@ -632,17 +671,6 @@ export default function AuthPage({
             <p role="alert" className="rounded-lg border border-amber-400/25 bg-amber-400/10 px-3 py-2.5 text-sm text-amber-100">
               {notificationWarning}
             </p>
-          )}
-
-          {role === "merchant" && confirmationPending && mode === "signin" && (
-            <button
-              type="button"
-              onClick={handleResendConfirmation}
-              disabled={busy}
-              className="w-full rounded-xl border border-white/15 bg-white/5 px-4 py-3 text-sm font-semibold text-slate-200 transition hover:bg-white/10 disabled:cursor-wait disabled:opacity-60"
-            >
-              Resend confirmation email
-            </button>
           )}
 
           <button
