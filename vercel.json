@@ -1,0 +1,9 @@
+{
+  "framework": "vite",
+  "crons": [
+    {
+      "path": "/api/cron/check-reviews",
+      "schedule": "*/15 * * * *"
+    }
+  ]
+}
