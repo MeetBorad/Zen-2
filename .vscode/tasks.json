@@ -1,0 +1,38 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "type": "npm",
+      "script": "dev",
+      "isBackground": true,
+      "problemMatcher": {
+        "owner": "typescript",
+        "pattern": "$tsc",
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": "^.*VITE.*ready.*",
+          "endsPattern": "^.*Local:.*"
+        }
+      },
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "label": "npm: dev (Start Vite Local Server)"
+    },
+    {
+      "type": "npm",
+      "script": "build",
+      "problemMatcher": ["$tsc"],
+      "group": "build",
+      "label": "npm: build (Production Build)"
+    },
+    {
+      "type": "npm",
+      "script": "preview",
+      "isBackground": true,
+      "problemMatcher": [],
+      "label": "npm: preview (Preview Production Build)"
+    }
+  ]
+}
