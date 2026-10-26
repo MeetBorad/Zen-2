@@ -25,9 +25,9 @@ export function CustomersPanel() {
           { k: "Google not connected", v: String(stalled), s: "revenue-bearing accounts at risk" },
           { k: "Standee not delivered", v: String(noStandee), s: "signup → delivery gap" },
         ].map((c, i) => (
-          <div key={c.k} className="rounded-xl border border-white/8 bg-white/[0.03] p-3.5" style={{ animationDelay: `${i * 70}ms` }}>
+          <div key={c.k} className="rounded-xl border border-slate-200 bg-white shadow-xs p-3.5" style={{ animationDelay: `${i * 70}ms` }}>
             <p className="text-[11px] uppercase tracking-wider text-slate-500">{c.k}</p>
-            <p className="mt-1 font-mono text-2xl font-semibold text-white">{c.v}</p>
+            <p className="mt-1 font-mono text-2xl font-semibold text-slate-900">{c.v}</p>
             <p className="mt-1 text-[11px] text-slate-500">{c.s}</p>
           </div>
         ))}
@@ -43,7 +43,7 @@ export function CustomersPanel() {
               onChange={(e) => setQ(e.target.value)}
               placeholder="Filter businesses…"
               aria-label="Filter businesses"
-              className="w-48 rounded-lg border border-white/10 bg-ink-900/80 px-3 py-1.5 text-[12px] text-white placeholder:text-slate-500 focus:border-brand-400/60 focus:outline-none"
+              className="w-48 rounded-lg border border-slate-300 bg-white text-slate-900 shadow-xs px-3 py-1.5 text-[12px] text-slate-900 placeholder:text-slate-500 focus:border-brand-400/60 focus:outline-none"
             />
           </label>
         }
@@ -62,21 +62,21 @@ export function CustomersPanel() {
             </thead>
             <tbody className="divide-y divide-white/6">
               {rows.map((c) => (
-                <tr key={c.merchantId} className="group transition-colors hover:bg-white/[0.035]">
+                <tr key={c.merchantId} className="group transition-colors hover:bg-slate-50">
                   <td className="py-2.5 pl-1">
                     <div className="flex items-center gap-2.5">
-                      <span className="grid h-7 w-7 shrink-0 place-items-center rounded-lg bg-gradient-to-br from-brand-500/40 to-cyan-400/25 text-[11px] font-bold text-white ring-1 ring-white/10">
+                      <span className="grid h-7 w-7 shrink-0 place-items-center rounded-lg bg-gradient-to-br from-brand-500/40 to-cyan-400/25 text-[11px] font-bold text-slate-900 ring-1 ring-white/10">
                         {c.business.slice(0, 2).toUpperCase()}
                       </span>
                       <div className="min-w-0">
-                        <p className="truncate text-[12.5px] font-semibold text-white">{c.business}</p>
+                        <p className="truncate text-[12.5px] font-semibold text-slate-900">{c.business}</p>
                         <p className="truncate font-mono text-[10.5px] text-slate-500">
                           {c.merchantId} · {c.city}
                         </p>
                       </div>
                     </div>
                   </td>
-                  <td className="py-2.5 text-[12px] text-slate-300">{c.plan}</td>
+                  <td className="py-2.5 text-[12px] text-slate-700">{c.plan}</td>
                   <td className="py-2.5">
                     <Chip tone={c.trial === "Converted" ? "good" : "warn"}>{c.trial}</Chip>
                   </td>
@@ -90,7 +90,7 @@ export function CustomersPanel() {
                       {c.standee}
                     </Chip>
                   </td>
-                  <td className="py-2.5 pr-1 text-right font-mono text-[12px] text-white">{c.scans}</td>
+                  <td className="py-2.5 pr-1 text-right font-mono text-[12px] text-slate-900">{c.scans}</td>
                 </tr>
               ))}
               {rows.length === 0 && (
@@ -107,7 +107,7 @@ export function CustomersPanel() {
 
       <div className="rounded-xl border border-brand-400/25 bg-brand-500/8 p-3.5">
         <p className="text-[12px] leading-relaxed text-brand-100/90">
-          <strong className="font-semibold text-white">Founder insight:</strong> Cafe Koramangala Co. signed up but has
+          <strong className="font-semibold text-slate-900">Founder insight:</strong> Cafe Koramangala Co. signed up but has
           not connected Google or ordered a standee. Trigger the guided onboarding sequence before the pilot goes cold.
         </p>
       </div>
@@ -124,7 +124,7 @@ export function RevenuePanel({ demo }: { demo: boolean }) {
         <Panel title="MRR movement" note="Gross subscription revenue before fees, taxes, refunds and other costs.">
           <div className="flex items-end justify-between gap-4">
             <div>
-              <p className="font-mono text-3xl font-semibold text-white">{money(demo ? 29990 : 0)}</p>
+              <p className="font-mono text-3xl font-semibold text-slate-900">{money(demo ? 29990 : 0)}</p>
               <p className="mt-1 text-[11.5px] text-slate-500">12-week trend · illustrative</p>
             </div>
             <Chip tone="good">▲ 18.4% MoM</Chip>
@@ -157,8 +157,8 @@ export function RevenuePanel({ demo }: { demo: boolean }) {
             ].map((t) => (
               <li key={t.n}>
                 <div className="flex items-center justify-between text-[12.5px]">
-                  <span className="font-medium text-white">{t.n}</span>
-                  <span className="font-mono text-[11.5px] text-slate-400">{t.d}</span>
+                  <span className="font-medium text-slate-900">{t.n}</span>
+                  <span className="font-mono text-[11.5px] text-slate-600">{t.d}</span>
                 </div>
                 <div className="mt-2">
                   <Bar value={t.p} tone={t.p > 70 ? "warn" : "brand"} />
@@ -202,11 +202,11 @@ export function ReviewsPanel() {
             {REVIEWS.map((r, i) => (
               <li
                 key={r.author + i}
-                className="rounded-xl border border-white/8 bg-white/[0.025] p-3 transition-colors hover:border-white/16 hover:bg-white/[0.05]"
+                className="rounded-xl border border-slate-200 bg-white shadow-xs p-3 transition-colors hover:border-white/16 hover:bg-white/[0.05]"
                 style={{ animation: `rise .6s cubic-bezier(.16,1,.3,1) ${i * 60}ms both` }}
               >
                 <div className="flex flex-wrap items-center gap-2">
-                  <span className="text-[12.5px] font-semibold text-white">{r.business}</span>
+                  <span className="text-[12.5px] font-semibold text-slate-900">{r.business}</span>
                   <span className="text-[11px] text-slate-500">· {r.author}</span>
                   <span className="ml-auto flex items-center gap-1">
                     {Array.from({ length: 5 }).map((_, s) => (
@@ -219,7 +219,7 @@ export function ReviewsPanel() {
                     </Chip>
                   </span>
                 </div>
-                <p className="mt-1.5 text-[12px] leading-relaxed text-slate-300">“{r.text}”</p>
+                <p className="mt-1.5 text-[12px] leading-relaxed text-slate-700">“{r.text}”</p>
                 <div className="mt-2 flex items-center gap-3 text-[10.5px] text-slate-500">
                   <span className="inline-flex items-center gap-1">
                     {r.channel === "Private" ? <IconPulse className="h-3 w-3" /> : <IconGoogle className="h-3 w-3" />}
@@ -246,7 +246,7 @@ export function ReviewsPanel() {
         </Panel>
         <div className="rounded-xl border border-emerald-400/20 bg-emerald-500/6 p-3.5">
           <p className="text-[11.5px] leading-relaxed text-emerald-100/85">
-            <strong className="font-semibold text-white">Policy-safe by design:</strong> low ratings can route into a
+            <strong className="font-semibold text-slate-900">Policy-safe by design:</strong> low ratings can route into a
             private feedback conversation, but every customer keeps an honest path to a public Google review. Zentap
             never gates or suppresses reviews.
           </p>
@@ -271,9 +271,9 @@ export function ScansPanel({ demo }: { demo: boolean }) {
               { k: "NFC share", v: "39%" },
               { k: "Repeat visitors", v: demo ? "18%" : "0%" },
             ].map((s) => (
-              <div key={s.k} className="rounded-xl border border-white/8 bg-white/[0.03] p-3">
+              <div key={s.k} className="rounded-xl border border-slate-200 bg-white shadow-xs p-3">
                 <p className="text-[10.5px] uppercase tracking-wider text-slate-500">{s.k}</p>
-                <p className="mt-1 font-mono text-xl font-semibold text-white">{s.v}</p>
+                <p className="mt-1 font-mono text-xl font-semibold text-slate-900">{s.v}</p>
               </div>
             ))}
           </div>
@@ -282,7 +282,7 @@ export function ScansPanel({ demo }: { demo: boolean }) {
               <div key={b.merchantId}>
                 <div className="flex items-center justify-between text-[12px]">
                   <span className="truncate font-medium text-slate-200">{b.business}</span>
-                  <span className="ml-3 shrink-0 font-mono text-[11.5px] text-slate-400">{b.scans} scans</span>
+                  <span className="ml-3 shrink-0 font-mono text-[11.5px] text-slate-600">{b.scans} scans</span>
                 </div>
                 <div className="mt-2">
                   <Bar value={(b.scans / max) * 100} delay={i * 70} />
@@ -302,16 +302,16 @@ export function ScansPanel({ demo }: { demo: boolean }) {
           ].map((f, i) => (
             <div key={f.l} className="mb-3">
               <div className="flex items-baseline justify-between">
-                <span className="text-[12px] text-slate-300">{f.l}</span>
-                <span className="font-mono text-[12px] font-semibold text-white">{f.v.toLocaleString("en-IN")}</span>
+                <span className="text-[12px] text-slate-700">{f.l}</span>
+                <span className="font-mono text-[12px] font-semibold text-slate-900">{f.v.toLocaleString("en-IN")}</span>
               </div>
               <div className="mt-2">
                 <Bar value={(f.v / (demo ? 2413 : 1)) * 100} tone={f.tone} delay={i * 90} />
               </div>
             </div>
           ))}
-          <p className="mt-3 rounded-lg bg-white/5 p-2.5 text-[11px] leading-relaxed text-slate-400">
-            Scan-to-review conversion: <span className="font-mono text-white">9.4%</span> — scans are never counted as
+          <p className="mt-3 rounded-lg bg-slate-100 p-2.5 text-[11px] leading-relaxed text-slate-600">
+            Scan-to-review conversion: <span className="font-mono text-slate-900">9.4%</span> — scans are never counted as
             Google reviews.
           </p>
         </Panel>
@@ -331,11 +331,11 @@ export function OrdersPanel() {
             return (
               <div
                 key={s.id}
-                className="rounded-xl border border-white/8 bg-white/[0.03] p-3 transition-colors hover:border-brand-400/40"
+                className="rounded-xl border border-slate-200 bg-white shadow-xs p-3 transition-colors hover:border-brand-400/40"
                 style={{ animation: `rise .6s cubic-bezier(.16,1,.3,1) ${i * 60}ms both` }}
               >
-                <p className="font-mono text-xl font-semibold text-white">{count}</p>
-                <p className="mt-1 text-[10.5px] leading-tight text-slate-400">{s.label}</p>
+                <p className="font-mono text-xl font-semibold text-slate-900">{count}</p>
+                <p className="mt-1 text-[10.5px] leading-tight text-slate-600">{s.label}</p>
               </div>
             );
           })}
@@ -348,13 +348,13 @@ export function OrdersPanel() {
             return (
               <li
                 key={o.business}
-                className="rounded-xl border border-white/8 bg-white/[0.025] p-3 transition-colors hover:border-white/16"
+                className="rounded-xl border border-slate-200 bg-white shadow-xs p-3 transition-colors hover:border-white/16"
                 style={{ animation: `rise .6s cubic-bezier(.16,1,.3,1) ${i * 55}ms both` }}
               >
                 <div className="flex flex-wrap items-center gap-2">
-                  <span className="text-[12.5px] font-semibold text-white">{o.business}</span>
+                  <span className="text-[12.5px] font-semibold text-slate-900">{o.business}</span>
                   <Chip tone={o.stage === "delivered" ? "good" : idx > 2 ? "brand" : "warn"}>{STAGES[idx].label}</Chip>
-                  <span className="ml-auto font-mono text-[11px] text-slate-400">
+                  <span className="ml-auto font-mono text-[11px] text-slate-600">
                     {o.qty} standees · {o.courier}
                   </span>
                 </div>
@@ -364,7 +364,7 @@ export function OrdersPanel() {
                       key={s.id}
                       className={cn(
                         "h-1.5 flex-1 rounded-full transition-all duration-500",
-                        si <= idx ? "bg-gradient-to-r from-brand-400 to-cyan-300" : "bg-white/8",
+                        si <= idx ? "bg-gradient-to-r from-brand-400 to-cyan-300" : "bg-slate-100",
                       )}
                       style={{ transitionDelay: `${si * 40}ms` }}
                     />
@@ -404,7 +404,7 @@ export function HealthPanel() {
                 <li
                   key={a.title}
                   className={cn(
-                    "rounded-xl border border-white/8 bg-white/[0.025] p-3 transition-all duration-300 hover:border-white/16",
+                    "rounded-xl border border-slate-200 bg-white shadow-xs p-3 transition-all duration-300 hover:border-white/16",
                     isResolved && "opacity-55",
                   )}
                 >
@@ -412,12 +412,12 @@ export function HealthPanel() {
                     <span className={cn("rounded-full px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider ring-1", sevStyles[a.severity])}>
                       {a.severity}
                     </span>
-                    <span className={cn("text-[12.5px] font-semibold text-white", isResolved && "line-through")}>
+                    <span className={cn("text-[12.5px] font-semibold text-slate-900", isResolved && "line-through")}>
                       {a.title}
                     </span>
                     <span className="ml-auto font-mono text-[10.5px] text-slate-500">{a.ago}</span>
                   </div>
-                  <p className="mt-1.5 text-[11.5px] leading-relaxed text-slate-400">{a.detail}</p>
+                  <p className="mt-1.5 text-[11.5px] leading-relaxed text-slate-600">{a.detail}</p>
                   <div className="mt-2 flex items-center gap-2">
                     <Chip>{a.customer}</Chip>
                     <button
@@ -426,7 +426,7 @@ export function HealthPanel() {
                         "ml-auto inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[10.5px] font-semibold ring-1 transition-all",
                         isResolved
                           ? "bg-emerald-500/15 text-emerald-300 ring-emerald-400/30"
-                          : "bg-white/5 text-slate-300 ring-white/12 hover:bg-white/10 hover:text-white",
+                          : "bg-slate-100 text-slate-700 ring-white/12 hover:bg-white/10 hover:text-slate-900",
                       )}
                     >
                       <IconCheck className="h-3 w-3" />
@@ -476,21 +476,21 @@ export function PipelinePanel() {
           return (
             <div
               key={c.id}
-              className="rounded-2xl border border-white/8 bg-white/[0.025] p-3.5"
+              className="rounded-2xl border border-slate-200 bg-white shadow-xs p-3.5"
               style={{ animation: `rise .6s cubic-bezier(.16,1,.3,1) ${ci * 70}ms both` }}
             >
               <div className="flex items-center justify-between">
-                <p className="text-[11px] font-semibold uppercase tracking-wider text-slate-400">{c.label}</p>
+                <p className="text-[11px] font-semibold uppercase tracking-wider text-slate-600">{c.label}</p>
                 <span className="font-mono text-[11px] text-slate-500">{items.length}</span>
               </div>
-              <p className="mt-1 font-mono text-lg font-semibold text-white">{money(value)}</p>
+              <p className="mt-1 font-mono text-lg font-semibold text-slate-900">{money(value)}</p>
               <ul className="mt-3 space-y-2">
                 {items.map((l) => (
                   <li
                     key={l.name}
-                    className="rounded-lg border border-white/8 bg-ink-900/60 p-2.5 transition-all duration-300 hover:-translate-y-0.5 hover:border-brand-400/40"
+                    className="rounded-lg border border-slate-200 bg-white shadow-xs p-2.5 transition-all duration-300 hover:-translate-y-0.5 hover:border-brand-400/40"
                   >
-                    <p className="text-[12px] font-semibold text-white">{l.name}</p>
+                    <p className="text-[12px] font-semibold text-slate-900">{l.name}</p>
                     <p className="mt-0.5 text-[10.5px] text-slate-500">
                       {l.category} · {l.owner}
                     </p>
@@ -509,9 +509,9 @@ export function PipelinePanel() {
           { k: "Pilot → paid", v: "62%", s: "completion rate" },
           { k: "CAC", v: money(1840), s: "blended, per paying customer" },
         ].map((m, i) => (
-          <div key={m.k} className="rounded-xl border border-white/8 bg-white/[0.03] p-3.5">
+          <div key={m.k} className="rounded-xl border border-slate-200 bg-white shadow-xs p-3.5">
             <p className="text-[11px] uppercase tracking-wider text-slate-500">{m.k}</p>
-            <p className="mt-1 font-mono text-2xl font-semibold text-white">{m.v}</p>
+            <p className="mt-1 font-mono text-2xl font-semibold text-slate-900">{m.v}</p>
             <p className="mt-1 text-[11px] text-slate-500">{m.s}</p>
             <div className="mt-2" style={{ animation: `rise .5s ease ${i * 80}ms both` }}>
               <Bar value={m.v.includes("₹") ? 44 : parseFloat(m.v)} tone={i === 2 ? "warn" : "brand"} delay={i * 90} />
@@ -530,13 +530,13 @@ export function TasksPanel() {
     <div className={cn("space-y-4", fadeUp)}>
       <Panel title="Founder action centre" note="Ranked by impact, not by who shouted loudest.">
         <div className="mb-4 flex items-center gap-3">
-          <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-white/8">
+          <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-slate-100">
             <div
               className="h-full rounded-full bg-gradient-to-r from-brand-400 to-cyan-300 transition-all duration-500"
               style={{ width: `${(completed / total) * 100}%` }}
             />
           </div>
-          <span className="font-mono text-[11.5px] text-slate-400">
+          <span className="font-mono text-[11.5px] text-slate-600">
             {completed}/{total} done
           </span>
         </div>
@@ -550,14 +550,14 @@ export function TasksPanel() {
                   "flex w-full items-start gap-3 rounded-xl border p-3 text-left transition-all duration-300",
                   done[t.id]
                     ? "border-emerald-400/25 bg-emerald-500/8"
-                    : "border-white/8 bg-white/[0.025] hover:border-brand-400/40 hover:bg-white/[0.05]",
+                    : "border-slate-200 bg-slate-50 hover:border-brand-400/40 hover:bg-white/[0.05]",
                 )}
                 style={{ animation: `rise .5s cubic-bezier(.16,1,.3,1) ${i * 50}ms both` }}
               >
                 <span
                   className={cn(
                     "mt-0.5 grid h-4.5 w-4.5 shrink-0 place-items-center rounded-[5px] ring-1 transition-all",
-                    done[t.id] ? "bg-emerald-400 text-ink-950 ring-emerald-300" : "bg-white/5 ring-white/20",
+                    done[t.id] ? "bg-emerald-400 text-ink-950 ring-emerald-300" : "bg-slate-100 ring-white/20",
                   )}
                   style={{ width: 18, height: 18 }}
                 >
@@ -565,7 +565,7 @@ export function TasksPanel() {
                 </span>
                 <span className="min-w-0 flex-1">
                   <span className="flex flex-wrap items-center gap-2">
-                    <span className={cn("text-[12.5px] font-semibold", done[t.id] ? "text-slate-400 line-through" : "text-white")}>
+                    <span className={cn("text-[12.5px] font-semibold", done[t.id] ? "text-slate-600 line-through" : "text-slate-900")}>
                       {t.title}
                     </span>
                     <Chip tone={t.priority === "Urgent" ? "bad" : t.priority === "High" ? "warn" : t.priority === "Medium" ? "brand" : "neutral"}>
@@ -573,7 +573,7 @@ export function TasksPanel() {
                     </Chip>
                     <Chip>{t.bucket}</Chip>
                   </span>
-                  <span className="mt-1 block text-[11.5px] leading-relaxed text-slate-400">{t.detail}</span>
+                  <span className="mt-1 block text-[11.5px] leading-relaxed text-slate-600">{t.detail}</span>
                 </span>
               </button>
             </li>

@@ -186,7 +186,7 @@ const statusStyles: Record<SubscriptionStatus, string> = {
   active: "bg-emerald-400/15 text-emerald-300 border-emerald-400/30",
   trial: "bg-cyan-400/15 text-cyan-200 border-cyan-400/30",
   halted: "bg-amber-400/15 text-amber-200 border-amber-400/30",
-  cancelled: "bg-slate-400/15 text-slate-300 border-slate-400/30",
+  cancelled: "bg-slate-400/15 text-slate-700 border-slate-400/30",
 };
 
 export default function AdminDashboard({
@@ -391,13 +391,13 @@ export default function AdminDashboard({
   };
 
   return (
-    <main className="min-h-screen bg-ink-950 text-slate-100 selection:bg-brand-500 selection:text-white">
+    <main className="min-h-screen bg-slate-50 text-slate-900 selection:bg-blue-600 selection:text-slate-900">
       {/* Top Header */}
-      <header className="sticky top-0 z-30 border-b border-white/10 bg-ink-900/90 px-4 py-3.5 backdrop-blur-2xl sm:px-8">
+      <header className="sticky top-0 z-30 border-b border-slate-200 bg-white/95 px-4 py-3.5 backdrop-blur-2xl sm:px-8">
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-4">
           <div className="flex items-center gap-3.5">
             <div className="relative">
-              <img src="/zentap-logo-white.png" alt="Zentap Digital Solutions" className="h-9 w-auto object-contain" />
+              <img src="/zentap-logo.png" alt="Zentap Digital Solutions" className="h-9 w-auto object-contain" />
               <span className="absolute -bottom-1 -right-1 flex h-3 w-3">
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75"></span>
                 <span className="relative inline-flex h-3 w-3 rounded-full bg-emerald-500"></span>
@@ -405,11 +405,11 @@ export default function AdminDashboard({
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <span className="rounded-md border border-cyan-400/30 bg-cyan-400/10 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-cyan-200">
+                <span className="rounded-md border border-blue-200 bg-blue-50 px-2.5 py-1 text-[11px] font-bold uppercase tracking-wider text-blue-700">
                   Founder Command Center
                 </span>
               </div>
-              <p className="text-[11px] text-slate-400">admin@zentapdigitalsolutions.com • Ahmedabad Pilot Node</p>
+              <p className="text-[11px] text-slate-600">admin@zentapdigitalsolutions.com • Ahmedabad Pilot Node</p>
             </div>
           </div>
 
@@ -424,7 +424,7 @@ export default function AdminDashboard({
             </button>
             <button
               onClick={onBackToHome}
-              className="rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-xs font-semibold text-slate-300 transition hover:bg-white/10 hover:text-white"
+              className="rounded-xl border border-slate-200 bg-slate-100 px-3.5 py-2 text-xs font-bold text-slate-700 transition hover:bg-slate-200 hover:text-slate-900"
             >
               Marketing Site
             </button>
@@ -446,7 +446,7 @@ export default function AdminDashboard({
               <span className="text-lg">⚡</span>
               <p className="font-medium">{notice}</p>
             </div>
-            <button onClick={() => setNotice("")} className="text-xs text-emerald-400 hover:text-white underline">Dismiss</button>
+            <button onClick={() => setNotice("")} className="text-xs text-emerald-400 hover:text-slate-900 underline">Dismiss</button>
           </div>
         )}
 
@@ -469,13 +469,13 @@ export default function AdminDashboard({
             }
             footer={
               <div className="space-y-1.5">
-                <div className="flex items-center justify-between text-xs text-slate-400">
+                <div className="flex items-center justify-between text-xs text-slate-600">
                   <span>Goal: ₹1,00,000 / mo</span>
                   <span className="font-semibold text-emerald-300 font-mono">
                     {Math.round((totalMRR / 100000) * 100)}%
                   </span>
                 </div>
-                <div className="h-1.5 w-full overflow-hidden rounded-full bg-white/5">
+                <div className="h-1.5 w-full overflow-hidden rounded-full bg-slate-100">
                   <div
                     className="h-full rounded-full bg-gradient-to-r from-emerald-500 via-teal-400 to-cyan-400 transition-all duration-500"
                     style={{ width: `${Math.min(100, Math.round((totalMRR / 100000) * 100))}%` }}
@@ -503,7 +503,7 @@ export default function AdminDashboard({
             }
             footer={
               <div className="flex items-center justify-between text-xs">
-                <span className="text-slate-400">💍 3 Jewelers • ☕ 1 Cafe • 💇 1 Salon</span>
+                <span className="text-slate-600">💍 3 Jewelers • ☕ 1 Cafe • 💇 1 Salon</span>
                 <span className="font-semibold text-emerald-400 font-mono">0% Churn</span>
               </div>
             }
@@ -527,7 +527,7 @@ export default function AdminDashboard({
             }
             footer={
               <div className="flex items-center justify-between text-xs">
-                <span className="text-slate-400">Mode B: Auto-replied in 15m</span>
+                <span className="text-slate-600">Mode B: Auto-replied in 15m</span>
                 <span className="font-semibold text-amber-300 font-mono">NFC+QR Scans</span>
               </div>
             }
@@ -551,7 +551,7 @@ export default function AdminDashboard({
             }
             footer={
               <div className="flex items-center justify-between text-xs">
-                <span className="text-slate-400">3 Placed • 1 Transit • 1 Print</span>
+                <span className="text-slate-600">3 Placed • 1 Transit • 1 Print</span>
                 <span className="font-semibold text-cyan-300">BlueDart Transit</span>
               </div>
             }
@@ -559,7 +559,7 @@ export default function AdminDashboard({
         </div>
 
         {/* TAB CONTROLS (Open Design Segmented Switcher) */}
-        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between border-b border-white/10 pb-4">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between border-b border-slate-200 pb-4">
           <SegmentedControl
             value={activeTab}
             onChange={(val) => setActiveTab(val as DashboardTab)}
@@ -585,21 +585,21 @@ export default function AdminDashboard({
         {activeTab === "merchants" && (
           <section className="space-y-4">
             {/* Search and Filters */}
-            <div className="flex flex-col gap-3 rounded-2xl border border-white/10 bg-ink-900 p-4 sm:flex-row sm:items-center sm:justify-between">
+            <div className="flex flex-col gap-3 rounded-2xl border border-slate-200 bg-white shadow-xs p-4 sm:flex-row sm:items-center sm:justify-between">
               <div className="flex flex-1 items-center gap-2">
                 <input
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
                   placeholder="Search by merchant, city, phone..."
-                  className="w-full rounded-xl border border-white/10 bg-ink-950 px-3.5 py-2.5 text-sm text-white placeholder:text-slate-500 outline-none focus:border-brand-400 sm:max-w-md"
+                  className="w-full rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 text-sm text-slate-900 placeholder:text-slate-500 outline-none focus:border-brand-400 sm:max-w-md"
                 />
               </div>
               <div className="flex items-center gap-2">
-                <span className="text-xs text-slate-400">Category:</span>
+                <span className="text-xs text-slate-600">Category:</span>
                 <select
                   value={categoryFilter}
                   onChange={(e) => setCategoryFilter(e.target.value)}
-                  className="rounded-xl border border-white/10 bg-ink-950 px-3 py-2 text-xs font-semibold text-white outline-none focus:border-brand-400"
+                  className="rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-900 outline-none focus:border-brand-400"
                 >
                   <option value="All">All Categories</option>
                   <option value="Jewellery Showroom">Jewellery Showrooms</option>
@@ -615,13 +615,13 @@ export default function AdminDashboard({
               {visibleMerchants.map((merchant) => (
                 <article
                   key={merchant.id}
-                  className="group relative flex flex-col justify-between rounded-3xl border border-white/10 bg-ink-900/90 p-5 shadow-lg backdrop-blur-xl transition hover:border-brand-500/40 hover:bg-ink-900"
+                  className="group relative flex flex-col justify-between rounded-3xl border border-slate-200 bg-white shadow-xs/90 p-5 shadow-lg backdrop-blur-xl transition hover:border-brand-500/40 hover:bg-white"
                 >
                   <div>
                     <div className="flex items-start justify-between gap-2">
                       <div>
                         <div className="flex items-center gap-2">
-                          <h3 className="font-display text-base font-bold text-white">{merchant.name}</h3>
+                          <h3 className="font-display text-base font-bold text-slate-900">{merchant.name}</h3>
                           <StatusPill
                             tone={merchant.is_active ? "done" : "blocked"}
                             dot={merchant.is_active}
@@ -630,7 +630,7 @@ export default function AdminDashboard({
                             {merchant.is_active ? "Active" : "Disabled"}
                           </StatusPill>
                         </div>
-                        <p className="mt-1 text-xs text-slate-400 flex items-center gap-1.5">
+                        <p className="mt-1 text-xs text-slate-600 flex items-center gap-1.5">
                           <span>📍 {merchant.city || "Ahmedabad"}</span>
                           <span>•</span>
                           <span>🏷️ {merchant.category || "Retail"}</span>
@@ -642,10 +642,10 @@ export default function AdminDashboard({
                     </div>
 
                     {/* Stats pills */}
-                    <div className="mt-4 grid grid-cols-2 gap-2 rounded-2xl border border-white/6 bg-white/[0.02] p-2.5 text-xs">
+                    <div className="mt-4 grid grid-cols-2 gap-2 rounded-2xl border border-slate-100 bg-slate-50 p-2.5 text-xs">
                       <div>
                         <p className="text-[10px] text-slate-500 uppercase font-bold tracking-wider">Reviews Lift</p>
-                        <p className="font-mono text-sm font-bold text-white">+{merchant.reviews_count || 18} Verified</p>
+                        <p className="font-mono text-sm font-bold text-slate-900">+{merchant.reviews_count || 18} Verified</p>
                       </div>
                       <div>
                         <p className="text-[10px] text-slate-500 uppercase font-bold tracking-wider">Counter Standee</p>
@@ -670,14 +670,14 @@ export default function AdminDashboard({
                       </div>
                     </div>
 
-                    <div className="mt-3 text-xs text-slate-400 space-y-1">
-                      <p>📱 WhatsApp: <strong className="text-slate-200">{merchant.phone || "+91 8788416911"}</strong></p>
+                    <div className="mt-3 text-xs text-slate-600 space-y-1">
+                      <p>📱 WhatsApp: <strong className="text-slate-800">{merchant.phone || "+91 8788416911"}</strong></p>
                       <p>🔗 Route: <span className="font-mono text-brand-300">/r/{merchant.slug || "virat-gold"}</span></p>
                     </div>
                   </div>
 
                   {/* Action buttons */}
-                  <div className="mt-5 pt-3.5 border-t border-white/8 flex items-center gap-2">
+                  <div className="mt-5 pt-3.5 border-t border-slate-200 flex items-center gap-2">
                     <a
                       href={`https://wa.me/${(merchant.phone || "918788416911").replace(/\D/g, "")}?text=Hello%20${encodeURIComponent(merchant.name)}!%20Zentap%20Reputation%20Engine%20is%20active%20on%20your%20counter.`}
                       target="_blank"
@@ -690,14 +690,14 @@ export default function AdminDashboard({
                       href={`/r/virat-gold`}
                       target="_blank"
                       rel="noreferrer"
-                      className="flex-1 rounded-xl border border-white/10 bg-white/5 py-2 text-center text-xs font-semibold text-slate-200 transition hover:bg-white/10"
+                      className="flex-1 rounded-xl border border-slate-200 bg-slate-100 py-2 text-center text-xs font-semibold text-slate-800 transition hover:bg-slate-100"
                     >
                       📱 Test /r/
                     </a>
                     <button
                       onClick={() => handleToggleMerchant(merchant)}
                       disabled={busyId === merchant.id}
-                      className="rounded-xl border border-white/10 bg-white/5 px-2.5 py-2 text-xs text-slate-400 transition hover:text-white"
+                      className="rounded-xl border border-slate-200 bg-slate-100 px-2.5 py-2 text-xs text-slate-600 transition hover:text-slate-900"
                       title={merchant.is_active ? "Pause merchant" : "Activate merchant"}
                     >
                       {merchant.is_active ? "⏸" : "▶"}
@@ -714,25 +714,25 @@ export default function AdminDashboard({
         {/* ========================================================================= */}
         {activeTab === "reviews" && (
           <section className="space-y-4">
-            <div className="rounded-2xl border border-white/10 bg-ink-900 p-5">
-              <h3 className="text-base font-bold text-white">Live Customer Reviews & AI Reply Engine</h3>
-              <p className="mt-1 text-xs text-slate-400">
+            <div className="rounded-2xl border border-slate-200 bg-white shadow-xs p-5">
+              <h3 className="text-base font-bold text-slate-900">Live Customer Reviews & AI Reply Engine</h3>
+              <p className="mt-1 text-xs text-slate-600">
                 Mode B Active: 4-5★ reviews auto-posted via Google Business Profile API within 15 minutes. 1-3★ reviews require founder approval.
               </p>
             </div>
 
             <div className="grid gap-4 md:grid-cols-2">
               {liveReviews.map((review) => (
-                <article key={review.id} className="rounded-3xl border border-white/10 bg-ink-900/95 p-5 shadow-lg space-y-4">
+                <article key={review.id} className="rounded-3xl border border-slate-200 bg-white shadow-xs/95 p-5 shadow-lg space-y-4">
                   <div className="flex items-start justify-between gap-3">
                     <div>
                       <div className="flex items-center gap-2">
-                        <span className="font-bold text-white">{review.author}</span>
-                        <span className="rounded bg-brand-500/20 px-1.5 py-0.5 text-[10px] font-semibold text-brand-300">
+                        <span className="font-bold text-slate-900">{review.author}</span>
+                        <span className="rounded bg-blue-600/20 px-1.5 py-0.5 text-[10px] font-semibold text-brand-300">
                           {review.language}
                         </span>
                       </div>
-                      <p className="text-xs text-slate-400 mt-0.5">{review.merchantName} • {review.timeAgo}</p>
+                      <p className="text-xs text-slate-600 mt-0.5">{review.merchantName} • {review.timeAgo}</p>
                     </div>
                     <div className="flex items-center text-amber-300 text-sm">
                       {"★".repeat(review.rating)}
@@ -740,11 +740,11 @@ export default function AdminDashboard({
                     </div>
                   </div>
 
-                  <p className="text-sm leading-relaxed text-slate-200 bg-ink-950/60 p-3 rounded-2xl border border-white/6">
+                  <p className="text-sm leading-relaxed text-slate-800 bg-slate-50/60 p-3 rounded-2xl border border-slate-100">
                     "{review.text}"
                   </p>
 
-                  <div className="rounded-2xl border border-brand-500/20 bg-brand-500/[0.06] p-3.5 space-y-2">
+                  <div className="rounded-2xl border border-brand-500/20 bg-blue-600/[0.06] p-3.5 space-y-2">
                     <div className="flex items-center justify-between text-[11px]">
                       <span className="font-bold text-brand-300 flex items-center gap-1">
                         <span>✨</span> Gemini 1.5 Auto-Reply
@@ -757,7 +757,7 @@ export default function AdminDashboard({
                         {review.status === "auto_posted" ? "Posted to Google" : "Pending Approval"}
                       </StatusPill>
                     </div>
-                    <p className="text-xs leading-relaxed text-slate-300">{review.aiReply}</p>
+                    <p className="text-xs leading-relaxed text-slate-700">{review.aiReply}</p>
                   </div>
 
                   {review.status === "pending_approval" && (
@@ -779,9 +779,9 @@ export default function AdminDashboard({
         {/* ========================================================================= */}
         {activeTab === "standees" && (
           <section className="space-y-4">
-            <div className="rounded-2xl border border-white/10 bg-ink-900 p-5">
-              <h3 className="text-base font-bold text-white">Physical Counter Standee Dispatch Pipeline</h3>
-              <p className="mt-1 text-xs text-slate-400">
+            <div className="rounded-2xl border border-slate-200 bg-white shadow-xs p-5">
+              <h3 className="text-base font-bold text-slate-900">Physical Counter Standee Dispatch Pipeline</h3>
+              <p className="mt-1 text-xs text-slate-600">
                 Track acrylic A6 NFC+QR standees from print production to counter placement in Ahmedabad & Gujarat.
               </p>
             </div>
@@ -824,11 +824,11 @@ export default function AdminDashboard({
                   date: "Estimated Dispatch: Tomorrow",
                 },
               ].map((item, idx) => (
-                <div key={idx} className="rounded-2xl border border-white/10 bg-ink-900 p-5 space-y-3">
+                <div key={idx} className="rounded-2xl border border-slate-200 bg-white shadow-xs p-5 space-y-3">
                   <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
                     <div>
-                      <h4 className="font-bold text-white text-sm">{item.biz}</h4>
-                      <p className="text-xs text-slate-400">{item.city} • <span className="font-mono text-cyan-300">{item.tracking}</span></p>
+                      <h4 className="font-bold text-slate-900 text-sm">{item.biz}</h4>
+                      <p className="text-xs text-slate-600">{item.city} • <span className="font-mono text-cyan-300">{item.tracking}</span></p>
                     </div>
                     <span className="rounded-lg border border-emerald-400/30 bg-emerald-400/10 px-2.5 py-1 text-xs font-semibold text-emerald-300 self-start sm:self-auto">
                       {item.date}
@@ -849,10 +849,10 @@ export default function AdminDashboard({
                         <div key={sIdx} className="space-y-1">
                           <div
                             className={`h-2 rounded-full transition ${
-                              completed ? "bg-gradient-to-r from-brand-500 to-emerald-400" : "bg-white/10"
+                              completed ? "bg-gradient-to-r from-brand-500 to-emerald-400" : "bg-slate-100"
                             }`}
                           />
-                          <p className={completed ? "text-slate-200" : "text-slate-600"}>{stepName}</p>
+                          <p className={completed ? "text-slate-800" : "text-slate-600"}>{stepName}</p>
                         </div>
                       );
                     })}
@@ -868,9 +868,9 @@ export default function AdminDashboard({
         {/* ========================================================================= */}
         {activeTab === "system" && (
           <section className="space-y-4">
-            <div className="rounded-2xl border border-white/10 bg-ink-900 p-5">
-              <h3 className="text-base font-bold text-white">System Infrastructure & Telemetry Health</h3>
-              <p className="mt-1 text-xs text-slate-400">
+            <div className="rounded-2xl border border-slate-200 bg-white shadow-xs p-5">
+              <h3 className="text-base font-bold text-slate-900">System Infrastructure & Telemetry Health</h3>
+              <p className="mt-1 text-xs text-slate-600">
                 Live monitoring of cloud serverless endpoints, Google Business Profile cron sync, and payment webhooks.
               </p>
             </div>
@@ -879,10 +879,10 @@ export default function AdminDashboard({
               {/* Item 1 */}
               <div className="rounded-2xl border border-emerald-500/25 bg-emerald-500/[0.05] p-5 space-y-2">
                 <div className="flex items-center justify-between">
-                  <h4 className="text-sm font-bold text-white">⏱️ 15-Minute Review Poller Cron</h4>
+                  <h4 className="text-sm font-bold text-slate-900">⏱️ 15-Minute Review Poller Cron</h4>
                   <span className="rounded-full bg-emerald-400/20 px-2.5 py-0.5 text-xs font-bold text-emerald-300">Active</span>
                 </div>
-                <p className="text-xs text-slate-300">
+                <p className="text-xs text-slate-700">
                   Runs every 15 minutes via Vercel Cron (`/api/cron/check-reviews`). Queries new reviews and triggers Mode B responses.
                 </p>
                 <div className="pt-2">
@@ -907,22 +907,22 @@ export default function AdminDashboard({
               {/* Item 2 */}
               <div className="rounded-2xl border border-sky-500/25 bg-sky-500/[0.05] p-5 space-y-2">
                 <div className="flex items-center justify-between">
-                  <h4 className="text-sm font-bold text-white">💳 Razorpay UPI AutoPay Webhook</h4>
+                  <h4 className="text-sm font-bold text-slate-900">💳 Razorpay UPI AutoPay Webhook</h4>
                   <span className="rounded-full bg-sky-400/20 px-2.5 py-0.5 text-xs font-bold text-sky-300">HMAC Verified</span>
                 </div>
-                <p className="text-xs text-slate-300">
+                <p className="text-xs text-slate-700">
                   Endpoint `/api/webhooks/razorpay` listening for `subscription.charged`, `payment.failed`, and `subscription.cancelled`.
                 </p>
-                <p className="text-[11px] font-mono text-slate-400">Secret: •••••••••• (Configured in Vercel)</p>
+                <p className="text-[11px] font-mono text-slate-600">Secret: •••••••••• (Configured in Vercel)</p>
               </div>
 
               {/* Item 3 */}
               <div className="rounded-2xl border border-violet-500/25 bg-violet-500/[0.05] p-5 space-y-2">
                 <div className="flex items-center justify-between">
-                  <h4 className="text-sm font-bold text-white">🤖 Google Gemini 1.5 Flash AI Engine</h4>
+                  <h4 className="text-sm font-bold text-slate-900">🤖 Google Gemini 1.5 Flash AI Engine</h4>
                   <span className="rounded-full bg-violet-400/20 px-2.5 py-0.5 text-xs font-bold text-violet-300">380ms Latency</span>
                 </div>
-                <p className="text-xs text-slate-300">
+                <p className="text-xs text-slate-700">
                   Endpoint `/api/generate-review` serving instant regional drafts in Gujarati, Hindi, and English.
                 </p>
                 <p className="text-[11px] text-emerald-400 font-semibold">✓ 0 API Fallbacks in last 24h</p>
@@ -931,13 +931,13 @@ export default function AdminDashboard({
               {/* Item 4 */}
               <div className="rounded-2xl border border-amber-500/25 bg-amber-500/[0.05] p-5 space-y-2">
                 <div className="flex items-center justify-between">
-                  <h4 className="text-sm font-bold text-white">📲 Founder Telegram Bot Dispatcher</h4>
+                  <h4 className="text-sm font-bold text-slate-900">📲 Founder Telegram Bot Dispatcher</h4>
                   <span className="rounded-full bg-amber-400/20 px-2.5 py-0.5 text-xs font-bold text-amber-300">@danielm_99</span>
                 </div>
-                <p className="text-xs text-slate-300">
+                <p className="text-xs text-slate-700">
                   Instant registration and negative review escalations delivered straight to Chat ID `742309073`.
                 </p>
-                <p className="text-[11px] text-slate-400">Bot: @zentap_bot (Token: 8846...pvQ)</p>
+                <p className="text-[11px] text-slate-600">Bot: @zentap_bot (Token: 8846...pvQ)</p>
               </div>
             </div>
           </section>
@@ -949,30 +949,30 @@ export default function AdminDashboard({
       {/* ========================================================================= */}
       {showAddModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4 backdrop-blur-md">
-          <div className="relative w-full max-w-md rounded-3xl border border-white/15 bg-ink-900 p-6 shadow-2xl">
-            <h3 className="text-lg font-bold text-white">Onboard New Merchant</h3>
-            <p className="mt-1 text-xs text-slate-400">
+          <div className="relative w-full max-w-md rounded-3xl border border-slate-200 bg-white p-6 shadow-2xl">
+            <h3 className="text-lg font-bold text-slate-900">Onboard New Merchant</h3>
+            <p className="mt-1 text-xs text-slate-600">
               Instantly create a merchant workspace and generate their scannable counter route.
             </p>
 
             <form onSubmit={handleAddMerchantSubmit} className="mt-5 space-y-3.5">
-              <label className="block text-xs font-medium text-slate-300">
+              <label className="block text-xs font-medium text-slate-700">
                 Business / Showroom Name
                 <input
                   required
                   value={newBizName}
                   onChange={(e) => setNewBizName(e.target.value)}
                   placeholder="e.g. Radhe Krishna Jewellers"
-                  className="mt-1.5 w-full rounded-xl border border-white/10 bg-ink-950 px-3.5 py-2.5 text-sm text-white outline-none focus:border-brand-400"
+                  className="mt-1.5 w-full rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 text-sm text-slate-900 outline-none focus:border-brand-400"
                 />
               </label>
 
-              <label className="block text-xs font-medium text-slate-300">
+              <label className="block text-xs font-medium text-slate-700">
                 Category
                 <select
                   value={newBizCategory}
                   onChange={(e) => setNewBizCategory(e.target.value)}
-                  className="mt-1.5 w-full rounded-xl border border-white/10 bg-ink-950 px-3.5 py-2.5 text-sm text-white outline-none focus:border-brand-400"
+                  className="mt-1.5 w-full rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 text-sm text-slate-900 outline-none focus:border-brand-400"
                 >
                   <option value="Jewellery Showroom">Jewellery Showroom</option>
                   <option value="Salon & Bridal Spa">Salon & Bridal Spa</option>
@@ -983,36 +983,36 @@ export default function AdminDashboard({
                 </select>
               </label>
 
-              <label className="block text-xs font-medium text-slate-300">
+              <label className="block text-xs font-medium text-slate-700">
                 City / Location
                 <input
                   required
                   value={newBizCity}
                   onChange={(e) => setNewBizCity(e.target.value)}
                   placeholder="e.g. Nikol, Ahmedabad"
-                  className="mt-1.5 w-full rounded-xl border border-white/10 bg-ink-950 px-3.5 py-2.5 text-sm text-white outline-none focus:border-brand-400"
+                  className="mt-1.5 w-full rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 text-sm text-slate-900 outline-none focus:border-brand-400"
                 />
               </label>
 
-              <label className="block text-xs font-medium text-slate-300">
+              <label className="block text-xs font-medium text-slate-700">
                 WhatsApp Phone Number
                 <input
                   required
                   value={newBizPhone}
                   onChange={(e) => setNewBizPhone(e.target.value)}
                   placeholder="+91 98250 12345"
-                  className="mt-1.5 w-full rounded-xl border border-white/10 bg-ink-950 px-3.5 py-2.5 text-sm text-white outline-none focus:border-brand-400"
+                  className="mt-1.5 w-full rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 text-sm text-slate-900 outline-none focus:border-brand-400"
                 />
               </label>
 
-              <label className="block text-xs font-medium text-slate-300">
+              <label className="block text-xs font-medium text-slate-700">
                 Owner Email (Optional)
                 <input
                   type="email"
                   value={newBizEmail}
                   onChange={(e) => setNewBizEmail(e.target.value)}
                   placeholder="owner@example.com"
-                  className="mt-1.5 w-full rounded-xl border border-white/10 bg-ink-950 px-3.5 py-2.5 text-sm text-white outline-none focus:border-brand-400"
+                  className="mt-1.5 w-full rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 text-sm text-slate-900 outline-none focus:border-brand-400"
                 />
               </label>
 
@@ -1020,13 +1020,13 @@ export default function AdminDashboard({
                 <button
                   type="button"
                   onClick={() => setShowAddModal(false)}
-                  className="flex-1 rounded-xl border border-white/10 bg-white/5 py-2.5 text-xs font-semibold text-slate-300 hover:bg-white/10"
+                  className="flex-1 rounded-xl border border-slate-200 bg-slate-100 py-2.5 text-xs font-semibold text-slate-700 hover:bg-slate-100"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="flex-1 rounded-xl bg-gradient-to-r from-brand-500 to-violet-500 py-2.5 text-xs font-bold text-white shadow-md hover:brightness-110"
+                  className="flex-1 rounded-xl bg-gradient-to-r from-brand-500 to-violet-500 py-2.5 text-xs font-bold text-slate-900 shadow-md hover:brightness-110"
                 >
                   Create & Activate
                 </button>

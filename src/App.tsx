@@ -25,7 +25,7 @@ function ScrollProgressBar() {
   const progress = useScrollProgress();
   return (
     <div
-      className="fixed top-0 left-0 z-50 h-1 bg-gradient-to-r from-brand-500 via-violet-500 to-cyan-500 origin-left transition-transform duration-100"
+      className="fixed top-0 left-0 z-50 h-1 bg-gradient-to-r from-blue-600 via-indigo-600 to-emerald-500 origin-left transition-transform duration-100"
       style={{ transform: `scaleX(${progress})` }}
       aria-hidden="true"
     />

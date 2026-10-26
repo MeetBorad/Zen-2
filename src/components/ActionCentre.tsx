@@ -15,7 +15,7 @@ const toneFor = (p: string) =>
       ? "text-amber-200 bg-amber-500/12 ring-amber-400/30"
       : p === "Medium"
         ? "text-brand-200 bg-brand-500/12 ring-brand-400/30"
-        : "text-slate-300 bg-white/6 ring-white/15";
+        : "text-slate-700 bg-white/6 ring-white/15";
 
 export default function ActionCentre() {
   const { done, toggle, completed, total, reset } = useTasks();
@@ -36,13 +36,13 @@ export default function ActionCentre() {
             </span>
           </Reveal>
           <Reveal delay={90}>
-            <h2 className="mt-5 text-[clamp(1.85rem,4.4vw,3.1rem)] font-bold leading-[1.08] text-white">
+            <h2 className="mt-5 text-[clamp(1.85rem,4.4vw,3.1rem)] font-bold leading-[1.08] text-slate-900">
               A dashboard that tells you
-              <span className="text-gradient-brand"> what to do next.</span>
+              <span className="text-blue-600"> what to do next.</span>
             </h2>
           </Reveal>
           <Reveal delay={160}>
-            <p className="mt-5 text-[15px] leading-relaxed text-slate-400">
+            <p className="mt-5 text-[15px] leading-relaxed text-slate-600">
               Most dashboards show numbers. This command centre converts your business data into a ranked, prioritised list — the
               failed payment to verify, the trial about to expire, the Google token to reconnect — so ten minutes each
               morning is enough.
@@ -72,15 +72,15 @@ export default function ActionCentre() {
                     </linearGradient>
                   </defs>
                 </svg>
-                <span className="absolute inset-0 grid place-items-center font-mono text-[12px] font-semibold text-white">
+                <span className="absolute inset-0 grid place-items-center font-mono text-[12px] font-semibold text-slate-900">
                   {completed}/{total}
                 </span>
               </div>
               <div>
-                <p className="text-[13.5px] font-semibold text-white">completed</p>
+                <p className="text-[13.5px] font-semibold text-slate-900">completed</p>
                 <button
                   onClick={reset}
-                  className="mt-1 text-[12px] text-slate-500 underline-offset-4 transition-colors hover:text-slate-300 hover:underline"
+                  className="mt-1 text-[12px] text-slate-500 underline-offset-4 transition-colors hover:text-slate-700 hover:underline"
                 >
                   Reset this demo checklist
                 </button>
@@ -90,7 +90,7 @@ export default function ActionCentre() {
         </div>
 
         <Reveal dir="right">
-          <div className="rounded-3xl border border-white/10 bg-ink-900/70 p-4 shadow-[0_40px_100px_-40px_rgba(0,0,0,0.9)] backdrop-blur-xl sm:p-6">
+          <div className="rounded-3xl border border-slate-200 bg-white/70 p-4 shadow-[0_40px_100px_-40px_rgba(0,0,0,0.9)] backdrop-blur-xl sm:p-6">
             <div className="flex flex-wrap items-center gap-1.5" role="tablist" aria-label="Filter tasks by priority">
               {FILTERS.map((f) => (
                 <button
@@ -101,8 +101,8 @@ export default function ActionCentre() {
                   className={cn(
                     "rounded-full px-3 py-1.5 text-[12px] font-medium transition-all duration-300",
                     filter === f
-                      ? "bg-white/12 text-white ring-1 ring-white/15"
-                      : "text-slate-400 hover:bg-white/6 hover:text-white",
+                      ? "bg-white/12 text-slate-900 ring-1 ring-white/15"
+                      : "text-slate-600 hover:bg-white/6 hover:text-slate-900",
                   )}
                 >
                   {f}
@@ -125,7 +125,7 @@ export default function ActionCentre() {
                         "group flex w-full items-start gap-3 rounded-2xl border p-3.5 text-left transition-all duration-400",
                         isDone
                           ? "border-emerald-400/25 bg-emerald-500/8"
-                          : "border-white/8 bg-white/[0.025] hover:-translate-y-0.5 hover:border-brand-400/35 hover:bg-white/[0.05]",
+                          : "border-slate-200 bg-slate-50/80 hover:-translate-y-0.5 hover:border-brand-400/35 hover:bg-white/[0.05]",
                       )}
                     >
                       <span
@@ -141,7 +141,7 @@ export default function ActionCentre() {
                           <span
                             className={cn(
                               "text-[13px] font-semibold transition-colors",
-                              isDone ? "text-slate-400 line-through" : "text-white",
+                              isDone ? "text-slate-600 line-through" : "text-slate-900",
                             )}
                           >
                             {t.title}
@@ -149,11 +149,11 @@ export default function ActionCentre() {
                           <span className={cn("rounded-full px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider ring-1", toneFor(t.priority))}>
                             {t.priority}
                           </span>
-                          <span className="rounded-full bg-white/6 px-2 py-0.5 text-[10px] font-medium text-slate-400 ring-1 ring-white/10">
+                          <span className="rounded-full bg-white/6 px-2 py-0.5 text-[10px] font-medium text-slate-600 ring-1 ring-white/10">
                             {t.bucket}
                           </span>
                         </span>
-                        <span className="mt-1.5 block text-[12px] leading-relaxed text-slate-400">{t.detail}</span>
+                        <span className="mt-1.5 block text-[12px] leading-relaxed text-slate-600">{t.detail}</span>
                         <span className="mt-2 inline-flex items-center gap-1.5 font-mono text-[10.5px] text-slate-500">
                           <span className="h-1 w-1 rounded-full bg-brand-300" />
                           {t.metric}
@@ -168,7 +168,7 @@ export default function ActionCentre() {
               )}
             </ul>
 
-            <p className="mt-4 border-t border-white/8 pt-3 text-[11px] leading-relaxed text-slate-500">
+            <p className="mt-4 border-t border-slate-200 pt-3 text-[11px] leading-relaxed text-slate-500">
               Sample tasks only. Checking an item updates this prototype's checklist, not an actual business system.
             </p>
           </div>

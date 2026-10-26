@@ -27,7 +27,7 @@ export function SegmentedControl<T extends string = string>({
     <div
       role="tablist"
       className={cn(
-        "inline-flex items-center gap-1 overflow-x-auto rounded-2xl border border-white/10 bg-ink-950/80 p-1 backdrop-blur-md select-none",
+        "inline-flex items-center gap-1 overflow-x-auto rounded-2xl border border-slate-200 bg-slate-100 p-1 select-none",
         className
       )}
     >
@@ -43,8 +43,8 @@ export function SegmentedControl<T extends string = string>({
               "relative flex items-center gap-2 whitespace-nowrap rounded-xl font-bold transition-all duration-200 outline-none",
               size === "sm" ? "px-3 py-1.5 text-xs" : "px-4 py-2 text-xs sm:text-sm",
               isActive
-                ? "bg-white/12 text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.1),0_2px_8px_rgba(0,0,0,0.3)] ring-1 ring-white/15"
-                : "text-slate-400 hover:text-slate-200 hover:bg-white/[0.04]"
+                ? "bg-white text-slate-900 shadow-sm ring-1 ring-slate-200"
+                : "text-slate-600 hover:text-slate-900 hover:bg-slate-200/60"
             )}
           >
             {opt.icon && <span className="shrink-0">{opt.icon}</span>}
@@ -54,8 +54,8 @@ export function SegmentedControl<T extends string = string>({
                 className={cn(
                   "rounded-md px-1.5 py-0.5 text-[10px] font-mono font-bold transition-colors",
                   isActive
-                    ? "bg-brand-500/30 text-brand-200"
-                    : "bg-white/8 text-slate-400"
+                    ? "bg-blue-100 text-blue-700"
+                    : "bg-slate-200 text-slate-600"
                 )}
               >
                 {opt.count}

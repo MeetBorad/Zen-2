@@ -82,12 +82,12 @@ function BusinessCategorySelect({
   onChange: (category: BusinessCategory) => void;
 }) {
   return (
-    <label className="block text-xs font-medium text-slate-400">
+    <label className="block text-xs font-medium text-slate-600">
       Business category
       <select
         value={value}
         onChange={(event) => onChange(event.target.value as BusinessCategory)}
-        className="mt-1.5 w-full rounded-lg border border-white/10 bg-ink-950 px-3 py-2.5 text-sm text-white outline-none focus:border-brand-400 sm:min-w-56"
+        className="mt-1.5 w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-900 outline-none focus:border-blue-500 sm:min-w-56"
       >
         {BUSINESS_CATEGORIES.map((category) => (
           <option key={category} value={category}>{category}</option>
@@ -105,7 +105,7 @@ function RatingBars() {
         const percentage = (count / DEMO_REVIEWS.length) * 100;
         return (
           <div key={rating} className="flex items-center gap-3 text-xs">
-            <span className="w-8 text-slate-400">{rating} star</span>
+            <span className="w-8 text-slate-600">{rating} star</span>
             <div
               className="h-2 flex-1 overflow-hidden rounded-full bg-white/8"
               role="img"
@@ -176,14 +176,14 @@ export default function MerchantPreview({ user, onExit }: MerchantPreviewProps) 
   });
 
   return (
-    <main className="min-h-screen bg-ink-950 text-slate-100">
+    <main className="min-h-screen bg-slate-50 text-slate-900">
       {/* Top Header */}
-      <header className="sticky top-0 z-20 border-b border-white/8 bg-ink-900/90 px-4 py-3 backdrop-blur-xl sm:px-8">
+      <header className="sticky top-0 z-20 border-b border-slate-200 bg-white/95 px-4 py-3 backdrop-blur-xl sm:px-8">
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-3">
           <div className="flex items-center gap-3">
-            <img src="/zentap-logo-white.png" alt="Zentap Digital Solutions" className="h-8 w-auto object-contain shadow-sm" />
+            <img src="/zentap-logo.png" alt="Zentap Digital Solutions" className="h-8 w-auto object-contain shadow-sm" />
             <div>
-              <p className="font-display text-sm font-black text-white">{businessName}</p>
+              <p className="font-display text-sm font-black text-slate-900">{businessName}</p>
               <p className="text-[11px] text-emerald-400 font-medium">
                 {isRealUser ? `● Active Merchant (${ownerName})` : "Preview workspace"}
               </p>
@@ -194,7 +194,7 @@ export default function MerchantPreview({ user, onExit }: MerchantPreviewProps) 
             className={`rounded-lg px-3.5 py-2 text-xs font-semibold transition ${
               isRealUser
                 ? "border border-rose-500/30 bg-rose-500/10 text-rose-300 hover:bg-rose-500/20"
-                : "border border-white/10 text-white hover:bg-white/8"
+                : "border border-slate-300 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold"
             }`}
           >
             {isRealUser ? "Sign out" : "Exit preview"}
@@ -205,34 +205,34 @@ export default function MerchantPreview({ user, onExit }: MerchantPreviewProps) 
       <div className="mx-auto max-w-7xl px-4 py-8 sm:px-8">
         {/* User Workspace Info Banner */}
         {isRealUser ? (
-          <div className="mb-6 flex flex-col gap-4 rounded-2xl border border-emerald-500/20 bg-emerald-500/[0.06] p-4 sm:flex-row sm:items-center sm:justify-between">
+          <div className="mb-6 flex flex-col gap-4 rounded-2xl border border-emerald-200 bg-emerald-50/80 p-4 sm:flex-row sm:items-center sm:justify-between">
             <div className="flex items-center gap-3.5">
               <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-emerald-500/15 text-xl">
                 🏬
               </div>
               <div>
-                <p className="text-sm font-bold text-white flex items-center gap-2">
+                <p className="text-sm font-bold text-slate-900 flex items-center gap-2">
                   {businessName}
-                  <span className="rounded-full border border-emerald-400/30 bg-emerald-400/10 px-2 py-0.5 text-[11px] text-emerald-300">
+                  <span className="rounded-full border border-emerald-300 bg-emerald-100 px-2 py-0.5 text-[11px] text-emerald-800 font-bold">
                     Live Merchant Account
                   </span>
                 </p>
-                <p className="text-xs text-slate-400 mt-0.5">
-                  Owner: <strong className="text-slate-200">{ownerName}</strong> • {city} • {businessCategory} • Phone: <strong className="text-slate-200">{phone}</strong>
+                <p className="text-xs text-slate-600 mt-0.5">
+                  Owner: <strong className="text-slate-800">{ownerName}</strong> • {city} • {businessCategory} • Phone: <strong className="text-slate-800">{phone}</strong>
                   {displayEmail ? ` • Email: ${displayEmail}` : ""}
                 </p>
               </div>
             </div>
             <div className="flex items-center gap-2">
-              <span className="rounded-lg border border-brand-400/30 bg-brand-400/15 px-3 py-1.5 text-xs font-semibold text-brand-200">
+              <span className="rounded-lg border border-blue-200 bg-blue-100 px-3 py-1.5 text-xs font-bold text-blue-800">
                 {plan} Plan
               </span>
             </div>
           </div>
         ) : (
-          <div className="mb-6 rounded-xl border border-amber-300/25 bg-amber-300/[0.07] px-4 py-3">
-            <p className="text-sm font-semibold text-amber-100">Testing preview — sample data mode</p>
-            <p className="mt-1 text-xs leading-relaxed text-amber-100/70">
+          <div className="mb-6 rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-amber-900">
+            <p className="text-sm font-bold text-amber-900">Testing preview — sample data mode</p>
+            <p className="mt-1 text-xs leading-relaxed text-amber-800">
               Sign in or create an account with your mobile number to bind your real business profile and live standees.
             </p>
           </div>
@@ -241,9 +241,9 @@ export default function MerchantPreview({ user, onExit }: MerchantPreviewProps) 
         {/* Workspace Title & Tabs (Open Design Segmented Switcher) */}
         <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-brand-300">Merchant Dashboard</p>
-            <h1 className="mt-1 text-3xl font-black text-white">{businessName}</h1>
-            <p className="mt-1 text-sm text-slate-400">
+            <p className="text-xs font-bold uppercase tracking-[0.18em] text-blue-600">Merchant Dashboard</p>
+            <h1 className="mt-1 text-3xl font-black text-slate-900">{businessName}</h1>
+            <p className="mt-1 text-sm text-slate-600">
               AI Growth OS for Google Reviews & Countertop Standees ({city})
             </p>
           </div>
@@ -289,7 +289,7 @@ export default function MerchantPreview({ user, onExit }: MerchantPreviewProps) 
                 unit="★"
                 accentGlow="amber"
                 sparkline={<Sparkline data={[4.6, 4.6, 4.7, 4.8, 4.8, 4.9, 4.9]} tone="amber" width={90} height={30} showPoints />}
-                footer={<p className="text-slate-400 text-xs">Top 1% rated showroom in Nikol, Ahmedabad</p>}
+                footer={<p className="text-slate-600 text-xs">Top 1% rated showroom in Nikol, Ahmedabad</p>}
               />
               <BentoCard
                 label="Total Verified Reviews"
@@ -298,7 +298,7 @@ export default function MerchantPreview({ user, onExit }: MerchantPreviewProps) 
                 unit="Verified"
                 accentGlow="emerald"
                 sparkline={<Sparkline data={[6, 12, 18, 22, 28, 31, 34]} tone="emerald" width={90} height={30} showPoints />}
-                footer={<p className="text-slate-400 text-xs">Scanned directly on counter standee</p>}
+                footer={<p className="text-slate-600 text-xs">Scanned directly on counter standee</p>}
               />
               <BentoCard
                 label="Replies Awaiting Review"
@@ -307,7 +307,7 @@ export default function MerchantPreview({ user, onExit }: MerchantPreviewProps) 
                 unit="Pending"
                 accentGlow="cyan"
                 sparkline={<Sparkline data={[4, 3, 2, 2, 1, 0, pendingCount]} tone="cyan" width={90} height={30} />}
-                footer={<p className="text-slate-400 text-xs">Auto-replies 4-5★, review 1-3★ only</p>}
+                footer={<p className="text-slate-600 text-xs">Auto-replies 4-5★, review 1-3★ only</p>}
               />
               <BentoCard
                 label="Customer Sentiment"
@@ -315,7 +315,7 @@ export default function MerchantPreview({ user, onExit }: MerchantPreviewProps) 
                 value={`${Math.round((positiveCount / DEMO_REVIEWS.length) * 100)}%`}
                 accentGlow="violet"
                 sparkline={<Sparkline data={[82, 85, 88, 90, 92, 95, 96]} tone="violet" width={90} height={30} showPoints />}
-                footer={<p className="text-slate-400 text-xs">Gujarati, Hindi, and English feedback</p>}
+                footer={<p className="text-slate-600 text-xs">Gujarati, Hindi, and English feedback</p>}
               />
             </div>
 
@@ -323,13 +323,13 @@ export default function MerchantPreview({ user, onExit }: MerchantPreviewProps) 
             <div className="rounded-2xl border border-brand-500/25 bg-gradient-to-r from-brand-500/10 via-violet-500/10 to-transparent p-5 sm:p-6">
               <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                 <div>
-                  <span className="rounded-full border border-brand-400/30 bg-brand-400/15 px-2.5 py-0.5 text-xs font-bold text-brand-200">
+                  <span className="rounded-full border border-blue-500/30 bg-brand-400/15 px-2.5 py-0.5 text-xs font-bold text-brand-200">
                     Counter Standee & NFC Link
                   </span>
-                  <h3 className="mt-2 text-lg font-bold text-white">
+                  <h3 className="mt-2 text-lg font-bold text-slate-900">
                     Live Review Flow for {businessName}
                   </h3>
-                  <p className="mt-1 text-xs text-slate-300">
+                  <p className="mt-1 text-xs text-slate-700">
                     Customers tap with NFC or scan this QR at your checkout counter to draft 5★ reviews in Gujarati, Hindi, or English.
                   </p>
                   <p className="mt-2 font-mono text-xs text-brand-300 select-all">
@@ -349,7 +349,7 @@ export default function MerchantPreview({ user, onExit }: MerchantPreviewProps) 
                     href={`/standee/virat-gold`}
                     target="_blank"
                     rel="noreferrer"
-                    className="rounded-xl border border-white/15 bg-white/5 px-4 py-2.5 text-xs font-semibold text-white transition hover:bg-white/10"
+                    className="rounded-xl border border-white/15 bg-white/5 px-4 py-2.5 text-xs font-bold text-slate-900 transition hover:bg-white/10"
                   >
                     Printable A6 Standee
                   </a>
@@ -358,10 +358,10 @@ export default function MerchantPreview({ user, onExit }: MerchantPreviewProps) 
             </div>
 
             <div className="grid gap-4 lg:grid-cols-2">
-              <section className="rounded-2xl border border-white/10 bg-ink-900 p-5">
+              <section className="rounded-2xl border border-slate-200 bg-white shadow-xs p-5">
                 <div className="flex items-center justify-between gap-3">
                   <div>
-                    <h2 className="font-semibold text-white">Review topics</h2>
+                    <h2 className="font-bold text-slate-900">Review topics</h2>
                     <p className="mt-1 text-xs text-slate-500">What customers highlight most about {businessName}</p>
                   </div>
                   <button onClick={() => setTab("insights")} className="text-xs font-semibold text-brand-300 hover:text-brand-200">
@@ -375,7 +375,7 @@ export default function MerchantPreview({ user, onExit }: MerchantPreviewProps) 
                     return (
                       <div key={topic}>
                         <div className="mb-1.5 flex justify-between gap-3 text-xs">
-                          <span className="text-slate-300">{topic}</span>
+                          <span className="text-slate-700">{topic}</span>
                           <span className="text-slate-500">{count} of {DEMO_REVIEWS.length}</span>
                         </div>
                         <div className="h-2 overflow-hidden rounded-full bg-white/8">
@@ -387,13 +387,13 @@ export default function MerchantPreview({ user, onExit }: MerchantPreviewProps) 
                 </div>
               </section>
 
-              <section className="rounded-2xl border border-white/10 bg-ink-900 p-5">
-                <h2 className="font-semibold text-white">AI Auto-Reply Configuration</h2>
+              <section className="rounded-2xl border border-slate-200 bg-white shadow-xs p-5">
+                <h2 className="font-bold text-slate-900">AI Auto-Reply Configuration</h2>
                 <p className="mt-1 text-xs text-slate-500">Automated Google review replies powered by Gemini 1.5</p>
-                <div className="mt-4 rounded-xl border border-brand-400/15 bg-brand-400/[0.06] p-4">
+                <div className="mt-4 rounded-xl border border-blue-500/15 bg-brand-400/[0.06] p-4">
                   <p className="text-xs uppercase tracking-wider text-brand-200 font-semibold">Active Mode</p>
-                  <p className="mt-1 text-lg font-bold text-white">Mode B: Semi-Automated Guardrail</p>
-                  <p className="mt-2 text-xs leading-relaxed text-slate-300">
+                  <p className="mt-1 text-lg font-bold text-slate-900">Mode B: Semi-Automated Guardrail</p>
+                  <p className="mt-2 text-xs leading-relaxed text-slate-700">
                     • <strong>4★ and 5★ reviews:</strong> AI automatically generates courteous response and publishes within 15 minutes.<br />
                     • <strong>1★, 2★, and 3★ reviews:</strong> AI generates apology draft and pings your WhatsApp ({phone}) for approval.
                   </p>
@@ -410,48 +410,48 @@ export default function MerchantPreview({ user, onExit }: MerchantPreviewProps) 
         {tab === "reviews" && (
           <section className="mt-6 space-y-4">
             <div>
-              <h2 className="text-lg font-semibold text-white">Google Review Stream</h2>
-              <p className="mt-1 text-sm text-slate-400">Incoming reviews for {businessName} and AI reply drafts.</p>
+              <h2 className="text-lg font-bold text-slate-900">Google Review Stream</h2>
+              <p className="mt-1 text-sm text-slate-600">Incoming reviews for {businessName} and AI reply drafts.</p>
             </div>
-            <div className="grid gap-3 rounded-2xl border border-white/10 bg-ink-900 p-4 md:grid-cols-3">
-              <label className="block text-xs font-medium text-slate-400">
+            <div className="grid gap-3 rounded-2xl border border-slate-200 bg-white shadow-xs p-4 md:grid-cols-3">
+              <label className="block text-xs font-medium text-slate-600">
                 Search reviews
                 <input
                   value={search}
                   onChange={(event) => setSearch(event.target.value)}
                   placeholder="Name, topic, or review text"
-                  className="mt-1.5 w-full rounded-lg border border-white/10 bg-ink-950 px-3 py-2.5 text-sm text-white outline-none placeholder:text-slate-600 focus:border-brand-400"
+                  className="mt-1.5 w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-900 outline-none placeholder:text-slate-600 focus:border-blue-500"
                 />
               </label>
-              <label className="block text-xs font-medium text-slate-400">
+              <label className="block text-xs font-medium text-slate-600">
                 Review topic
                 <select
                   value={topicFilter}
                   onChange={(event) => setTopicFilter(event.target.value)}
-                  className="mt-1.5 w-full rounded-lg border border-white/10 bg-ink-950 px-3 py-2.5 text-sm text-white outline-none focus:border-brand-400"
+                  className="mt-1.5 w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-900 outline-none focus:border-blue-500"
                 >
                   <option>All topics</option>
                   {reviewTopics.map((topic) => <option key={topic}>{topic}</option>)}
                 </select>
               </label>
               <div className="grid grid-cols-2 gap-3">
-                <label className="block text-xs font-medium text-slate-400">
+                <label className="block text-xs font-medium text-slate-600">
                   Rating
                   <select
                     value={ratingFilter}
                     onChange={(event) => setRatingFilter(event.target.value as "all" | "4+")}
-                    className="mt-1.5 w-full rounded-lg border border-white/10 bg-ink-950 px-3 py-2.5 text-sm text-white outline-none focus:border-brand-400"
+                    className="mt-1.5 w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-900 outline-none focus:border-blue-500"
                   >
                     <option value="all">Any rating</option>
                     <option value="4+">4 stars & up</option>
                   </select>
                 </label>
-                <label className="block text-xs font-medium text-slate-400">
+                <label className="block text-xs font-medium text-slate-600">
                   Queue
                   <select
                     value={statusFilter}
                     onChange={(event) => setStatusFilter(event.target.value as "pending" | "all")}
-                    className="mt-1.5 w-full rounded-lg border border-white/10 bg-ink-950 px-3 py-2.5 text-sm text-white outline-none focus:border-brand-400"
+                    className="mt-1.5 w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-900 outline-none focus:border-blue-500"
                   >
                     <option value="pending">Needs reply</option>
                     <option value="all">All reviews</option>
@@ -463,11 +463,11 @@ export default function MerchantPreview({ user, onExit }: MerchantPreviewProps) 
               Showing {filteredReviews.length} of {reviews.length} reviews · {pendingCount} awaiting approval
             </p>
             {filteredReviews.map((review) => (
-              <article key={review.id} className="rounded-2xl border border-white/10 bg-ink-900 p-5">
+              <article key={review.id} className="rounded-2xl border border-slate-200 bg-white shadow-xs p-5">
                 <div className="flex flex-wrap items-start justify-between gap-3">
                   <div>
-                    <p className="font-semibold text-white">{review.author}</p>
-                    <p className="mt-1 text-xs text-slate-400">
+                    <p className="font-bold text-slate-900">{review.author}</p>
+                    <p className="mt-1 text-xs text-slate-600">
                       <span className="text-amber-300">{"★".repeat(review.rating)}</span>
                       <span className="text-slate-600">{"★".repeat(5 - review.rating)}</span>
                       {" · "}{review.date}{" · "}{reviewTopics[review.topicIndex] || "Customer Feedback"}
@@ -481,7 +481,7 @@ export default function MerchantPreview({ user, onExit }: MerchantPreviewProps) 
                         );
                         setMessage(`Reply approved and queued to publish to Google for ${review.author}.`);
                       }}
-                      className="rounded-lg border border-brand-400/20 bg-brand-400/10 px-3.5 py-2 text-xs font-semibold text-brand-200 hover:bg-brand-400/20"
+                      className="rounded-lg border border-blue-500/20 bg-brand-400/10 px-3.5 py-2 text-xs font-semibold text-brand-200 hover:bg-brand-400/20"
                     >
                       Approve & Post to Google
                     </button>
@@ -491,13 +491,13 @@ export default function MerchantPreview({ user, onExit }: MerchantPreviewProps) 
                     </span>
                   )}
                 </div>
-                <p className="mt-4 text-sm leading-relaxed text-slate-300">{review.text}</p>
-                <div className="mt-3 rounded-lg border border-white/6 bg-white/[0.025] p-3.5">
+                <p className="mt-4 text-sm leading-relaxed text-slate-700">{review.text}</p>
+                <div className="mt-3 rounded-xl border border-blue-100 bg-blue-50/40 p-3.5">
                   <div className="flex flex-wrap items-center justify-between gap-2">
                     <p className="text-[10px] font-semibold uppercase tracking-wider text-slate-500">AI Reply Draft · Gujarati/English</p>
                     <span className="text-[10px] text-brand-200">{businessCategory}</span>
                   </div>
-                  <p className="mt-1.5 text-sm leading-relaxed text-slate-300">{getReplyDraft(review, businessCategory, businessName)}</p>
+                  <p className="mt-1.5 text-sm leading-relaxed text-slate-700">{getReplyDraft(review, businessCategory, businessName)}</p>
                 </div>
               </article>
             ))}
@@ -508,8 +508,8 @@ export default function MerchantPreview({ user, onExit }: MerchantPreviewProps) 
         {tab === "insights" && (
           <section className="mt-6 space-y-4" aria-label="Review analytics">
             <div>
-              <h2 className="text-lg font-semibold text-white">Sentiment & Topic Insights</h2>
-              <p className="mt-1 text-sm text-slate-400">
+              <h2 className="text-lg font-bold text-slate-900">Sentiment & Topic Insights</h2>
+              <p className="mt-1 text-sm text-slate-600">
                 AI extraction of topics mentioned in customer Google reviews for {businessName}.
               </p>
             </div>
@@ -519,21 +519,21 @@ export default function MerchantPreview({ user, onExit }: MerchantPreviewProps) 
                 ["Positive Reviews", `${positiveCount} / ${DEMO_REVIEWS.length}`, "Ratings of 4 and 5 stars"],
                 ["Needs Attention", String(DEMO_REVIEWS.filter((review) => review.rating <= 3).length), "Direct feedback routed to owner"],
               ].map(([label, value, detail]) => (
-                <article key={label} className="rounded-2xl border border-white/10 bg-ink-900 p-5">
-                  <p className="text-xs font-medium uppercase tracking-wider text-slate-400">{label}</p>
-                  <p className="mt-3 text-2xl font-semibold text-white">{value}</p>
+                <article key={label} className="rounded-2xl border border-slate-200 bg-white shadow-xs p-5">
+                  <p className="text-xs font-medium uppercase tracking-wider text-slate-600">{label}</p>
+                  <p className="mt-3 text-2xl font-bold text-slate-900">{value}</p>
                   <p className="mt-2 text-xs text-slate-500">{detail}</p>
                 </article>
               ))}
             </div>
             <div className="grid gap-4 lg:grid-cols-2">
-              <section className="rounded-2xl border border-white/10 bg-ink-900 p-5">
-                <h3 className="font-semibold text-white">Rating Distribution</h3>
+              <section className="rounded-2xl border border-slate-200 bg-white shadow-xs p-5">
+                <h3 className="font-bold text-slate-900">Rating Distribution</h3>
                 <p className="mb-5 mt-1 text-xs text-slate-500">Star breakdown across customers</p>
                 <RatingBars />
               </section>
-              <section className="rounded-2xl border border-white/10 bg-ink-900 p-5">
-                <h3 className="font-semibold text-white">Topics Customers Value</h3>
+              <section className="rounded-2xl border border-slate-200 bg-white shadow-xs p-5">
+                <h3 className="font-bold text-slate-900">Topics Customers Value</h3>
                 <p className="mb-5 mt-1 text-xs text-slate-500">Keyword breakdown from customer reviews</p>
                 <div className="space-y-4">
                   {reviewTopics.map((topic, topicIndex) => {
@@ -543,7 +543,7 @@ export default function MerchantPreview({ user, onExit }: MerchantPreviewProps) 
                     return (
                       <div key={topic}>
                         <div className="mb-1.5 flex justify-between gap-3 text-xs">
-                          <span className="text-slate-300">{topic}</span>
+                          <span className="text-slate-700">{topic}</span>
                           <span className="text-slate-500">{positive} positive of {matchingReviews.length}</span>
                         </div>
                         <div className="h-2 overflow-hidden rounded-full bg-white/8">
@@ -560,39 +560,39 @@ export default function MerchantPreview({ user, onExit }: MerchantPreviewProps) 
 
         {/* TAB 4: BILLING & STANDEE */}
         {tab === "billing" && (
-          <section className="mt-6 max-w-2xl rounded-2xl border border-white/10 bg-ink-900 p-6 sm:p-8 space-y-6">
+          <section className="mt-6 max-w-2xl rounded-2xl border border-slate-200 bg-white shadow-xs p-6 sm:p-8 space-y-6">
             <div>
               <p className="text-xs font-semibold uppercase tracking-wider text-brand-300">Subscription & Standees</p>
-              <h2 className="mt-1 text-2xl font-bold text-white">{plan} Plan</h2>
-              <p className="mt-1 text-sm text-slate-400">Recurring UPI AutoPay via Razorpay</p>
+              <h2 className="mt-1 text-2xl font-bold text-slate-900">{plan} Plan</h2>
+              <p className="mt-1 text-sm text-slate-600">Recurring UPI AutoPay via Razorpay</p>
             </div>
 
-            <div className="rounded-xl border border-white/8 bg-white/[0.02] p-4 space-y-3 text-sm text-slate-300">
-              <div className="flex justify-between gap-4 py-1.5 border-b border-white/6">
+            <div className="rounded-xl border border-slate-200 bg-slate-50 p-4 space-y-3 text-sm text-slate-700">
+              <div className="flex justify-between gap-4 py-1.5 border-b border-slate-200">
                 <span>Showroom</span>
-                <span className="font-semibold text-white">{businessName}</span>
+                <span className="font-bold text-slate-900">{businessName}</span>
               </div>
-              <div className="flex justify-between gap-4 py-1.5 border-b border-white/6">
+              <div className="flex justify-between gap-4 py-1.5 border-b border-slate-200">
                 <span>Location</span>
-                <span className="text-slate-200">{city}</span>
+                <span className="text-slate-800">{city}</span>
               </div>
-              <div className="flex justify-between gap-4 py-1.5 border-b border-white/6">
+              <div className="flex justify-between gap-4 py-1.5 border-b border-slate-200">
                 <span>Account Status</span>
                 <span className="text-emerald-400 font-semibold">14-Day Free Trial Active</span>
               </div>
-              <div className="flex justify-between gap-4 py-1.5 border-b border-white/6">
+              <div className="flex justify-between gap-4 py-1.5 border-b border-slate-200">
                 <span>Billing Amount</span>
                 <span className="font-bold text-white">₹2,999 / month</span>
               </div>
               <div className="flex justify-between gap-4 py-1.5">
                 <span>Next Billing Date</span>
-                <span className="text-slate-400">14 days from registration (Auto-mandate)</span>
+                <span className="text-slate-600">14 days from registration (Auto-mandate)</span>
               </div>
             </div>
 
             <div className="rounded-xl border border-brand-500/20 bg-brand-500/10 p-4">
-              <h4 className="text-sm font-bold text-white">Physical Standee Shipment</h4>
-              <p className="mt-1 text-xs text-slate-300">
+              <h4 className="text-sm font-bold text-slate-900">Physical Standee Shipment</h4>
+              <p className="mt-1 text-xs text-slate-700">
                 Your A6 acrylic countertop standee is assigned for dispatch to your registered address in {city}.
                 Track via helpline: <strong>+91 8788416911</strong>.
               </p>

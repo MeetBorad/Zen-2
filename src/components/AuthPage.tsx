@@ -324,45 +324,38 @@ export default function AuthPage({
   };
 
   return (
-    <main className="relative flex min-h-screen items-center justify-center overflow-hidden bg-ink-950 px-4 py-12 text-slate-100">
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0"
-        style={{
-          background:
-            "radial-gradient(45% 35% at 50% 0%, rgba(99,102,241,0.2), transparent 75%)",
-        }}
-      />
-      <section className="relative w-full max-w-lg rounded-3xl border border-white/10 bg-ink-900/90 p-6 shadow-[0_30px_100px_-35px_rgba(0,0,0,0.95)] backdrop-blur-xl sm:p-8">
+    <main className="relative flex min-h-screen items-center justify-center overflow-hidden bg-slate-50 px-4 py-12 text-slate-900">
+      <div aria-hidden className="grid-lines pointer-events-none absolute inset-0 mask-fade-b opacity-60" />
+      <section className="relative w-full max-w-lg rounded-3xl border border-slate-200 bg-white p-6 shadow-xl sm:p-8">
         <button
           type="button"
           onClick={onBackToHome}
-          className="mb-7 text-sm text-slate-400 transition hover:text-white"
+          className="mb-7 inline-flex items-center gap-1.5 text-sm font-semibold text-slate-500 transition hover:text-blue-600"
         >
           ← Back to Home
         </button>
 
         <div className="flex flex-col items-start gap-1">
-          <img src="/zentap-logo-white.png" alt="Zentap Digital Solutions" className="h-9 w-auto object-contain" />
-          <p className="text-xs text-slate-400 mt-1">Sign in or create your account</p>
+          <img src="/zentap-logo.png" alt="Zentap Digital Solutions" className="h-9 w-auto object-contain" />
+          <p className="text-xs text-slate-500 mt-1">Sign in or create your business account</p>
         </div>
 
         {/* Role Selector: Merchant vs Staff */}
-        <div className="mt-7 grid grid-cols-2 rounded-xl border border-white/10 bg-ink-950 p-1">
+        <div className="mt-7 grid grid-cols-2 rounded-xl border border-slate-200 bg-slate-100 p-1">
           <button
             type="button"
             onClick={() => changeRole("merchant")}
-            className={`rounded-lg px-3 py-2.5 text-sm font-semibold transition ${
-              role === "merchant" ? "bg-brand-500 text-white" : "text-slate-400 hover:text-white"
+            className={`rounded-lg px-3 py-2 text-sm font-bold transition ${
+              role === "merchant" ? "bg-blue-600 text-white shadow-sm" : "text-slate-600 hover:text-slate-900"
             }`}
           >
-            Merchant
+            Showroom / Merchant
           </button>
           <button
             type="button"
             onClick={() => changeRole("staff")}
-            className={`flex items-center justify-center gap-2 rounded-lg px-3 py-2.5 text-sm font-semibold transition ${
-              role === "staff" ? "bg-cyan-400 text-ink-950" : "text-slate-400 hover:text-white"
+            className={`flex items-center justify-center gap-2 rounded-lg px-3 py-2 text-sm font-bold transition ${
+              role === "staff" ? "bg-slate-800 text-white shadow-sm" : "text-slate-600 hover:text-slate-900"
             }`}
           >
             <IconLock className="h-3.5 w-3.5" />
@@ -372,23 +365,23 @@ export default function AuthPage({
 
         <div className="mt-6">
           {emailConfirmationResult === "confirmed" && (
-            <p role="status" className="mb-4 rounded-lg border border-emerald-400/25 bg-emerald-400/10 px-3 py-2.5 text-sm text-emerald-200">
+            <p role="status" className="mb-4 rounded-xl border border-emerald-200 bg-emerald-50 px-3 py-2.5 text-sm text-emerald-800 font-semibold">
               Email confirmed successfully. You can now sign in to your merchant account.
             </p>
           )}
           {emailConfirmationResult === "error" && (
-            <p role="alert" className="mb-4 rounded-lg border border-rose-400/25 bg-rose-400/10 px-3 py-2.5 text-sm text-rose-200">
+            <p role="alert" className="mb-4 rounded-xl border border-rose-200 bg-rose-50 px-3 py-2.5 text-sm text-rose-800 font-semibold">
               This confirmation link could not be verified or has expired. You can sign in using your credentials below.
             </p>
           )}
-          <h1 className="text-xl font-bold text-white">
+          <h1 className="text-xl font-black text-slate-900">
             {role === "staff"
               ? "Staff console access"
               : mode === "signup"
-                ? "Create a merchant account"
-                : "Merchant sign in"}
+                ? "Register Your Business"
+                : "Merchant Sign In"}
           </h1>
-          <p className="mt-1 text-sm leading-relaxed text-slate-400">
+          <p className="mt-1 text-sm leading-relaxed text-slate-600">
             {role === "staff"
               ? "Use your authorized staff email and password. Staff accounts must be enabled by an administrator."
               : mode === "signup"
@@ -396,7 +389,7 @@ export default function AuthPage({
                 : "Sign in with your mobile number or email to manage reviews and standees."}
           </p>
           {role === "merchant" && initialPlan && (
-            <p className="mt-3 rounded-lg border border-brand-400/20 bg-brand-400/10 px-3 py-2 text-sm text-brand-100">
+            <p className="mt-3 rounded-xl border border-blue-200 bg-blue-50 px-3 py-2 text-sm text-blue-900 font-medium">
               Selected plan: <strong>{initialPlan}</strong>
             </p>
           )}
@@ -404,7 +397,7 @@ export default function AuthPage({
 
         {/* Mode Selector: Sign in vs Create account */}
         {role === "merchant" && (
-          <div className="mt-5 flex rounded-lg bg-white/5 p-1 text-sm">
+          <div className="mt-5 flex rounded-xl border border-slate-200 bg-slate-100 p-1 text-sm font-semibold">
             <button
               type="button"
               onClick={() => {
@@ -414,11 +407,11 @@ export default function AuthPage({
                 setNotificationWarning("");
                 setConfirmationPending(false);
               }}
-              className={`flex-1 rounded-md py-2 transition ${
-                mode === "signin" ? "bg-white/10 text-white font-semibold" : "text-slate-400"
+              className={`flex-1 rounded-lg py-2 transition ${
+                mode === "signin" ? "bg-white text-slate-900 shadow-sm font-bold" : "text-slate-600 hover:text-slate-900"
               }`}
             >
-              Sign in
+              Sign In
             </button>
             <button
               type="button"
@@ -429,46 +422,46 @@ export default function AuthPage({
                 setNotificationWarning("");
                 setConfirmationPending(false);
               }}
-              className={`flex-1 rounded-md py-2 transition ${
-                mode === "signup" ? "bg-white/10 text-white font-semibold" : "text-slate-400"
+              className={`flex-1 rounded-lg py-2 transition ${
+                mode === "signup" ? "bg-white text-slate-900 shadow-sm font-bold" : "text-slate-600 hover:text-slate-900"
               }`}
             >
-              Create account
+              Create Account
             </button>
           </div>
         )}
 
         {/* Demo Login Preview */}
         {role === "merchant" && mode === "signin" && showDemoLogin && (
-          <div className="mt-5 rounded-xl border border-amber-400/25 bg-amber-400/[0.07] p-4">
-            <p className="text-sm font-semibold text-amber-100">Preview testing</p>
-            <p className="mt-1 text-xs leading-relaxed text-amber-100/70">
+          <div className="mt-5 rounded-2xl border border-amber-200 bg-amber-50/70 p-4">
+            <p className="text-sm font-bold text-amber-900">Demo Preview Testing</p>
+            <p className="mt-1 text-xs leading-relaxed text-amber-800">
               Explore the merchant dashboard with sample data. No account is created and no real customer or billing data is changed.
             </p>
             <button
               type="button"
               onClick={onDemoLogin}
-              className="mt-3 w-full rounded-lg border border-amber-300/25 bg-amber-300/10 px-3 py-2.5 text-sm font-semibold text-amber-100 transition hover:bg-amber-300/20"
+              className="mt-3 w-full rounded-xl border border-amber-300 bg-amber-100 px-3 py-2.5 text-sm font-bold text-amber-900 transition hover:bg-amber-200"
             >
-              Enter merchant preview
+              Enter Merchant Preview
             </button>
           </div>
         )}
 
         {/* Registration Method Switcher (Mobile vs Email) */}
         {role === "merchant" && mode === "signup" && (
-          <div className="mt-5 grid grid-cols-2 rounded-xl border border-white/10 bg-white/[0.03] p-1 text-xs font-semibold">
+          <div className="mt-5 grid grid-cols-2 rounded-xl border border-slate-200 bg-slate-100 p-1 text-xs font-bold">
             <button
               type="button"
               onClick={() => setRegistrationMethod("mobile")}
               className={`flex items-center justify-center gap-1.5 rounded-lg py-2.5 transition ${
                 registrationMethod === "mobile"
-                  ? "bg-brand-500 text-white shadow-md"
-                  : "text-slate-400 hover:text-white"
+                  ? "bg-blue-600 text-white shadow-sm"
+                  : "text-slate-600 hover:text-slate-900"
               }`}
             >
               <span>📱 Mobile Number</span>
-              <span className="rounded bg-emerald-400/20 px-1 py-0.5 text-[10px] text-emerald-300">
+              <span className="rounded bg-emerald-100 px-1 py-0.5 text-[10px] text-emerald-800 font-bold">
                 Instant
               </span>
             </button>
@@ -477,8 +470,8 @@ export default function AuthPage({
               onClick={() => setRegistrationMethod("email")}
               className={`flex items-center justify-center gap-1.5 rounded-lg py-2.5 transition ${
                 registrationMethod === "email"
-                  ? "bg-white/15 text-white shadow-md"
-                  : "text-slate-400 hover:text-white"
+                  ? "bg-white text-slate-900 shadow-sm"
+                  : "text-slate-600 hover:text-slate-900"
               }`}
             >
               <span>✉️ Email Address</span>
@@ -489,7 +482,7 @@ export default function AuthPage({
         <form onSubmit={handleSubmit} className="mt-5 space-y-4">
           {mode === "signup" && role === "merchant" && (
             <>
-              <label className="block text-sm font-medium text-slate-300">
+              <label className="block text-sm font-semibold text-slate-700">
                 Your full name
                 <input
                   autoComplete="name"
@@ -497,16 +490,16 @@ export default function AuthPage({
                   value={name}
                   onChange={(event) => setName(event.target.value)}
                   placeholder="e.g. Dhruvil Patel"
-                  className="mt-1.5 w-full rounded-xl border border-white/10 bg-ink-950 px-3.5 py-3 text-sm text-white outline-none transition focus:border-brand-400"
+                  className="mt-1.5 w-full rounded-xl border border-slate-300 bg-white px-3.5 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-blue-600 focus:ring-2 focus:ring-blue-100"
                 />
               </label>
 
               {/* Mobile Number Field (When registering via Mobile) */}
               {registrationMethod === "mobile" ? (
-                <label className="block text-sm font-medium text-slate-300">
+                <label className="block text-sm font-semibold text-slate-700">
                   Mobile / WhatsApp Number
-                  <div className="mt-1.5 flex rounded-xl border border-white/10 bg-ink-950 transition focus-within:border-brand-400">
-                    <span className="flex items-center gap-1 border-r border-white/10 px-3.5 text-sm font-medium text-slate-300 select-none">
+                  <div className="mt-1.5 flex rounded-xl border border-slate-300 bg-white overflow-hidden transition focus-within:border-blue-600 focus-within:ring-2 focus-within:ring-blue-100">
+                    <span className="flex items-center gap-1 border-r border-slate-300 bg-slate-50 px-3.5 text-sm font-semibold text-slate-700 select-none">
                       🇮🇳 +91
                     </span>
                     <input
@@ -518,15 +511,15 @@ export default function AuthPage({
                       value={mobileDigits}
                       onChange={(event) => setMobileDigits(event.target.value.replace(/\D/g, ""))}
                       placeholder="9898980401"
-                      className="w-full bg-transparent px-3.5 py-3 text-sm text-white outline-none placeholder:text-slate-600"
+                      className="w-full bg-transparent px-3.5 py-3 text-sm text-slate-900 outline-none placeholder:text-slate-400"
                     />
                   </div>
-                  <span className="mt-1 block text-xs font-normal text-emerald-400">
+                  <span className="mt-1 block text-xs font-semibold text-emerald-700">
                     ⚡ Instant activation — no email verification needed.
                   </span>
                 </label>
               ) : (
-                <label className="block text-sm font-medium text-slate-300">
+                <label className="block text-sm font-semibold text-slate-700">
                   Email Address
                   <input
                     type="email"
@@ -535,12 +528,12 @@ export default function AuthPage({
                     value={email}
                     onChange={(event) => setEmail(event.target.value)}
                     placeholder="dhruvil@example.com"
-                    className="mt-1.5 w-full rounded-xl border border-white/10 bg-ink-950 px-3.5 py-3 text-sm text-white outline-none transition focus:border-brand-400"
+                    className="mt-1.5 w-full rounded-xl border border-slate-300 bg-white px-3.5 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-blue-600 focus:ring-2 focus:ring-blue-100"
                   />
                 </label>
               )}
 
-              <label className="block text-sm font-medium text-slate-300">
+              <label className="block text-sm font-semibold text-slate-700">
                 Business name
                 <input
                   autoComplete="organization"
@@ -548,17 +541,17 @@ export default function AuthPage({
                   value={businessName}
                   onChange={(event) => setBusinessName(event.target.value)}
                   placeholder="e.g. Digitronics Control"
-                  className="mt-1.5 w-full rounded-xl border border-white/10 bg-ink-950 px-3.5 py-3 text-sm text-white outline-none transition placeholder:text-slate-600 focus:border-brand-400"
+                  className="mt-1.5 w-full rounded-xl border border-slate-300 bg-white px-3.5 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-blue-600 focus:ring-2 focus:ring-blue-100"
                 />
               </label>
 
-              <label className="block text-sm font-medium text-slate-300">
+              <label className="block text-sm font-semibold text-slate-700">
                 Business category
                 <select
                   required
                   value={businessCategory}
                   onChange={(event) => setBusinessCategory(event.target.value)}
-                  className="mt-1.5 w-full rounded-xl border border-white/10 bg-ink-950 px-3.5 py-3 text-sm text-white outline-none transition focus:border-brand-400"
+                  className="mt-1.5 w-full rounded-xl border border-slate-300 bg-white px-3.5 py-3 text-sm text-slate-900 outline-none transition focus:border-blue-600 focus:ring-2 focus:ring-blue-100"
                 >
                   <option value="" disabled>Select your business type</option>
                   {BUSINESS_CATEGORIES.map((category) => (
@@ -570,7 +563,7 @@ export default function AuthPage({
                 </span>
               </label>
 
-              <label className="block text-sm font-medium text-slate-300">
+              <label className="block text-sm font-semibold text-slate-700">
                 Business city
                 <input
                   autoComplete="address-level2"
@@ -578,13 +571,13 @@ export default function AuthPage({
                   value={businessCity}
                   onChange={(event) => setBusinessCity(event.target.value)}
                   placeholder="e.g. Ahmedabad"
-                  className="mt-1.5 w-full rounded-xl border border-white/10 bg-ink-950 px-3.5 py-3 text-sm text-white outline-none transition placeholder:text-slate-600 focus:border-brand-400"
+                  className="mt-1.5 w-full rounded-xl border border-slate-300 bg-white px-3.5 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-blue-600 focus:ring-2 focus:ring-blue-100"
                 />
               </label>
 
               {/* Optional Email when registering with Mobile */}
               {registrationMethod === "mobile" && (
-                <label className="block text-sm font-medium text-slate-300">
+                <label className="block text-sm font-semibold text-slate-700">
                   Email address <span className="text-xs font-normal text-slate-500">(Optional for reports)</span>
                   <input
                     type="email"
@@ -592,7 +585,7 @@ export default function AuthPage({
                     value={email}
                     onChange={(event) => setEmail(event.target.value)}
                     placeholder="dhruvil@example.com (optional)"
-                    className="mt-1.5 w-full rounded-xl border border-white/10 bg-ink-950 px-3.5 py-3 text-sm text-white outline-none transition placeholder:text-slate-600 focus:border-brand-400"
+                    className="mt-1.5 w-full rounded-xl border border-slate-300 bg-white px-3.5 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-blue-600 focus:ring-2 focus:ring-blue-100"
                   />
                 </label>
               )}
@@ -601,7 +594,7 @@ export default function AuthPage({
 
           {/* SIGN IN: Combined Mobile or Email field */}
           {mode === "signin" && role === "merchant" && (
-            <label className="block text-sm font-medium text-slate-300">
+            <label className="block text-sm font-semibold text-slate-700">
               Mobile Number or Email
               <input
                 type="text"
@@ -610,14 +603,14 @@ export default function AuthPage({
                 value={loginIdentifier}
                 onChange={(event) => setLoginIdentifier(event.target.value)}
                 placeholder="e.g. 9662760880 or you@example.com"
-                className="mt-1.5 w-full rounded-xl border border-white/10 bg-ink-950 px-3.5 py-3 text-sm text-white outline-none transition placeholder:text-slate-600 focus:border-brand-400"
+                className="mt-1.5 w-full rounded-xl border border-slate-300 bg-white px-3.5 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-blue-600 focus:ring-2 focus:ring-blue-100"
               />
             </label>
           )}
 
           {/* Staff Login ID */}
           {role === "staff" && (
-            <label className="block text-sm font-medium text-slate-300">
+            <label className="block text-sm font-semibold text-slate-700">
               Admin ID (staff email)
               <input
                 type="email"
@@ -626,13 +619,13 @@ export default function AuthPage({
                 value={email}
                 onChange={(event) => setEmail(event.target.value)}
                 placeholder="admin@zentapdigitalsolutions.com"
-                className="mt-1.5 w-full rounded-xl border border-white/10 bg-ink-950 px-3.5 py-3 text-sm text-white outline-none transition focus:border-brand-400"
+                className="mt-1.5 w-full rounded-xl border border-slate-300 bg-white px-3.5 py-3 text-sm text-slate-900 outline-none transition focus:border-blue-600 focus:ring-2 focus:ring-blue-100"
               />
             </label>
           )}
 
           {/* Password Field */}
-          <label className="block text-sm font-medium text-slate-300">
+          <label className="block text-sm font-semibold text-slate-700">
             Password
             <input
               type="password"
@@ -642,7 +635,7 @@ export default function AuthPage({
               value={password}
               onChange={(event) => setPassword(event.target.value)}
               placeholder="••••••••"
-              className="mt-1.5 w-full rounded-xl border border-white/10 bg-ink-950 px-3.5 py-3 text-sm text-white outline-none transition focus:border-brand-400"
+              className="mt-1.5 w-full rounded-xl border border-slate-300 bg-white px-3.5 py-3 text-sm text-slate-900 outline-none transition focus:border-blue-600 focus:ring-2 focus:ring-blue-100"
             />
           </label>
 
@@ -652,7 +645,7 @@ export default function AuthPage({
                 type="button"
                 onClick={handlePasswordReset}
                 disabled={busy}
-                className="text-xs font-medium text-brand-300 hover:text-brand-200"
+                className="text-xs font-semibold text-blue-600 hover:text-blue-700 hover:underline"
               >
                 Forgot password?
               </button>
@@ -660,17 +653,17 @@ export default function AuthPage({
           )}
 
           {error && (
-            <p role="alert" className="rounded-lg border border-rose-400/25 bg-rose-400/10 px-3 py-2.5 text-sm text-rose-200">
+            <p role="alert" className="rounded-xl border border-rose-200 bg-rose-50 px-3.5 py-2.5 text-sm text-rose-800 font-semibold">
               {error}
             </p>
           )}
           {message && (
-            <p role="status" className="rounded-lg border border-emerald-400/25 bg-emerald-400/10 px-3 py-2.5 text-sm text-emerald-200">
+            <p role="status" className="rounded-xl border border-emerald-200 bg-emerald-50 px-3.5 py-2.5 text-sm text-emerald-800 font-semibold">
               {message}
             </p>
           )}
           {notificationWarning && (
-            <p role="alert" className="rounded-lg border border-amber-400/25 bg-amber-400/10 px-3 py-2.5 text-sm text-amber-100">
+            <p role="alert" className="rounded-xl border border-amber-200 bg-amber-50 px-3.5 py-2.5 text-sm text-amber-900 font-semibold">
               {notificationWarning}
             </p>
           )}
@@ -678,17 +671,17 @@ export default function AuthPage({
           <button
             type="submit"
             disabled={busy}
-            className="w-full rounded-xl bg-gradient-to-r from-brand-500 via-violet-500 to-cyan-500 px-4 py-3 text-sm font-bold text-white transition hover:brightness-110 disabled:cursor-wait disabled:opacity-60"
+            className="w-full rounded-xl bg-blue-600 hover:bg-blue-700 px-4 py-3.5 text-sm font-bold text-white shadow-md transition active:scale-95 disabled:cursor-wait disabled:opacity-60"
           >
             {busy
               ? "Please wait..."
               : mode === "signup"
                 ? registrationMethod === "mobile"
                   ? "⚡ Create Account with Mobile Number"
-                  : "Create merchant account"
+                  : "Create Merchant Account"
                 : role === "staff"
-                  ? "Sign in to staff console"
-                  : "Sign in"}
+                  ? "Sign in to Staff Console"
+                  : "Sign In"}
           </button>
         </form>
       </section>

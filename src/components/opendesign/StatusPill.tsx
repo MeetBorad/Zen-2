@@ -13,21 +13,21 @@ interface StatusPillProps {
 }
 
 const toneStyles: Record<StatusTone, string> = {
-  done: "bg-emerald-500/12 text-emerald-300 border-emerald-400/25",
-  progress: "bg-cyan-500/12 text-cyan-300 border-cyan-400/25",
-  warning: "bg-amber-500/12 text-amber-300 border-amber-400/25",
-  blocked: "bg-rose-500/12 text-rose-300 border-rose-400/25",
-  neutral: "bg-white/6 text-slate-300 border-white/12",
-  brand: "bg-indigo-500/15 text-indigo-300 border-indigo-400/30",
+  done: "bg-emerald-50 text-emerald-800 border-emerald-200 font-bold",
+  progress: "bg-blue-50 text-blue-800 border-blue-200 font-bold",
+  warning: "bg-amber-50 text-amber-900 border-amber-200 font-bold",
+  blocked: "bg-rose-50 text-rose-800 border-rose-200 font-bold",
+  neutral: "bg-slate-100 text-slate-700 border-slate-200 font-semibold",
+  brand: "bg-blue-50 text-blue-700 border-blue-200 font-bold",
 };
 
 const dotColors: Record<StatusTone, string> = {
-  done: "bg-emerald-400",
-  progress: "bg-cyan-400",
-  warning: "bg-amber-400",
-  blocked: "bg-rose-400",
+  done: "bg-emerald-500",
+  progress: "bg-blue-500",
+  warning: "bg-amber-500",
+  blocked: "bg-rose-500",
   neutral: "bg-slate-400",
-  brand: "bg-indigo-400",
+  brand: "bg-blue-600",
 };
 
 export function StatusPill({
