@@ -16,6 +16,7 @@ interface AuthPageProps {
   onBackToHome: () => void;
   onDemoLogin: () => void;
   onStaffAuthenticated: () => void;
+  onMerchantAuthenticated?: (user: any) => void;
 }
 
 const getAuthRedirectUrl = () => {
@@ -39,6 +40,7 @@ export default function AuthPage({
   onBackToHome,
   onDemoLogin,
   onStaffAuthenticated,
+  onMerchantAuthenticated,
 }: AuthPageProps) {
   const [role, setRole] = useState<AuthRole>(initialRole);
   const [mode, setMode] = useState<AuthMode>(initialMode);
@@ -141,9 +143,11 @@ export default function AuthPage({
           });
 
           if (!autoSignInError && signInData?.session) {
-            setMessage(
-              `🎉 Welcome ${name.trim() || "Merchant"}! Your account for +91 ${valid10} is active and verified. Your merchant workspace is being linked.`
-            );
+            if (onMerchantAuthenticated) {
+              onMerchantAuthenticated(signInData.user);
+            } else {
+              window.location.hash = "/merchant";
+            }
             return;
           }
 
@@ -277,9 +281,12 @@ export default function AuthPage({
         return;
       }
 
-      setMessage(
-        "Signed in successfully! Your merchant workspace is active."
-      );
+      if (onMerchantAuthenticated && data?.user) {
+        onMerchantAuthenticated(data.user);
+      } else {
+        window.location.hash = "/merchant";
+      }
+      return;
     } catch (authError) {
       setError(authError instanceof Error ? authError.message : "Authentication failed.");
     } finally {

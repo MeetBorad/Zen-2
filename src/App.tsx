@@ -70,7 +70,7 @@ function BackToTop() {
 const previewMerchantDemoEnabled =
   import.meta.env.DEV || import.meta.env.VITE_ENABLE_PREVIEW_MERCHANT_DEMO;
 
-function getPageFromHash(): "home" | "auth" | "admin" | "merchant-demo" {
+function getPageFromHash(): "home" | "auth" | "admin" | "merchant" | "merchant-demo" {
   const hash = window.location.hash.slice(1);
   const authCallback = new URLSearchParams(hash);
   if (
@@ -85,7 +85,7 @@ function getPageFromHash(): "home" | "auth" | "admin" | "merchant-demo" {
   const route = hash.replace(/^\//, "").split("?")[0];
   if (route === "auth") return "auth";
   if (route === "admin") return "admin";
-  if (route === "merchant-demo" && previewMerchantDemoEnabled) return "merchant-demo";
+  if (route === "merchant" || route === "merchant-demo" || route === "dashboard") return "merchant";
   return "home";
 }
 
@@ -159,7 +159,8 @@ function CommandCenterIntro() {
 export default function App() {
   useScrollReveal();
   const [ready, setReady] = useState(false);
-  const [page, setPage] = useState<"home" | "auth" | "admin" | "merchant-demo">(() => getPageFromHash());
+  const [page, setPage] = useState<"home" | "auth" | "admin" | "merchant" | "merchant-demo">(() => getPageFromHash());
+  const [currentUser, setCurrentUser] = useState<any>(null);
   const [authRole, setAuthRole] = useState<"merchant" | "staff">(() => getAuthRoleFromHash());
   const [authMode, setAuthMode] = useState<"signin" | "signup">(() => getAuthModeFromHash());
   const [authPlan, setAuthPlan] = useState<string | undefined>(() => getAuthPlanFromHash());
@@ -169,6 +170,22 @@ export default function App() {
   useEffect(() => {
     const t = setTimeout(() => setReady(true), 60);
     return () => clearTimeout(t);
+  }, []);
+
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data }) => {
+      if (data?.session?.user) {
+        setCurrentUser(data.session.user);
+      }
+    });
+
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      setCurrentUser(session?.user || null);
+    });
+
+    return () => subscription.unsubscribe();
   }, []);
 
   useEffect(() => {
@@ -261,13 +278,23 @@ export default function App() {
     window.location.hash = "/admin";
   }, []);
 
-  const navigateToMerchantDemo = useCallback(() => {
-    window.location.hash = "/merchant-demo";
+  const navigateToMerchant = useCallback(() => {
+    window.location.hash = "/merchant";
+  }, []);
+
+  const handleSignOut = useCallback(async () => {
+    await supabase.auth.signOut();
+    setCurrentUser(null);
+    window.location.hash = "top";
   }, []);
 
   const handleOpenMerchantLogin = useCallback(() => {
-    navigateToAuth("merchant");
-  }, [navigateToAuth]);
+    if (currentUser) {
+      navigateToMerchant();
+    } else {
+      navigateToAuth("merchant");
+    }
+  }, [currentUser, navigateToMerchant, navigateToAuth]);
 
   const handleOpenStaffLogin = useCallback(() => {
     navigateToAuth("staff");
@@ -285,14 +312,18 @@ export default function App() {
         emailConfirmationResult={emailConfirmationResult}
         showDemoLogin={previewMerchantDemoEnabled}
         onBackToHome={navigateHome}
-        onDemoLogin={navigateToMerchantDemo}
+        onDemoLogin={navigateToMerchant}
         onStaffAuthenticated={navigateToAdmin}
+        onMerchantAuthenticated={(user) => {
+          setCurrentUser(user);
+          navigateToMerchant();
+        }}
       />
     );
   }
 
-  if (page === "merchant-demo" && previewMerchantDemoEnabled) {
-    return <MerchantPreview onExit={() => navigateToAuth("merchant")} />;
+  if (page === "merchant" || (page === "merchant-demo" && previewMerchantDemoEnabled)) {
+    return <MerchantPreview user={currentUser} onExit={handleSignOut} />;
   }
 
   if (page === "admin") {
@@ -314,7 +345,11 @@ export default function App() {
         )}
       >
         <ScrollProgressBar />
-        <Nav onOpenAuth={handleOpenMerchantLogin} />
+        <Nav
+          onOpenAuth={handleOpenMerchantLogin}
+          currentUser={currentUser}
+          onOpenDashboard={navigateToMerchant}
+        />
 
         <main>
           <Hero onOpenAuth={handleOpenMerchantLogin} />

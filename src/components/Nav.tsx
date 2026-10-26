@@ -5,6 +5,8 @@ import { IconClose, IconMenu } from "./Icons";
 
 interface NavProps {
   onOpenAuth: () => void;
+  currentUser?: any;
+  onOpenDashboard?: () => void;
 }
 
 const MARKETING_LINKS = [
@@ -15,7 +17,7 @@ const MARKETING_LINKS = [
   { id: "faq", label: "FAQ" },
 ];
 
-export default function Nav({ onOpenAuth }: NavProps) {
+export default function Nav({ onOpenAuth, currentUser, onOpenDashboard }: NavProps) {
   const { scrolled, progress } = useScrollState(20);
   const [open, setOpen] = useState(false);
   const active = useActiveSection(["platform", "how", "results", "pricing", "faq"]);
@@ -89,13 +91,26 @@ export default function Nav({ onOpenAuth }: NavProps) {
 
             {/* Account access */}
             <div className="flex items-center gap-2 sm:gap-2.5">
-              <button
-                type="button"
-                onClick={onOpenAuth}
-                className="min-h-10 whitespace-nowrap rounded-full border border-white/12 bg-white/5 px-3 text-xs font-semibold text-slate-200 shadow-sm transition-all hover:border-white/25 hover:bg-white/10 hover:text-white sm:px-4 sm:text-[12.5px]"
-              >
-                Sign In / Sign Up
-              </button>
+              {currentUser ? (
+                <button
+                  type="button"
+                  onClick={onOpenDashboard || onOpenAuth}
+                  className="min-h-10 whitespace-nowrap rounded-full border border-brand-400/30 bg-brand-500/15 px-3 text-xs font-semibold text-brand-200 shadow-sm transition-all hover:bg-brand-500/25 sm:px-4 sm:text-[12.5px] flex items-center gap-1.5"
+                >
+                  <span>🏬</span>
+                  <span className="max-w-[120px] truncate sm:max-w-[160px]">
+                    {currentUser?.user_metadata?.business_name || "Dashboard"}
+                  </span>
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  onClick={onOpenAuth}
+                  className="min-h-10 whitespace-nowrap rounded-full border border-white/12 bg-white/5 px-3 text-xs font-semibold text-slate-200 shadow-sm transition-all hover:border-white/25 hover:bg-white/10 hover:text-white sm:px-4 sm:text-[12.5px]"
+                >
+                  Sign In / Sign Up
+                </button>
+              )}
 
               {/* Mobile hamburger */}
               <button
@@ -151,6 +166,34 @@ export default function Nav({ onOpenAuth }: NavProps) {
               </a>
             ))}
           </nav>
+
+          <div className="mt-4 pt-3 border-t border-white/10">
+            {currentUser ? (
+              <button
+                type="button"
+                onClick={() => {
+                  setOpen(false);
+                  if (onOpenDashboard) onOpenDashboard();
+                  else onOpenAuth();
+                }}
+                className="w-full flex items-center justify-center gap-2 rounded-xl border border-brand-400/30 bg-brand-500/20 py-3 text-sm font-semibold text-brand-200"
+              >
+                <span>🏬</span>
+                <span>{currentUser?.user_metadata?.business_name || "Merchant Dashboard"}</span>
+              </button>
+            ) : (
+              <button
+                type="button"
+                onClick={() => {
+                  setOpen(false);
+                  onOpenAuth();
+                }}
+                className="w-full rounded-xl bg-gradient-to-r from-brand-500 to-violet-500 py-3 text-sm font-bold text-white shadow-md"
+              >
+                Sign In / Sign Up
+              </button>
+            )}
+          </div>
         </div>
       </div>
     </>
