@@ -5,12 +5,12 @@ import { IconCheck, IconLock, IconShield, IconZap } from "./Icons";
 
 const PLANS = [
   {
-    name: "Pilot",
-    tag: "14 days free",
-    monthly: 0,
-    annual: 0,
-    blurb: "Prove it works on your own counter before you pay anything.",
-    cta: "Start the free pilot",
+    name: "Starter",
+    tag: "₹1,000/mo",
+    monthly: 1000,
+    annual: 833,
+    blurb: "Perfect for single counter businesses starting their reputation journey.",
+    cta: "Sign In / Sign Up",
     features: [
       "1 branded NFC + QR standee",
       "Google Business Profile connection",
@@ -26,7 +26,7 @@ const PLANS = [
     monthly: 2999,
     annual: 2499,
     blurb: "The full reputation engine for a single-location business.",
-    cta: "Start 14-day pilot",
+    cta: "Sign In / Sign Up",
     features: [
       "4 standees included, reprints at cost",
       "AI replies published automatically",
@@ -69,8 +69,8 @@ export default function Pricing({ onSelectPlan }: PricingProps) {
       <SectionHeading
         eyebrow="Pricing"
         title="One simple subscription."
-        highlight="No surprise invoices."
-        copy="Start with a free 14-day pilot. If Zentap doesn't move your reviews, don't subscribe — it's that honest."
+        highlight="Starting at ₹1,000/mo."
+        copy="Choose a plan to create your merchant account. The Zentap team will help link your business and activate billing."
         icon={<span className="text-cyan-300">◆</span>}
       />
 

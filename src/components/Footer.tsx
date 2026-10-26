@@ -1,12 +1,10 @@
 import { useState } from "react";
-import { IconArrow, IconCheck, IconMail, IconPhone, IconShield } from "./Icons";
+import { IconArrow, IconCheck, IconMail } from "./Icons";
 
 interface FooterProps {
   onOpenPrivacy: () => void;
   onOpenTerms: () => void;
-  onOpenStandeeSimulator: () => void;
-  onOpenMerchantLogin?: () => void;
-  onOpenStaffLogin?: () => void;
+  onOpenAuth: () => void;
 }
 
 const COLS = [
@@ -55,9 +53,7 @@ const COLS = [
 export default function Footer({
   onOpenPrivacy,
   onOpenTerms,
-  onOpenStandeeSimulator,
-  onOpenMerchantLogin,
-  onOpenStaffLogin,
+  onOpenAuth,
 }: FooterProps) {
   const [email, setEmail] = useState("");
   const [ok, setOk] = useState(false);
@@ -94,7 +90,7 @@ export default function Footer({
 
             <div className="mt-4 flex items-center gap-2 text-xs text-slate-300">
               <span className="inline-flex h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
-              <span>Pilot Anchor: Virat Gold Palace (Nikol, Ahmedabad)</span>
+              <span>Local business review management, made simpler</span>
             </div>
 
             <div className="mt-3 text-xs text-slate-400">
@@ -163,14 +159,6 @@ export default function Footer({
                           <span className="mr-0 h-px w-0 bg-brand-300 transition-all duration-300 group-hover:mr-1.5 group-hover:w-3" />
                           {l}
                         </a>
-                      ) : l.includes("standees") ? (
-                        <button
-                          onClick={onOpenStandeeSimulator}
-                          className="group inline-flex items-center text-[13px] text-slate-400 transition-colors duration-300 hover:text-white"
-                        >
-                          <span className="mr-0 h-px w-0 bg-brand-300 transition-all duration-300 group-hover:mr-1.5 group-hover:w-3" />
-                          {l}
-                        </button>
                       ) : (
                         <a
                           href="#top"
@@ -204,22 +192,12 @@ export default function Footer({
             © {new Date().getFullYear()} Zentap Technologies. All rights reserved.
           </p>
           <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-[12px] text-slate-400">
-            {onOpenMerchantLogin && (
-              <button
-                onClick={onOpenMerchantLogin}
-                className="text-emerald-400 hover:text-emerald-300 font-medium cursor-pointer"
-              >
-                🏪 Merchant Login / Test Demo
-              </button>
-            )}
-            {onOpenStaffLogin && (
-              <button
-                onClick={onOpenStaffLogin}
-                className="text-cyan-400 hover:text-cyan-300 font-medium cursor-pointer"
-              >
-                ⚡ Staff Login
-              </button>
-            )}
+            <button
+              onClick={onOpenAuth}
+              className="font-medium text-emerald-400 hover:text-emerald-300"
+            >
+              Sign In / Sign Up
+            </button>
             <button
               onClick={onOpenPrivacy}
               className="transition-colors hover:text-white cursor-pointer"

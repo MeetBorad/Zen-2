@@ -156,3 +156,63 @@ export function useTilt(max = 6) {
   }, [max]);
   return ref;
 }
+
+/** Live animated counter that updates periodically. */
+export function useLiveCounter(
+  initial: number,
+  increment: number,
+  intervalMs: number = 3000
+) {
+  const [count, setCount] = useState(initial);
+  useEffect(() => {
+    const id = setInterval(() => {
+      setCount((c) => c + increment + Math.floor(Math.random() * 3));
+    }, intervalMs);
+    return () => clearInterval(id);
+  }, [increment, intervalMs]);
+  return count;
+}
+
+/** Magnetic button effect - button follows cursor slightly. */
+export function useMagnetic(strength = 0.15) {
+  const ref = useRef<HTMLButtonElement | null>(null);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    if (window.matchMedia("(pointer: coarse)").matches) return;
+    const onMove = (e: MouseEvent) => {
+      const r = el.getBoundingClientRect();
+      const cx = r.left + r.width / 2;
+      const cy = r.top + r.height / 2;
+      const dx = (e.clientX - cx) * strength;
+      const dy = (e.clientY - cy) * strength;
+      el.style.transform = `translate(${dx}px, ${dy}px)`;
+    };
+    const onLeave = () => {
+      el.style.transform = "translate(0, 0)";
+    };
+    el.addEventListener("pointermove", onMove);
+    el.addEventListener("pointerleave", onLeave);
+    return () => {
+      el.removeEventListener("pointermove", onMove);
+      el.removeEventListener("pointerleave", onLeave);
+    };
+  }, [strength]);
+  return ref;
+}
+
+/** Scroll progress bar at top of page. */
+export function useScrollProgress() {
+  const [progress, setProgress] = useState(0);
+  useEffect(() => {
+    const onScroll = () => {
+      const doc = document.documentElement;
+      const max = doc.scrollHeight - doc.clientHeight;
+      const y = window.scrollY;
+      setProgress(max > 0 ? Math.min(1, y / max) : 0);
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+  return progress;
+}

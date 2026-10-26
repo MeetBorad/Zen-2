@@ -1,5 +1,5 @@
-import { Orb, PrimaryButton, Reveal } from "./ui";
-import { IconCheck, IconGoogle, IconNfc, IconQr, IconSparkles, IconStar, IconZap } from "./Icons";
+import { Orb, Reveal } from "./ui";
+import { IconCheck, IconGoogle, IconNfc, IconQr, IconSparkles, IconStar } from "./Icons";
 import { cn } from "@/utils/cn";
 
 const LOGOS = [
@@ -16,15 +16,10 @@ const LOGOS = [
   "Masala Junction",
 ];
 
-function StandeeMock({ onClick }: { onClick?: () => void }) {
+function StandeeMock() {
   return (
     <div
-      onClick={onClick}
-      role={onClick ? "button" : undefined}
-      className={cn(
-        "animate-float-slow relative w-[168px] rounded-[22px] border border-white/12 bg-gradient-to-b from-white/12 to-white/[0.03] p-4 shadow-[0_30px_80px_-30px_rgba(0,0,0,0.9)] backdrop-blur-xl sm:w-[188px] text-left",
-        onClick && "cursor-pointer transition-transform hover:scale-105",
-      )}
+      className="animate-float-slow relative w-[168px] rounded-[22px] border border-white/12 bg-gradient-to-b from-white/12 to-white/[0.03] p-4 text-left shadow-[0_30px_80px_-30px_rgba(0,0,0,0.9)] backdrop-blur-xl sm:w-[188px]"
     >
       <div className="flex items-center justify-between">
         <span className="font-display text-[11px] font-extrabold tracking-tight text-white">
@@ -71,7 +66,7 @@ function StandeeMock({ onClick }: { onClick?: () => void }) {
   );
 }
 
-function HeroVisual({ onStandeeClick }: { onStandeeClick?: () => void }) {
+function HeroVisual() {
   return (
     <div className="relative mx-auto w-full max-w-[560px]">
       <div
@@ -132,7 +127,7 @@ function HeroVisual({ onStandeeClick }: { onStandeeClick?: () => void }) {
 
       {/* floating standee */}
       <div className="animate-float-slow absolute -bottom-12 -left-4 hidden lg:block" style={{ animationDelay: "0.8s" }}>
-        <StandeeMock onClick={onStandeeClick} />
+        <StandeeMock />
       </div>
 
       {/* floating AI toast */}
@@ -168,20 +163,12 @@ function HeroVisual({ onStandeeClick }: { onStandeeClick?: () => void }) {
 }
 
 interface HeroProps {
-  onOpenOnboarding?: () => void;
-  onOpenMerchantLogin?: () => void;
-  onOpenStaffLogin?: () => void;
-  onOpenStandeeSimulator?: () => void;
+  onOpenAuth: () => void;
 }
 
-export default function Hero({
-  onOpenOnboarding,
-  onOpenMerchantLogin,
-  onOpenStaffLogin,
-  onOpenStandeeSimulator,
-}: HeroProps) {
+export default function Hero({ onOpenAuth }: HeroProps) {
   return (
-    <section id="top" className="relative overflow-hidden px-5 pb-16 pt-28 sm:px-8 sm:pt-36 lg:pb-24 lg:pt-44">
+    <section id="top" className="relative overflow-hidden px-4 pb-16 pt-28 sm:px-8 sm:pt-36 lg:pb-24 lg:pt-44">
       <Orb className="-left-24 -top-24" color="brand" size={620} />
       <Orb className="right-[-8rem] top-10" color="aqua" size={520} delay={4000} />
       <Orb className="left-1/3 top-[28rem]" color="violet" size={480} delay={8000} />
@@ -190,20 +177,19 @@ export default function Hero({
       <div className="relative mx-auto grid w-full max-w-7xl items-center gap-14 lg:grid-cols-[1.05fr_1fr] lg:gap-10">
         <div>
           <Reveal>
-            <span className="inline-flex items-center gap-2 rounded-full glass px-3 py-1.5 text-[11.5px] font-medium text-slate-200">
+            <span className="inline-flex max-w-full flex-wrap items-center justify-center gap-2 rounded-full glass px-3 py-1.5 text-center text-[11.5px] font-medium text-slate-200">
               <span className="relative flex h-1.5 w-1.5">
                 <span className="animate-pulse-ring absolute inline-flex h-full w-full rounded-full bg-emerald-400" />
                 <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-400" />
               </span>
               Now onboarding businesses across 12 Indian cities
-              <span aria-hidden className="text-slate-500">→</span>
             </span>
           </Reveal>
 
           <Reveal delay={90}>
-            <h1 className="mt-6 text-[clamp(2.35rem,6.2vw,4.35rem)] font-extrabold leading-[1.02] text-white">
+            <h1 className="mt-6 text-[clamp(1.85rem,7.5vw,2.35rem)] font-extrabold leading-[1.02] text-white sm:text-[clamp(2.35rem,6.2vw,4.35rem)]">
               Turn every walk-in
-              <br />
+              <br className="hidden sm:block" />{" "}
               into a <span className="text-gradient">5-star review.</span>
             </h1>
           </Reveal>
@@ -217,39 +203,19 @@ export default function Hero({
           </Reveal>
 
           <Reveal delay={240}>
-            <div className="mt-8 flex flex-wrap items-center gap-3">
-              {onOpenOnboarding && (
-                <button
-                  onClick={onOpenOnboarding}
-                  className="inline-flex items-center justify-center gap-2 rounded-full bg-[linear-gradient(105deg,#4f46e5,#7c3aed_50%,#0891b2)] px-6 py-3.5 text-[14.5px] font-semibold text-white shadow-[0_14px_40px_-14px_rgba(79,70,229,0.95)] ring-1 ring-white/20 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_20px_50px_-15px_rgba(79,70,229,1)]"
-                >
-                  Start 14-day free pilot
-                </button>
-              )}
-              {onOpenMerchantLogin && (
-                <button
-                  onClick={onOpenMerchantLogin}
-                  className="group inline-flex items-center justify-center gap-2 rounded-full border border-emerald-400/30 bg-emerald-500/10 px-5 py-3.5 text-[14px] font-semibold text-emerald-200 transition-all duration-300 hover:-translate-y-0.5 hover:bg-emerald-500/20"
-                >
-                  <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
-                  <span>Merchant Sign In & Test Demo</span>
-                </button>
-              )}
-              {onOpenStandeeSimulator && (
-                <button
-                  onClick={onOpenStandeeSimulator}
-                  className="group inline-flex items-center justify-center gap-2 rounded-full glass px-5 py-3.5 text-[14px] font-semibold text-white/90 transition-all duration-300 hover:-translate-y-0.5 hover:border-white/25 hover:bg-white/10 hover:text-white"
-                >
-                  <IconQr className="h-4 w-4 text-brand-200" />
-                  <span>Test Standee (/r/virat)</span>
-                </button>
-              )}
+            <div className="mt-8">
+              <button
+                onClick={onOpenAuth}
+                className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-full bg-[linear-gradient(105deg,#4f46e5,#7c3aed_50%,#0891b2)] px-6 py-3.5 text-[14.5px] font-semibold text-white shadow-[0_14px_40px_-14px_rgba(79,70,229,0.95)] ring-1 ring-white/20 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_20px_50px_-15px_rgba(79,70,229,1)] sm:w-auto"
+              >
+                Sign In / Sign Up
+              </button>
             </div>
           </Reveal>
 
           <Reveal delay={300}>
             <ul className="mt-7 flex flex-wrap items-center gap-x-5 gap-y-2 text-[12.5px] text-slate-500">
-              {["No card required for the pilot", "₹2,999/month after your pilot", "Cancel anytime"].map((t) => (
+              {["Choose a plan that fits your business", "Secure account sign-in", "Manage billing with staff support"].map((t) => (
                 <li key={t} className="inline-flex items-center gap-1.5">
                   <IconCheck className="h-3.5 w-3.5 text-emerald-400" strokeWidth={2.4} />
                   {t}
@@ -260,7 +226,7 @@ export default function Hero({
         </div>
 
         <Reveal delay={220} dir="scale">
-          <HeroVisual onStandeeClick={onOpenStandeeSimulator} />
+          <HeroVisual />
         </Reveal>
       </div>
 

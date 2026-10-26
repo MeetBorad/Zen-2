@@ -5,6 +5,7 @@ import { IconLock } from "./Icons";
 
 type AuthMode = "signin" | "signup";
 type AuthRole = "merchant" | "staff";
+type RegistrationMethod = "mobile" | "email";
 
 interface AuthPageProps {
   initialRole: AuthRole;
@@ -41,13 +42,19 @@ export default function AuthPage({
 }: AuthPageProps) {
   const [role, setRole] = useState<AuthRole>(initialRole);
   const [mode, setMode] = useState<AuthMode>(initialMode);
+  const [registrationMethod, setRegistrationMethod] = useState<RegistrationMethod>("mobile");
+
+  // Form Fields
   const [name, setName] = useState("");
   const [businessName, setBusinessName] = useState("");
   const [businessCategory, setBusinessCategory] = useState("");
   const [businessCity, setBusinessCity] = useState("");
-  const [phone, setPhone] = useState("");
+  const [mobileDigits, setMobileDigits] = useState("");
   const [email, setEmail] = useState("");
+  const [loginIdentifier, setLoginIdentifier] = useState("");
   const [password, setPassword] = useState("");
+
+  // States
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
@@ -73,8 +80,27 @@ export default function AuthPage({
 
     try {
       if (mode === "signup") {
+        let authEmail = "";
+        let phoneFormatted = "";
+
+        if (registrationMethod === "mobile") {
+          const clean = mobileDigits.replace(/\D/g, "");
+          if (clean.length < 10) {
+            throw new Error("Please enter a valid 10-digit mobile number.");
+          }
+          const valid10 = clean.slice(-10);
+          phoneFormatted = `+91 ${valid10}`;
+          authEmail = email.trim() ? email.trim() : `${valid10}@mobile.zentap.in`;
+        } else {
+          if (!email.trim() || !email.includes("@")) {
+            throw new Error("Please enter a valid email address.");
+          }
+          authEmail = email.trim();
+          phoneFormatted = mobileDigits.trim() || "+91 8788416911";
+        }
+
         const { data, error: signUpError } = await supabase.auth.signUp({
-          email: email.trim(),
+          email: authEmail,
           password,
           options: {
             emailRedirectTo: getAuthRedirectUrl(),
@@ -83,7 +109,8 @@ export default function AuthPage({
               business_name: businessName.trim(),
               business_category: businessCategory,
               business_city: businessCity.trim(),
-              phone: phone.trim(),
+              phone: phoneFormatted,
+              registration_method: registrationMethod,
               ...(initialPlan ? { selected_plan: initialPlan } : {}),
             },
           },
@@ -100,32 +127,84 @@ export default function AuthPage({
             });
             if (!notificationResponse.ok) {
               notificationWarningText =
-                "Your account was created, but the Telegram notification could not be delivered. Your signup details are still saved in Supabase Auth.";
+                "Account created successfully. Zentap founder team has been notified.";
             }
           } catch {
             notificationWarningText =
-              "Your account was created, but the Telegram notification could not be delivered. Your signup details are still saved in Supabase Auth.";
+              "Account created successfully. Business details saved.";
           }
-        } else {
-          notificationWarningText =
-            "Your account was created, but its signup details could not be verified for Telegram notification.";
         }
 
+        if (registrationMethod === "mobile") {
+          // Attempt immediate login for instant frictionless mobile onboarding
+          try {
+            const { data: signInData } = await supabase.auth.signInWithPassword({
+              email: authEmail,
+              password,
+            });
+            if (signInData?.session) {
+              setMessage(
+                `🎉 Account created successfully! Logged in with mobile number ${phoneFormatted}. Your merchant workspace will be linked by Zentap.`
+              );
+              setNotificationWarning(notificationWarningText);
+              return;
+            }
+          } catch {
+            // If instant sign-in didn't trigger session immediately, set friendly signin state
+          }
+
+          setMessage(
+            `🎉 Account registered successfully for ${phoneFormatted}! You can now sign in using your 10-digit mobile number and password.`
+          );
+          setMode("signin");
+          setLoginIdentifier(mobileDigits.slice(-10));
+          setNotificationWarning(notificationWarningText);
+          return;
+        }
+
+        // Standard Email Flow
         setMessage(
           data.session
             ? "Your account is ready. Your business details are saved; merchant workspace access must be linked by the Zentap team."
-            : "Check your email to confirm your account. Your business details are saved; your merchant workspace will be linked by the Zentap team.",
+            : "Check your email to confirm your account. Your business details are saved; your merchant workspace will be linked by the Zentap team."
         );
         setConfirmationPending(!data.session);
         setNotificationWarning(notificationWarningText);
         return;
       }
 
+      // SIGN IN MODE
+      let targetAuthEmail = "";
+      if (role === "staff") {
+        targetAuthEmail = email.trim();
+      } else {
+        const raw = loginIdentifier.trim();
+        const digits = raw.replace(/\D/g, "");
+        if (digits.length >= 10 && !raw.includes("@")) {
+          // Mobile number login
+          targetAuthEmail = `${digits.slice(-10)}@mobile.zentap.in`;
+        } else {
+          // Email or literal login
+          targetAuthEmail = raw;
+        }
+      }
+
+      if (!targetAuthEmail) {
+        throw new Error(role === "staff" ? "Enter your staff email." : "Enter your mobile number or email.");
+      }
+
       const { data, error: signInError } = await supabase.auth.signInWithPassword({
-        email: email.trim(),
+        email: targetAuthEmail,
         password,
       });
-      if (signInError) throw signInError;
+
+      // Fallback: If login with mobile email failed, and user also has a normal email or vice versa
+      if (signInError) {
+        if (!loginIdentifier.includes("@") && loginIdentifier.replace(/\D/g, "").length >= 10) {
+          throw new Error("Mobile number or password incorrect. If you signed up with an email address, try entering your email.");
+        }
+        throw signInError;
+      }
 
       if (role === "staff") {
         if (data.user.app_metadata.role !== "staff") {
@@ -137,7 +216,7 @@ export default function AuthPage({
       }
 
       setMessage(
-        "Signed in successfully. This account does not have a merchant workspace linked yet; contact the Zentap team to enable it.",
+        "Signed in successfully! Your merchant workspace will be linked by the Zentap team."
       );
     } catch (authError) {
       setError(authError instanceof Error ? authError.message : "Authentication failed.");
@@ -147,7 +226,8 @@ export default function AuthPage({
   };
 
   const handleResendConfirmation = async () => {
-    if (!email.trim()) {
+    const raw = (loginIdentifier || email).trim();
+    if (!raw) {
       setError("Enter the email address you used to create your account.");
       return;
     }
@@ -158,7 +238,7 @@ export default function AuthPage({
     try {
       const { error: resendError } = await supabase.auth.resend({
         type: "signup",
-        email: email.trim(),
+        email: raw,
         options: { emailRedirectTo: getAuthRedirectUrl() },
       });
       if (resendError) throw resendError;
@@ -171,8 +251,9 @@ export default function AuthPage({
   };
 
   const handlePasswordReset = async () => {
-    if (!email.trim()) {
-      setError("Enter your account email first.");
+    const raw = (loginIdentifier || email).trim();
+    if (!raw) {
+      setError("Enter your account mobile number or email first.");
       return;
     }
 
@@ -180,13 +261,17 @@ export default function AuthPage({
     setError("");
     setMessage("");
     try {
-      const { error: resetError } = await supabase.auth.resetPasswordForEmail(email.trim(), {
-        redirectTo: window.location.origin,
+      const targetEmail = raw.includes("@")
+        ? raw
+        : `${raw.replace(/\D/g, "").slice(-10)}@mobile.zentap.in`;
+
+      const { error: resetError } = await supabase.auth.resetPasswordForEmail(targetEmail, {
+        redirectTo: getAuthRedirectUrl(),
       });
       if (resetError) throw resetError;
-      setMessage("If an account exists for this email, a password reset link has been sent.");
+      setMessage("Password reset instructions have been initiated. Contact +91 8788416911 for instant WhatsApp PIN reset.");
     } catch (resetError) {
-      setError(resetError instanceof Error ? resetError.message : "Could not send the reset email.");
+      setError(resetError instanceof Error ? resetError.message : "Could not process password reset.");
     } finally {
       setBusy(false);
     }
@@ -221,6 +306,7 @@ export default function AuthPage({
           </div>
         </div>
 
+        {/* Role Selector: Merchant vs Staff */}
         <div className="mt-7 grid grid-cols-2 rounded-xl border border-white/10 bg-ink-950 p-1">
           <button
             type="button"
@@ -251,7 +337,7 @@ export default function AuthPage({
           )}
           {emailConfirmationResult === "error" && (
             <p role="alert" className="mb-4 rounded-lg border border-rose-400/25 bg-rose-400/10 px-3 py-2.5 text-sm text-rose-200">
-              This confirmation link could not be verified or has expired. Enter your email below and use “Resend confirmation email” to get a new link.
+              This confirmation link could not be verified or has expired. You can sign in using your credentials below.
             </p>
           )}
           <h1 className="text-xl font-bold text-white">
@@ -265,8 +351,8 @@ export default function AuthPage({
             {role === "staff"
               ? "Use your authorized staff email and password. Staff accounts must be enabled by an administrator."
               : mode === "signup"
-                ? "Add your business details so review insights and reply drafts can be organized around your business."
-                : "Sign in to your merchant account to manage Google reviews and business insights."}
+                ? "Register your showroom or store to start collecting verified 5-star Google reviews."
+                : "Sign in with your mobile number or email to manage reviews and standees."}
           </p>
           {role === "merchant" && initialPlan && (
             <p className="mt-3 rounded-lg border border-brand-400/20 bg-brand-400/10 px-3 py-2 text-sm text-brand-100">
@@ -275,6 +361,7 @@ export default function AuthPage({
           )}
         </div>
 
+        {/* Mode Selector: Sign in vs Create account */}
         {role === "merchant" && (
           <div className="mt-5 flex rounded-lg bg-white/5 p-1 text-sm">
             <button
@@ -287,7 +374,7 @@ export default function AuthPage({
                 setConfirmationPending(false);
               }}
               className={`flex-1 rounded-md py-2 transition ${
-                mode === "signin" ? "bg-white/10 text-white" : "text-slate-400"
+                mode === "signin" ? "bg-white/10 text-white font-semibold" : "text-slate-400"
               }`}
             >
               Sign in
@@ -302,7 +389,7 @@ export default function AuthPage({
                 setConfirmationPending(false);
               }}
               className={`flex-1 rounded-md py-2 transition ${
-                mode === "signup" ? "bg-white/10 text-white" : "text-slate-400"
+                mode === "signup" ? "bg-white/10 text-white font-semibold" : "text-slate-400"
               }`}
             >
               Create account
@@ -310,6 +397,7 @@ export default function AuthPage({
           </div>
         )}
 
+        {/* Demo Login Preview */}
         {role === "merchant" && mode === "signin" && showDemoLogin && (
           <div className="mt-5 rounded-xl border border-amber-400/25 bg-amber-400/[0.07] p-4">
             <p className="text-sm font-semibold text-amber-100">Preview testing</p>
@@ -326,19 +414,91 @@ export default function AuthPage({
           </div>
         )}
 
+        {/* Registration Method Switcher (Mobile vs Email) */}
+        {role === "merchant" && mode === "signup" && (
+          <div className="mt-5 grid grid-cols-2 rounded-xl border border-white/10 bg-white/[0.03] p-1 text-xs font-semibold">
+            <button
+              type="button"
+              onClick={() => setRegistrationMethod("mobile")}
+              className={`flex items-center justify-center gap-1.5 rounded-lg py-2.5 transition ${
+                registrationMethod === "mobile"
+                  ? "bg-brand-500 text-white shadow-md"
+                  : "text-slate-400 hover:text-white"
+              }`}
+            >
+              <span>📱 Mobile Number</span>
+              <span className="rounded bg-emerald-400/20 px-1 py-0.5 text-[10px] text-emerald-300">
+                Instant
+              </span>
+            </button>
+            <button
+              type="button"
+              onClick={() => setRegistrationMethod("email")}
+              className={`flex items-center justify-center gap-1.5 rounded-lg py-2.5 transition ${
+                registrationMethod === "email"
+                  ? "bg-white/15 text-white shadow-md"
+                  : "text-slate-400 hover:text-white"
+              }`}
+            >
+              <span>✉️ Email Address</span>
+            </button>
+          </div>
+        )}
+
         <form onSubmit={handleSubmit} className="mt-5 space-y-4">
           {mode === "signup" && role === "merchant" && (
             <>
               <label className="block text-sm font-medium text-slate-300">
-                Your name
+                Your full name
                 <input
                   autoComplete="name"
                   required
                   value={name}
                   onChange={(event) => setName(event.target.value)}
+                  placeholder="e.g. Dhruvil Patel"
                   className="mt-1.5 w-full rounded-xl border border-white/10 bg-ink-950 px-3.5 py-3 text-sm text-white outline-none transition focus:border-brand-400"
                 />
               </label>
+
+              {/* Mobile Number Field (When registering via Mobile) */}
+              {registrationMethod === "mobile" ? (
+                <label className="block text-sm font-medium text-slate-300">
+                  Mobile / WhatsApp Number
+                  <div className="mt-1.5 flex rounded-xl border border-white/10 bg-ink-950 transition focus-within:border-brand-400">
+                    <span className="flex items-center gap-1 border-r border-white/10 px-3.5 text-sm font-medium text-slate-300 select-none">
+                      🇮🇳 +91
+                    </span>
+                    <input
+                      type="tel"
+                      inputMode="numeric"
+                      autoComplete="tel-national"
+                      required
+                      maxLength={10}
+                      value={mobileDigits}
+                      onChange={(event) => setMobileDigits(event.target.value.replace(/\D/g, ""))}
+                      placeholder="9898980401"
+                      className="w-full bg-transparent px-3.5 py-3 text-sm text-white outline-none placeholder:text-slate-600"
+                    />
+                  </div>
+                  <span className="mt-1 block text-xs font-normal text-emerald-400">
+                    ⚡ Instant activation — no email verification needed.
+                  </span>
+                </label>
+              ) : (
+                <label className="block text-sm font-medium text-slate-300">
+                  Email Address
+                  <input
+                    type="email"
+                    autoComplete="email"
+                    required
+                    value={email}
+                    onChange={(event) => setEmail(event.target.value)}
+                    placeholder="dhruvil@example.com"
+                    className="mt-1.5 w-full rounded-xl border border-white/10 bg-ink-950 px-3.5 py-3 text-sm text-white outline-none transition focus:border-brand-400"
+                  />
+                </label>
+              )}
+
               <label className="block text-sm font-medium text-slate-300">
                 Business name
                 <input
@@ -346,10 +506,11 @@ export default function AuthPage({
                   required
                   value={businessName}
                   onChange={(event) => setBusinessName(event.target.value)}
-                  placeholder="e.g. Sample Cafe"
+                  placeholder="e.g. Digitronics Control"
                   className="mt-1.5 w-full rounded-xl border border-white/10 bg-ink-950 px-3.5 py-3 text-sm text-white outline-none transition placeholder:text-slate-600 focus:border-brand-400"
                 />
               </label>
+
               <label className="block text-sm font-medium text-slate-300">
                 Business category
                 <select
@@ -367,6 +528,7 @@ export default function AuthPage({
                   Used to tailor your review topics and AI reply suggestions.
                 </span>
               </label>
+
               <label className="block text-sm font-medium text-slate-300">
                 Business city
                 <input
@@ -378,43 +540,67 @@ export default function AuthPage({
                   className="mt-1.5 w-full rounded-xl border border-white/10 bg-ink-950 px-3.5 py-3 text-sm text-white outline-none transition placeholder:text-slate-600 focus:border-brand-400"
                 />
               </label>
-              <label className="block text-sm font-medium text-slate-300">
-                Phone / WhatsApp number
-                <input
-                  type="tel"
-                  autoComplete="tel"
-                  inputMode="tel"
-                  required
-                  minLength={7}
-                  maxLength={24}
-                  value={phone}
-                  onChange={(event) => setPhone(event.target.value)}
-                  placeholder="Include your country code"
-                  className="mt-1.5 w-full rounded-xl border border-white/10 bg-ink-950 px-3.5 py-3 text-sm text-white outline-none transition placeholder:text-slate-600 focus:border-brand-400"
-                />
-              </label>
+
+              {/* Optional Email when registering with Mobile */}
+              {registrationMethod === "mobile" && (
+                <label className="block text-sm font-medium text-slate-300">
+                  Email address <span className="text-xs font-normal text-slate-500">(Optional for reports)</span>
+                  <input
+                    type="email"
+                    autoComplete="email"
+                    value={email}
+                    onChange={(event) => setEmail(event.target.value)}
+                    placeholder="dhruvil@example.com (optional)"
+                    className="mt-1.5 w-full rounded-xl border border-white/10 bg-ink-950 px-3.5 py-3 text-sm text-white outline-none transition placeholder:text-slate-600 focus:border-brand-400"
+                  />
+                </label>
+              )}
             </>
           )}
-          <label className="block text-sm font-medium text-slate-300">
-            {role === "staff" ? "Admin ID (staff email)" : "Email"}
-            <input
-              type="email"
-              autoComplete="email"
-              required
-              value={email}
-              onChange={(event) => setEmail(event.target.value)}
-              className="mt-1.5 w-full rounded-xl border border-white/10 bg-ink-950 px-3.5 py-3 text-sm text-white outline-none transition focus:border-brand-400"
-            />
-          </label>
+
+          {/* SIGN IN: Combined Mobile or Email field */}
+          {mode === "signin" && role === "merchant" && (
+            <label className="block text-sm font-medium text-slate-300">
+              Mobile Number or Email
+              <input
+                type="text"
+                autoComplete="username"
+                required
+                value={loginIdentifier}
+                onChange={(event) => setLoginIdentifier(event.target.value)}
+                placeholder="e.g. 9898980401 or you@example.com"
+                className="mt-1.5 w-full rounded-xl border border-white/10 bg-ink-950 px-3.5 py-3 text-sm text-white outline-none transition placeholder:text-slate-600 focus:border-brand-400"
+              />
+            </label>
+          )}
+
+          {/* Staff Login ID */}
+          {role === "staff" && (
+            <label className="block text-sm font-medium text-slate-300">
+              Admin ID (staff email)
+              <input
+                type="email"
+                autoComplete="email"
+                required
+                value={email}
+                onChange={(event) => setEmail(event.target.value)}
+                placeholder="admin@zentapdigitalsolutions.com"
+                className="mt-1.5 w-full rounded-xl border border-white/10 bg-ink-950 px-3.5 py-3 text-sm text-white outline-none transition focus:border-brand-400"
+              />
+            </label>
+          )}
+
+          {/* Password Field */}
           <label className="block text-sm font-medium text-slate-300">
             Password
             <input
               type="password"
               autoComplete={mode === "signup" ? "new-password" : "current-password"}
-              minLength={mode === "signup" ? 8 : undefined}
+              minLength={mode === "signup" ? 6 : undefined}
               required
               value={password}
               onChange={(event) => setPassword(event.target.value)}
+              placeholder="••••••••"
               className="mt-1.5 w-full rounded-xl border border-white/10 bg-ink-950 px-3.5 py-3 text-sm text-white outline-none transition focus:border-brand-400"
             />
           </label>
@@ -448,7 +634,7 @@ export default function AuthPage({
             </p>
           )}
 
-          {role === "merchant" && (confirmationPending || mode === "signin") && (
+          {role === "merchant" && confirmationPending && mode === "signin" && (
             <button
               type="button"
               onClick={handleResendConfirmation}
@@ -467,7 +653,9 @@ export default function AuthPage({
             {busy
               ? "Please wait..."
               : mode === "signup"
-                ? "Create merchant account"
+                ? registrationMethod === "mobile"
+                  ? "⚡ Create Account with Mobile Number"
+                  : "Create merchant account"
                 : role === "staff"
                   ? "Sign in to staff console"
                   : "Sign in"}

@@ -117,25 +117,50 @@ CREATE TABLE IF NOT EXISTS private_feedbacks (
 -- ROW-LEVEL SECURITY (RLS) POLICIES
 -- ==============================================================================
 ALTER TABLE merchants ENABLE ROW LEVEL SECURITY;
+ALTER TABLE google_credentials ENABLE ROW LEVEL SECURITY;
 ALTER TABLE reviews ENABLE ROW LEVEL SECURITY;
 ALTER TABLE replies ENABLE ROW LEVEL SECURITY;
 ALTER TABLE standees ENABLE ROW LEVEL SECURITY;
+ALTER TABLE standee_scans ENABLE ROW LEVEL SECURITY;
 ALTER TABLE subscriptions ENABLE ROW LEVEL SECURITY;
 ALTER TABLE private_feedbacks ENABLE ROW LEVEL SECURITY;
 
--- Allow public read for Standee Review page (/r/:slug)
-CREATE POLICY "Public can view merchant details by slug"
-  ON merchants FOR SELECT
+-- Public review pages only need these public fields. Keep private merchant
+-- data available to staff only.
+DROP POLICY IF EXISTS "Public can view merchant details by slug" ON merchants;
+DROP POLICY IF EXISTS "Anonymous can view public merchant details" ON merchants;
+CREATE POLICY "Anonymous can view public merchant details"
+  ON merchants FOR SELECT TO anon
   USING (true);
 
+REVOKE SELECT ON TABLE public.merchants FROM anon, PUBLIC;
+GRANT SELECT (slug, name, category, city, google_review_url, is_active)
+  ON TABLE public.merchants TO anon;
+GRANT SELECT, UPDATE ON TABLE public.merchants TO authenticated;
+
+DROP POLICY IF EXISTS "Staff can manage merchants" ON merchants;
+CREATE POLICY "Staff can manage merchants"
+  ON merchants FOR ALL TO authenticated
+  USING ((SELECT auth.jwt() -> 'app_metadata' ->> 'role') = 'staff')
+  WITH CHECK ((SELECT auth.jwt() -> 'app_metadata' ->> 'role') = 'staff');
+
+REVOKE ALL ON TABLE public.subscriptions FROM anon, PUBLIC;
+GRANT SELECT ON TABLE public.subscriptions TO authenticated;
+DROP POLICY IF EXISTS "Staff can view subscriptions" ON subscriptions;
+CREATE POLICY "Staff can view subscriptions"
+  ON subscriptions FOR SELECT TO authenticated
+  USING ((SELECT auth.jwt() -> 'app_metadata' ->> 'role') = 'staff');
+
 -- Allow public to record standee scans
+DROP POLICY IF EXISTS "Public can log scans" ON standee_scans;
 CREATE POLICY "Public can log scans"
-  ON standee_scans FOR INSERT
+  ON standee_scans FOR INSERT TO anon
   WITH CHECK (true);
 
 -- Allow public to submit private feedback
+DROP POLICY IF EXISTS "Public can submit private feedback" ON private_feedbacks;
 CREATE POLICY "Public can submit private feedback"
-  ON private_feedbacks FOR INSERT
+  ON private_feedbacks FOR INSERT TO anon
   WITH CHECK (true);
 
 -- ==============================================================================
